@@ -287,7 +287,7 @@
                                         </HorizontalStackLayout>
                                     </Border>
                                     
-                                    <Button Text="Déposer mon commentaire →" BackgroundColor="#92400E" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" FontSize="13" />
+                                    <Button Text="Déposer mon commentaire →" Clicked="OnNavigateToRating" BackgroundColor="#92400E" TextColor="White" FontAttributes="Bold" CornerRadius="8" HeightRequest="40" FontSize="13" />
                                 </VerticalStackLayout>
                             </Border>
 

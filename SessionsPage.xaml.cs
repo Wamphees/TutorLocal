@@ -16,4 +16,9 @@ public partial class SessionsPage : ContentPage
     {
         Application.Current.MainPage = new NavigationPage(new MapPage());
     }
+
+    private async void OnNavigateToRating(object sender, EventArgs e)
+{
+    await Navigation.PushAsync(new RatingPage());
+}
 }
