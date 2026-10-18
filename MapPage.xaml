@@ -445,11 +445,13 @@
                                 StrokeShape="RoundRectangle 12"
                                 WidthRequest="52"
                                 HeightRequest="52">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNavigateToChat" /></Border.GestureRecognizers>
                             <Label Text="💬"
                                     FontSize="20"
                                     TextColor="{StaticResource PrimaryBlue}"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"/>
+                                    
                         </Border>
                     </Grid>
                 </VerticalStackLayout>

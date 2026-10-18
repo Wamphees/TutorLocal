@@ -1,0 +1,207 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TutorLocal.ChatPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F9FAFB">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryBlue">#5B44E9</Color>
+            <Color x:Key="LightBlueBg">#EEF0FF</Color>
+            <Color x:Key="TextDark">#111827</Color>
+            <Color x:Key="TextGray">#6B7280</Color>
+            <Color x:Key="GreenSuccess">#10B981</Color>
+            <Color x:Key="CardBg">#FFFFFF</Color>
+            <Color x:Key="BorderColor">#E5E7EB</Color>
+            <Color x:Key="BubbleUser">#5B44E9</Color>
+            <Color x:Key="BubbleTutor">#FFFFFF</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <!-- HEADER FIXE (Navigation & Tuteur) -->
+        <VerticalStackLayout Grid.Row="0" Spacing="0">
+            <!-- Navigation -->
+            <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,20,20,10" BackgroundColor="{StaticResource CardBg}">
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
+                        <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnBackButtonClicked" /></Label.GestureRecognizers>
+                    </Label>
+                    <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 8" StrokeThickness="0" VerticalOptions="Center">
+                        <Label Text="📘" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <Label Text="Messagerie" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="Center">
+                    <Label Text="👤" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+
+            <!-- Info Tuteur -->
+            <Border BackgroundColor="#F9FAFB" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 0" Padding="20,12">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12">
+                        <Grid WidthRequest="44" HeightRequest="44">
+                            <Border WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0" BackgroundColor="#E5E7EB"><Label Text="👨" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                            <Border WidthRequest="16" HeightRequest="16" BackgroundColor="{StaticResource GreenSuccess}" Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 8" HorizontalOptions="End" VerticalOptions="End"/>
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="Thomas D." FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                                <Label Text="✓" TextColor="{StaticResource GreenSuccess}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Text="Tuteur de Mathém" FontSize="13" TextColor="{StaticResource TextGray}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                            <Label Text="🎥" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border Grid.Column="3" BackgroundColor="#E5E7EB" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                            <Label Text="ℹ️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                    <!-- Bannière Sécurité -->
+                    <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,6">
+                        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Label Text="🛡️" FontSize="12" VerticalOptions="Center"/>
+                            <Label Text="Espace sécurisé • Répond généralement en 10 min" FontSize="11" TextColor="{StaticResource TextGray}" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ZONE DE CHAT DÉFILANTE -->
+        <!-- On nomme le ScrollView et le StackLayout pour pouvoir interagir avec eux en C# -->
+        <ScrollView x:Name="ChatScrollView" Grid.Row="1">
+            <VerticalStackLayout x:Name="MessageList" Padding="20,16,20,20" Spacing="20">
+
+                <!-- Carte Séance -->
+                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16" Margin="20,0,20,16">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Border WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource PrimaryBlue}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Margin="0,0,12,0" VerticalOptions="Start">
+                            <Label Text="📅" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Séance confirmée" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource PrimaryBlue}" />
+                            <Label Text="Mercredi 14 Oct. à 15h30 à la Médiathèque Violette Leduc (lieu public garanti)." FontSize="13" TextColor="{StaticResource TextDark}" LineHeight="1.3" />
+                            <HorizontalStackLayout Spacing="4" Margin="0,4,0,0">
+                                <Label Text="📖" FontSize="12"/>
+                                <Label Text="Table 4 - Espace Étude Calme" FontSize="12" TextColor="{StaticResource TextGray}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Séparateur Date -->
+                <Label Text="Aujourd'hui" FontSize="12" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" />
+
+                <!-- Message Tuteur -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="8">
+                    <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="End">
+                        <Label Text="👨" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Start">
+                        <Border BackgroundColor="{StaticResource BubbleTutor}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" Padding="16,12" MaximumWidthRequest="280">
+                            <!-- Bordure arrondie asymétrique pour simuler une bulle de chat -->
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16,16,16,4" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="#000000" Offset="0,1" Radius="2" Opacity="0.05" /></Border.Shadow>
+                            <Label Text="Bonjour Alex ! J'ai bien vu ta demande sur le chapitre des dérivées. Tu as ton manuel scolaire ou une fiche d'exercices particulière sur laquelle tu souhaites travailler ?" FontSize="14" TextColor="{StaticResource TextDark}" LineHeight="1.4" />
+                        </Border>
+                        <Label Text="11:42" FontSize="10" TextColor="{StaticResource TextGray}" Margin="4,0,0,0" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Message Utilisateur -->
+                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="End">
+                        <Border BackgroundColor="{StaticResource BubbleUser}" StrokeThickness="0" Padding="16,12" MaximumWidthRequest="280">
+                            <!-- Bordure arrondie asymétrique -->
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16,16,4,16" /></Border.StrokeShape>
+                            <Label Text="Bonjour Thomas, merci beaucoup ! Oui j'ai pris en photo l'exercice 42 de la page 118 sur les tangentes, je te l'envoie tout de suite." FontSize="14" TextColor="White" LineHeight="1.4" />
+                        </Border>
+                        <HorizontalStackLayout HorizontalOptions="End" Spacing="4" Margin="0,0,4,0">
+                            <Label Text="11:45" FontSize="10" TextColor="{StaticResource TextGray}" />
+                            <Label Text="✓✓" FontSize="10" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Message Utilisateur (Image) -->
+                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="End">
+                        <Border BackgroundColor="{StaticResource BubbleUser}" StrokeThickness="0" Padding="4" MaximumWidthRequest="280">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16,16,4,16" /></Border.StrokeShape>
+                            <Grid>
+                                <!-- Simulation de l'image du devoir -->
+                                <Border BackgroundColor="#CBD5E1" HeightRequest="160" StrokeThickness="0" StrokeShape="RoundRectangle 12">
+                                    <!-- Si vous ajoutez une image, remplacez par : <Image Source="maths_homework.jpg" Aspect="AspectFill" /> -->
+                                    <Label Text="📸 Image du manuel" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <!-- Footer de l'image -->
+                                <Border BackgroundColor="#000000" Opacity="0.5" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="8,4" HorizontalOptions="Start" VerticalOptions="End" Margin="8">
+                                    <HorizontalStackLayout Spacing="4"><Label Text="📄" FontSize="10"/><Label Text="Exercice_42_maths.jpg" TextColor="White" FontSize="10" /></HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <HorizontalStackLayout HorizontalOptions="End" Spacing="4" Margin="0,0,4,0">
+                            <Label Text="11:46" FontSize="10" TextColor="{StaticResource TextGray}" />
+                            <Label Text="✓✓" FontSize="10" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Message Tuteur + Réaction -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="8">
+                    <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="End">
+                        <Label Text="👨" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Start">
+                        <Border BackgroundColor="{StaticResource BubbleTutor}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" Padding="16,12" MaximumWidthRequest="280">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16,16,16,4" /></Border.StrokeShape>
+                            <Border.Shadow><Shadow Brush="#000000" Offset="0,1" Radius="2" Opacity="0.05" /></Border.Shadow>
+                            <Label Text="Parfait, c'est très clair ! On commencera par revoir la formule du nombre dérivé avant de passer aux calculs. À demain ! 👋" FontSize="14" TextColor="{StaticResource TextDark}" LineHeight="1.4" />
+                        </Border>
+                        <HorizontalStackLayout Spacing="8" Margin="4,0,0,0">
+                            <Label Text="11:48" FontSize="10" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="6,2">
+                                <Label Text="👍 1" FontSize="10" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BARRE DE SAISIE FIXE EN BAS -->
+        <Border Grid.Row="2" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="#E5E7EB" Padding="16,12,16,30" Margin="-1,0,-1,-1">
+            <VerticalStackLayout Spacing="8">
+                <!-- Conseil -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,0,0,8">
+                    <Label Text="💡" FontSize="12" />
+                    <Label Text="Conseil : prépare 2 questions précises pour ta séance" FontSize="11" TextColor="{StaticResource TextDark}" FontAttributes="Bold" />
+                </HorizontalStackLayout>
+                
+                <!-- Zone de texte et boutons -->
+                <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12" VerticalOptions="End">
+                    <Label Text="📎" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                    
+                    <Border Grid.Column="1" BackgroundColor="#F3F4F6" StrokeThickness="0" StrokeShape="RoundRectangle 20" HeightRequest="44" Padding="16,0">
+                        <!-- L'Entry est nommé pour pouvoir récupérer son texte en C# -->
+                        <Entry x:Name="MessageEntry" Placeholder="Écrire un message bienveilla..." BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" FontSize="14" VerticalOptions="Center" />
+                    </Border>
+                    
+                    <Label Grid.Column="2" Text="📷" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                    
+                    <!-- Bouton Envoyer avec Clicked -->
+                    <Border Grid.Column="3" BackgroundColor="{StaticResource PrimaryBlue}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSendMessageClicked" /></Border.GestureRecognizers>
+                        <Label Text="➤" TextColor="White" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>

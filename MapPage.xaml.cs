@@ -25,4 +25,8 @@ public partial class MapPage : ContentPage
         // Ainsi, le bouton retour (PopAsync) du profil ramènera naturellement à la carte.
         await Navigation.PushAsync(new TutorProfilePage());
     }
+    private async void OnNavigateToChat(object sender, EventArgs e)
+{
+    await Navigation.PushAsync(new ChatPage());
+}
 }

@@ -370,11 +370,11 @@
                                                                                FontAttributes="Bold"
                                                                                FontSize="12"/>
                                                                 </HorizontalStackLayout>
-                                                                <Label Grid.Column="1"
-                                                                       Text="Détails · Chat"
-                                                                       TextColor="{StaticResource PrimaryBlue}"
-                                                                       FontAttributes="Bold"
-                                                                       FontSize="13"/>
+                                                                <Label Grid.Column="1" Text="Détails · Chat" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="13">
+    <Label.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnNavigateToChat" />
+    </Label.GestureRecognizers>
+</Label>
                                                         </Grid>
                                                 </VerticalStackLayout>
                                         </Border>
@@ -544,6 +544,7 @@
 
                                                                         <Button Text="Demander un cours"
                                                                                 BackgroundColor="{StaticResource PrimaryBlue}"
+                                                                                Clicked="OnNavigateToChat"
                                                                                 TextColor="White"
                                                                                 FontAttributes="Bold"
                                                                                 CornerRadius="10"
@@ -632,6 +633,7 @@
                                                                         </HorizontalStackLayout>
                                                                         <Button Text="Demander un cours"
                                                                                 BackgroundColor="{StaticResource PrimaryBlue}"
+                                                                                Clicked="OnNavigateToChat"
                                                                                 TextColor="White"
                                                                                 FontAttributes="Bold"
                                                                                 CornerRadius="10"

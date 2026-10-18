@@ -28,6 +28,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
+[/home/freddy/Documents/MAUI/TutorLocal/ChatPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.ChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = ChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = ChatPage.xaml
+
 [/home/freddy/Documents/MAUI/TutorLocal/DashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.DashboardPage.xaml
