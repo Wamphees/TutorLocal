@@ -37,4 +37,9 @@ public partial class MainPage : ContentPage
         // PushAsync fait glisser la nouvelle page par-dessus l'ancienne
         await Navigation.PushAsync(new RegisterPage());
     }
+
+    private async void OnNavigateToLogin(object sender, EventArgs e)
+{
+    await Navigation.PushAsync(new LoginPage());
+}
 }

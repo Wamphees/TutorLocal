@@ -6,4 +6,9 @@ public partial class RegisterPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private async void OnNavigateToLogin(object sender, EventArgs e)
+{
+    await Navigation.PushAsync(new LoginPage());
+}
 }
