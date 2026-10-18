@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TutorLocal.MainPage"
+             NavigationPage.HasNavigationBar="False"
              BackgroundColor="#FFFFFF">
 
 
@@ -19,102 +20,272 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="20,40,20,20" Spacing="0">
+        <VerticalStackLayout Padding="20,40,20,20"
+                Spacing="0">
 
             <!-- HEADER : Logo et Badge Local -->
             <Grid ColumnDefinitions="Auto, *">
                 <!-- Logo et Titre -->
-                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                    <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{StaticResource PrimaryPurple}" StrokeShape="RoundRectangle 12" StrokeThickness="0">
-                        <Label Text="📖" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20"/>
+                <HorizontalStackLayout Spacing="12"
+                        VerticalOptions="Center">
+                    <Border WidthRequest="44"
+                            HeightRequest="44"
+                            BackgroundColor="{StaticResource PrimaryPurple}"
+                            StrokeShape="RoundRectangle 12"
+                            StrokeThickness="0">
+                        <Label Text="📖"
+                                TextColor="White"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="20"/>
                     </Border>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="-2">
-                        <Label Text="TutorLocal" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource TextDark}" />
-                        <Label Text="RÉSEAU SOLIDAIRE" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource TextGray}" CharacterSpacing="1" />
+                    <VerticalStackLayout VerticalOptions="Center"
+                            Spacing="-2">
+                        <Label Text="TutorLocal"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                TextColor="{StaticResource TextDark}"/>
+                        <Label Text="RÉSEAU SOLIDAIRE"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource TextGray}"
+                                CharacterSpacing="1"/>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
-                
+
                 <!-- Badge Droite -->
-                <Border Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" BackgroundColor="{StaticResource LightPurple}" StrokeShape="RoundRectangle 20" Padding="12,6" StrokeThickness="0">
-                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                        <Label Text="📍" FontSize="12" VerticalOptions="Center"/>
-                        <Label Text="Local &amp; Solidaire" TextColor="{StaticResource PrimaryPurple}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center"/>
+                <Border Grid.Column="1"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        BackgroundColor="{StaticResource LightPurple}"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="12,6"
+                        StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="6"
+                            VerticalOptions="Center">
+                        <Label Text="📍"
+                                FontSize="12"
+                                VerticalOptions="Center"/>
+                        <Label Text="Local &amp; Solidaire"
+                                TextColor="{StaticResource PrimaryPurple}"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
             </Grid>
 
             <!-- CARTE ILLUSTRATION HERO -->
-            <Border Margin="0,24,0,20" StrokeThickness="0" StrokeShape="RoundRectangle 24" HeightRequest="280">
+            <Border Margin="0,24,0,20"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 24"
+                    HeightRequest="280">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#FFFFFF" Offset="0.0" />
-                        <GradientStop Color="#FFF5EB" Offset="0.6" />
-                        <GradientStop Color="#F2F4FF" Offset="1.0" />
+                        <GradientStop Color="#FFFFFF"
+                                Offset="0.0"/>
+                        <GradientStop Color="#FFF5EB"
+                                Offset="0.6"/>
+                        <GradientStop Color="#F2F4FF"
+                                Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <Grid RowDefinitions="*, Auto" Padding="20">
+                <Grid RowDefinitions="*, Auto"
+                        Padding="20">
                     <!-- Espace pour l'illustration (à remplacer par l'image SVG/PNG) -->
-                    <Image Grid.Row="0" Source="illustration_onboarding.png" Aspect="AspectFit" Margin="20" />
-                    
+                    <Image Grid.Row="0"
+                            Source="illustration_onboarding.png"
+                            Aspect="AspectFit"
+                            Margin="20"/>
+
                     <!-- Footer de la carte -->
-                    <Grid Grid.Row="1" ColumnDefinitions="*, Auto" VerticalOptions="End">
-                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Label Text="👥" FontSize="16" />
-                            <Label Text="340+ tuteurs actifs ce mois" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
+                    <Grid Grid.Row="1"
+                            ColumnDefinitions="*, Auto"
+                            VerticalOptions="End">
+                        <HorizontalStackLayout Spacing="8"
+                                VerticalOptions="Center">
+                            <Label Text="👥"
+                                    FontSize="16"/>
+                            <Label Text="340+ tuteurs actifs ce mois"
+                                    FontSize="12"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource TextDark}"/>
                         </HorizontalStackLayout>
-                        
+
                         <!-- Avatars superposés -->
-                        <HorizontalStackLayout Grid.Column="1" Spacing="-12">
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" Stroke="White" StrokeThickness="2" BackgroundColor="{StaticResource PrimaryPurple}"><Label Text="M" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold"/></Border>
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" Stroke="White" StrokeThickness="2" BackgroundColor="#F59E0B"><Label Text="S" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold"/></Border>
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" Stroke="White" StrokeThickness="2" BackgroundColor="{StaticResource GreenBadge}"><Label Text="A" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="11" FontAttributes="Bold"/></Border>
+                        <HorizontalStackLayout Grid.Column="1"
+                                Spacing="-12">
+                            <Border WidthRequest="28"
+                                    HeightRequest="28"
+                                    StrokeShape="RoundRectangle 14"
+                                    Stroke="White"
+                                    StrokeThickness="2"
+                                    BackgroundColor="{StaticResource PrimaryPurple}">
+                                <Label Text="M"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="11"
+                                        FontAttributes="Bold"/>
+                            </Border>
+                            <Border WidthRequest="28"
+                                    HeightRequest="28"
+                                    StrokeShape="RoundRectangle 14"
+                                    Stroke="White"
+                                    StrokeThickness="2"
+                                    BackgroundColor="#F59E0B">
+                                <Label Text="S"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="11"
+                                        FontAttributes="Bold"/>
+                            </Border>
+                            <Border WidthRequest="28"
+                                    HeightRequest="28"
+                                    StrokeShape="RoundRectangle 14"
+                                    Stroke="White"
+                                    StrokeThickness="2"
+                                    BackgroundColor="{StaticResource GreenBadge}">
+                                <Label Text="A"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="11"
+                                        FontAttributes="Bold"/>
+                            </Border>
                         </HorizontalStackLayout>
                     </Grid>
                 </Grid>
             </Border>
 
             <!-- BADGES HORIZONTAUX -->
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="12" Margin="0,0,0,24">
-                <Border BackgroundColor="{StaticResource LightGreenBadge}" StrokeThickness="0" StrokeShape="RoundRectangle 20" Padding="14,8">
-                    <Label Text="✅ 100% Gratuit" TextColor="{StaticResource GreenBadge}" FontSize="13" FontAttributes="Bold" />
+            <HorizontalStackLayout HorizontalOptions="Center"
+                    Spacing="12"
+                    Margin="0,0,0,24">
+                <Border BackgroundColor="{StaticResource LightGreenBadge}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="14,8">
+                    <Label Text="✅ 100% Gratuit"
+                            TextColor="{StaticResource GreenBadge}"
+                            FontSize="13"
+                            FontAttributes="Bold"/>
                 </Border>
-                <Border BackgroundColor="{StaticResource LightPurple}" StrokeThickness="0" StrokeShape="RoundRectangle 20" Padding="14,8">
-                    <Label Text="🛡️ Tuteurs Vérifiés" TextColor="{StaticResource PrimaryPurple}" FontSize="13" FontAttributes="Bold" />
+                <Border BackgroundColor="{StaticResource LightPurple}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        Padding="14,8">
+                    <Label Text="🛡️ Tuteurs Vérifiés"
+                            TextColor="{StaticResource PrimaryPurple}"
+                            FontSize="13"
+                            FontAttributes="Bold"/>
                 </Border>
             </HorizontalStackLayout>
 
             <!-- TITRE ET DESCRIPTION -->
-            <Label Text="L'entraide scolaire près de&#10;chez vous" FontSize="28" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{StaticResource TextDark}" LineHeight="1.1" Margin="0,0,0,12" />
-            
-            <Label Text="Soutien scolaire gratuit dispensé par des tuteurs bénévoles engagés. En médiathèque ou en ligne, réussissez ensemble." FontSize="15" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" LineHeight="1.4" Margin="10,0,10,24" />
+            <Label Text="L'entraide scolaire près de&#10;chez vous"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{StaticResource TextDark}"
+                    LineHeight="1.1"
+                    Margin="0,0,0,12"/>
+
+            <Label Text="Soutien scolaire gratuit dispensé par des tuteurs bénévoles engagés. En médiathèque ou en ligne, réussissez ensemble."
+                    FontSize="15"
+                    TextColor="{StaticResource TextGray}"
+                    HorizontalTextAlignment="Center"
+                    LineHeight="1.4"
+                    Margin="10,0,10,24"/>
 
             <!-- CARTE INFO SÉCURITÉ -->
-            <Border BackgroundColor="{StaticResource CardBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16" Margin="0,0,0,24">
+            <Border BackgroundColor="{StaticResource CardBackground}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 16"
+                    Padding="16"
+                    Margin="0,0,0,24">
                 <Grid ColumnDefinitions="Auto, *">
-                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 10" BackgroundColor="{StaticResource LightPurple}" StrokeThickness="0" VerticalOptions="Start" Margin="0,0,14,0">
-                        <Label Text="📘" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" />
+                    <Border WidthRequest="40"
+                            HeightRequest="40"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="{StaticResource LightPurple}"
+                            StrokeThickness="0"
+                            VerticalOptions="Start"
+                            Margin="0,0,14,0">
+                        <Label Text="📘"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="18"/>
                     </Border>
-                    <VerticalStackLayout Grid.Column="1" Spacing="4">
-                        <Label Text="Rencontres sécurisées garanties" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
-                        <Label Text="Médiathèques, lycées et centres sociaux de proximité." FontSize="13" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                    <VerticalStackLayout Grid.Column="1"
+                            Spacing="4">
+                        <Label Text="Rencontres sécurisées garanties"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                TextColor="{StaticResource TextDark}"/>
+                        <Label Text="Médiathèques, lycées et centres sociaux de proximité."
+                                FontSize="13"
+                                TextColor="{StaticResource TextGray}"
+                                LineHeight="1.3"/>
                     </VerticalStackLayout>
                 </Grid>
             </Border>
 
             <!-- BOUTONS D'ACTION -->
-            <Button Text="Trouver un tuteur  →" BackgroundColor="{StaticResource PrimaryPurple}" TextColor="White" CornerRadius="14" HeightRequest="56" FontAttributes="Bold" FontSize="16" Margin="0,0,0,12" />
-            
-            <Border Stroke="{StaticResource LightPurple}" StrokeThickness="2" BackgroundColor="White" StrokeShape="RoundRectangle 14" HeightRequest="56" Margin="0,0,0,32">
+            <Button Text="Trouver un tuteur  →"
+                    BackgroundColor="{StaticResource PrimaryPurple}"
+                    Clicked="OnNavigateToRegister"
+                    TextColor="White"
+                    CornerRadius="14"
+                    HeightRequest="56"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Margin="0,0,0,12"/>
+
+            <!-- <Border Stroke="{StaticResource LightPurple}" StrokeThickness="2" BackgroundColor="White" StrokeShape="RoundRectangle 14" HeightRequest="56" Margin="0,0,0,32">
                 <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
                     <Label Text="🤝" VerticalOptions="Center" FontSize="18" />
                     <Label Text="Devenir tuteur bénévole" TextColor="{StaticResource PrimaryPurple}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                 </HorizontalStackLayout>
+            </Border> -->
+
+            <Border Stroke="{StaticResource LightPurple}"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 14"
+                    HeightRequest="56"
+                    Margin="0,0,0,32">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavigateToRegister"/>
+                </Border.GestureRecognizers>
+
+                <HorizontalStackLayout HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Spacing="8">
+                    <Label Text="🤝"
+                            VerticalOptions="Center"
+                            FontSize="18"/>
+                    <Label Text="Devenir tuteur bénévole"
+                            TextColor="{StaticResource PrimaryPurple}"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            VerticalOptions="Center"/>
+                </HorizontalStackLayout>
             </Border>
 
             <!-- FOOTER LOGIN -->
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,0,0,20">
-                <Label Text="Déjà un compte ?" TextColor="{StaticResource TextGray}" FontSize="15" />
-                <Label Text="Connectez-vous" TextColor="{StaticResource PrimaryPurple}" FontSize="15" FontAttributes="Bold" TextDecorations="Underline" />
+            <HorizontalStackLayout HorizontalOptions="Center"
+                    Spacing="6"
+                    Margin="0,0,0,20">
+                <Label Text="Déjà un compte ?"
+                        TextColor="{StaticResource TextGray}"
+                        FontSize="15"/>
+                <Label Text="Connectez-vous"
+                        TextColor="{StaticResource PrimaryPurple}"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        TextDecorations="Underline"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

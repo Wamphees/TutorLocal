@@ -1,0 +1,188 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TutorLocal.RegisterPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F9FAFB">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryBlue">#5B44E9</Color>
+            <Color x:Key="LightBlueBg">#EEF0FF</Color>
+            <Color x:Key="TextDark">#111827</Color>
+            <Color x:Key="TextGray">#6B7280</Color>
+            <Color x:Key="InputBg">#F3F4F6</Color>
+            <Color x:Key="BorderColor">#E5E7EB</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,40,20,30" Spacing="0">
+
+            <!-- HEADER : Logo et Titres -->
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center" Margin="0,0,0,24">
+                <!-- Icône centrale -->
+                <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{StaticResource PrimaryBlue}" StrokeShape="RoundRectangle 14" StrokeThickness="0" HorizontalOptions="Center">
+                    <Label Text="📖" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="22"/>
+                </Border>
+                
+                <!-- Badge Entraide -->
+                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="12,6" HorizontalOptions="Center">
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Label Text="👥" FontSize="12" VerticalOptions="Center" />
+                        <Label Text="TutorLocal Entraide" TextColor="{StaticResource PrimaryBlue}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Textes -->
+                <Label Text="Rejoignez la communauté" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" Margin="0,4,0,0" />
+                <Label Text="Créez votre profil en 1 minute pour accéder&#10;aux tuteurs près de chez vous" FontSize="14" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" LineHeight="1.4" />
+            </VerticalStackLayout>
+
+            <!-- CARTE BLANCHE DU FORMULAIRE -->
+            <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,4" Radius="20" Opacity="0.05" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- SELECTEUR ELEVE / TUTEUR -->
+                    <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="4">
+                        <Grid ColumnDefinitions="*,*">
+                            <!-- Actif -->
+                            <Border Grid.Column="0" BackgroundColor="{StaticResource PrimaryBlue}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="🎓" VerticalOptions="Center" FontSize="14" />
+                                    <Label Text="Élève / Parent" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                            <!-- Inactif -->
+                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="🤝" VerticalOptions="Center" FontSize="14" />
+                                <Label Text="Tuteur bénévole" TextColor="{StaticResource TextDark}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- BANNIERE INFO APPRENANT -->
+                    <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="📘" FontSize="20" Margin="0,0,12,0" VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="Profil apprenant" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                                <Label Text="Accès gratuit aux sessions d'entraide encadrées en médiathèques partenaires." FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- CHAMP : NOM -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Nom complet" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                        <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" HeightRequest="48" Padding="12,0">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="👤" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="ex. Alex Dupont" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- CHAMP : EMAIL -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Email académique ou personnel" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                        <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" HeightRequest="48" Padding="12,0">
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="✉️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="alex@exemple.fr" Keyboard="Email" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- CHAMP : MOT DE PASSE -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Mot de passe" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                        <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" HeightRequest="48" Padding="12,0">
+                            <Grid ColumnDefinitions="Auto, *, Auto">
+                                <Label Text="🔒" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Placeholder="••••••••" IsPassword="True" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="👁️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- NIVEAU SCOLAIRE -->
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="Niveau scolaire actuel" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                            <Label Grid.Column="1" Text="Obligatoire" FontSize="12" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*, *, *" ColumnSpacing="8">
+                            <Border BackgroundColor="{StaticResource PrimaryBlue}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,10">
+                                <Label Text="Collège" TextColor="White" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </Border>
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,10">
+                                <Label Text="Lycée" TextColor="{StaticResource TextDark}" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </Border>
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,10">
+                                <Label Text="Supérieur" TextColor="{StaticResource TextDark}" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- CHECKBOX CONDITIONS -->
+                    <Grid ColumnDefinitions="Auto, *" Margin="0,4,0,0" ColumnSpacing="12">
+                        <CheckBox Color="{StaticResource PrimaryBlue}" VerticalOptions="Start" />
+                        <Label Grid.Column="1" FontSize="13" TextColor="{StaticResource TextGray}" LineHeight="1.3" VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="J'accepte la " />
+                                    <Span Text="charte d'entraide bienveillante" TextColor="{StaticResource PrimaryBlue}" TextDecorations="Underline" />
+                                    <Span Text=" et les conditions d'utilisation." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Grid>
+
+                    <!-- BOUTON SUBMIT -->
+                    <Button Text="⚡ S'inscrire gratuitement" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="15" Margin="0,8,0,0" />
+
+                    <!-- SEPARATEUR OU -->
+                    <Grid ColumnDefinitions="*, Auto, *" VerticalOptions="Center" Margin="0,4">
+                        <BoxView HeightRequest="1" Color="{StaticResource BorderColor}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="ou continuer avec" TextColor="{StaticResource TextGray}" FontSize="13" Margin="12,0" />
+                        <BoxView Grid.Column="2" HeightRequest="1" Color="{StaticResource BorderColor}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- BOUTON GOOGLE -->
+                    <Border Stroke="{StaticResource BorderColor}" StrokeThickness="1" BackgroundColor="White" StrokeShape="RoundRectangle 12" HeightRequest="52">
+                        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                            <!-- Fausse icône Google en attendant l'image SVG -->
+                            <Label Text="G" TextColor="#EA4335" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" />
+                            <Label Text="Continuer avec Google" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- BADGE GARANTIE (Hors de la carte) -->
+            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" Margin="0,24,0,24">
+                <Grid ColumnDefinitions="Auto, *">
+                    <Border BackgroundColor="#34D399" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" Margin="0,0,12,0">
+                        <Label Text="🛡️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="Garantie neutralité &amp; gratuité" FontAttributes="Bold" FontSize="12" TextColor="#059669" />
+                        <Label Text="Partenariat avec les collèges &amp; médiathèques" FontSize="11" TextColor="{StaticResource TextGray}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- FOOTER LOGIN -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                <Label Text="Vous avez déjà un compte ?" TextColor="{StaticResource TextGray}" FontSize="14" />
+                <Label Text="Se connecter" TextColor="{StaticResource PrimaryBlue}" FontSize="14" FontAttributes="Bold" TextDecorations="Underline" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -30,4 +30,11 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
     }
+
+    //methode  de navigation vers la page d'inscription
+    private async void OnNavigateToRegister(object sender, EventArgs e)
+    {
+        // PushAsync fait glisser la nouvelle page par-dessus l'ancienne
+        await Navigation.PushAsync(new RegisterPage());
+    }
 }
