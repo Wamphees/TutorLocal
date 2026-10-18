@@ -58,6 +58,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.MapPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MapPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MapPage.xaml
 
+[/home/freddy/Documents/MAUI/TutorLocal/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = ProfilePage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal/RatingPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RatingPage.xaml
+build_metadata.AdditionalFiles.TargetPath = RatingPage.xaml
+build_metadata.AdditionalFiles.RelativePath = RatingPage.xaml
+
 [/home/freddy/Documents/MAUI/TutorLocal/RegisterPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RegisterPage.xaml

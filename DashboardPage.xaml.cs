@@ -27,4 +27,8 @@ public partial class DashboardPage : ContentPage
         // Empile la page de chat par-dessus le tableau de bord
         await Navigation.PushAsync(new ChatPage());
     }
+    private void OnNavigateToProfile(object sender, EventArgs e)
+{
+    Application.Current.MainPage = new NavigationPage(new ProfilePage());
+}
 }
