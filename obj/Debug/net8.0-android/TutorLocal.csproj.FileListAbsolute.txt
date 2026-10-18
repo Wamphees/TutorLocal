@@ -1043,3 +1043,4 @@
 /home/freddy/Documents/MAUI/TutorLocal/obj/Debug/net8.0-android/stamp/_GenerateJavaStubs.stamp
 /home/freddy/Documents/MAUI/TutorLocal/obj/Debug/net8.0-android/stamp/_GeneratePackageManagerJava.stamp
 /home/freddy/Documents/MAUI/TutorLocal/obj/Debug/net8.0-android/stamp/_ResolveLibraryProjectImports.stamp
+/home/freddy/Documents/MAUI/TutorLocal/obj/Debug/net8.0-android/TutorLocal.sourcelink.json
