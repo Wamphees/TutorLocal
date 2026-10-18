@@ -125,7 +125,7 @@
             </Grid>
 
             <!-- BOUTON SE CONNECTER -->
-            <Button Text="Se connecter  →" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
+            <Button Text="Se connecter  →" Clicked="OnLoginClicked" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
 
             <!-- SEPARATEUR OU -->
             <Grid ColumnDefinitions="*, Auto, *" VerticalOptions="Center" Margin="0,0,0,24">
