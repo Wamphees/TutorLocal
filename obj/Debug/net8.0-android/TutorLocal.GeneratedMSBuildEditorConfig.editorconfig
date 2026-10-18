@@ -58,6 +58,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RegisterPage.xa
 build_metadata.AdditionalFiles.TargetPath = RegisterPage.xaml
 build_metadata.AdditionalFiles.RelativePath = RegisterPage.xaml
 
+[/home/freddy/Documents/MAUI/TutorLocal/RequestHelpPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RequestHelpPage.xaml
+build_metadata.AdditionalFiles.TargetPath = RequestHelpPage.xaml
+build_metadata.AdditionalFiles.RelativePath = RequestHelpPage.xaml
+
 [/home/freddy/Documents/MAUI/TutorLocal/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Resources.Styles.Colors.xaml
@@ -69,6 +75,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal/SessionsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.SessionsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = SessionsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = SessionsPage.xaml
 
 [/home/freddy/Documents/MAUI/TutorLocal/TutorProfilePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

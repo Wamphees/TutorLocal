@@ -4,725 +4,726 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="PrimaryBlue">#4338CA</Color>
-            <Color x:Key="LightBlue">#EEF2FF</Color>
-            <Color x:Key="TextDark">#111827</Color>
-            <Color x:Key="TextGray">#6B7280</Color>
-            <Color x:Key="CardBg">#FFFFFF</Color>
-            <Color x:Key="OrangeAccent">#F59E0B</Color>
-            <Color x:Key="GreenSuccess">#10B981</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+        <ContentPage.Resources>
+                <ResourceDictionary>
+                        <Color x:Key="PrimaryBlue">#4338CA</Color>
+                        <Color x:Key="LightBlue">#EEF2FF</Color>
+                        <Color x:Key="TextDark">#111827</Color>
+                        <Color x:Key="TextGray">#6B7280</Color>
+                        <Color x:Key="CardBg">#FFFFFF</Color>
+                        <Color x:Key="OrangeAccent">#F59E0B</Color>
+                        <Color x:Key="GreenSuccess">#10B981</Color>
+                </ResourceDictionary>
+        </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, *, Auto">
+        <Grid RowDefinitions="Auto, *, Auto">
 
-        <!-- HEADER FIXE (Ligne du haut) -->
-        <Grid Grid.Row="0"
-                ColumnDefinitions="Auto, *, Auto, Auto"
-                Padding="20,20,20,10"
-                BackgroundColor="#F9FAFB">
-            <!-- Logo miniature -->
-            <Border WidthRequest="28"
-                    HeightRequest="28"
-                    BackgroundColor="{StaticResource LightBlue}"
-                    StrokeShape="RoundRectangle 8"
-                    StrokeThickness="0"
-                    VerticalOptions="Center">
-                <Label Text="📘"
-                        FontSize="14"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
-            </Border>
-            <Label Grid.Column="1"
-                    Text="TutorLocal"
-                    FontAttributes="Bold"
-                    FontSize="16"
-                    TextColor="{StaticResource TextDark}"
-                    VerticalOptions="Center"
-                    Margin="8,0,0,0"/>
-
-            <!-- Notification -->
-            <Label Grid.Column="2"
-                    Text="🔔"
-                    FontSize="20"
-                    VerticalOptions="Center"
-                    Margin="0,0,16,0"/>
-
-            <!-- Avatar Profil -->
-            <Border Grid.Column="3"
-                    WidthRequest="32"
-                    HeightRequest="32"
-                    StrokeShape="RoundRectangle 16"
-                    StrokeThickness="0"
-                    BackgroundColor="#E5E7EB"
-                    VerticalOptions="Center">
-                <Label Text="👤"
-                        FontSize="20"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
-            </Border>
-        </Grid>
-
-        <!-- CONTENU DÉFILANT -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="20,10,20,40"
-                    Spacing="24">
-
-                <!-- MESSAGE DE BIENVENUE & BARRE DE RECHERCHE -->
-                <VerticalStackLayout Spacing="16">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout Spacing="4">
-                                <Label Text="Bonjour, Alex"
-                                        FontSize="26"
-                                        FontAttributes="Bold"
-                                        TextColor="{StaticResource TextDark}"/>
-                                <Label Text="👋"
-                                        FontSize="26"/>
-                            </HorizontalStackLayout>
-                            <Label Text="Prêt pour réviser&#10;aujourd'hui ?"
-                                    FontSize="15"
-                                    TextColor="{StaticResource TextGray}"
-                                    LineHeight="1.3"/>
-                        </VerticalStackLayout>
-
-                        <!-- Bulle Notification Flottante -->
-                        <Grid Grid.Column="1"
-                                VerticalOptions="Start"
-                                WidthRequest="44"
-                                HeightRequest="44">
-                            <Border BackgroundColor="{StaticResource LightBlue}"
-                                    StrokeShape="RoundRectangle 22"
-                                    StrokeThickness="0"/>
-                            <Label Text="🔔"
-                                    FontSize="18"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"/>
-                            <Border WidthRequest="10"
-                                    HeightRequest="10"
-                                    BackgroundColor="#EF4444"
-                                    StrokeShape="RoundRectangle 5"
-                                    StrokeThickness="2"
-                                    Stroke="White"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Start"
-                                    Margin="0,4,4,0"/>
-                        </Grid>
-                    </Grid>
-
-                    <!-- Barre de recherche -->
-                    <Border BackgroundColor="White"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            HeightRequest="52"
-                            Padding="16,0">
-                        <Grid ColumnDefinitions="Auto, *, Auto">
-                            <Label Text="🔍"
-                                    FontSize="16"
-                                    TextColor="{StaticResource TextGray}"
-                                    VerticalOptions="Center"/>
-                            <Entry Grid.Column="1"
-                                    Placeholder="Quelle matière voulez-vous réviser"
-                                    BackgroundColor="Transparent"
-                                    TextColor="{StaticResource TextDark}"
-                                    Margin="8,0"
-                                    VerticalOptions="Center"/>
-                            <Label Grid.Column="2"
-                                    Text="⚡"
-                                    FontSize="18"
-                                    TextColor="{StaticResource TextGray}"
-                                    VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
-
-                    <!-- Filtres (Pills) -->
-                    <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never">
-                        <HorizontalStackLayout Spacing="8">
-                            <Border BackgroundColor="{StaticResource PrimaryBlue}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="16,8">
-                                <Label Text="Tous"
-                                        TextColor="White"
-                                        FontAttributes="Bold"
-                                        FontSize="13"/>
-                            </Border>
-                            <Border BackgroundColor="White"
-                                    StrokeThickness="1"
-                                    Stroke="#E5E7EB"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="12,8">
-                                <HorizontalStackLayout Spacing="6">
-                                    <Label Text="📐"
-                                            FontSize="12"/>
-                                    <Label Text="Maths"
-                                            TextColor="{StaticResource TextDark}"
-                                            FontAttributes="Bold"
-                                            FontSize="13"/>
-                                </HorizontalStackLayout>
-                            </Border>
-                            <Border BackgroundColor="White"
-                                    StrokeThickness="1"
-                                    Stroke="#E5E7EB"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="12,8">
-                                <HorizontalStackLayout Spacing="6">
-                                    <Label Text="⚡"
-                                            FontSize="12"/>
-                                    <Label Text="Physique"
-                                            TextColor="{StaticResource TextDark}"
-                                            FontAttributes="Bold"
-                                            FontSize="13"/>
-                                </HorizontalStackLayout>
-                            </Border>
-                            <Border BackgroundColor="White"
-                                    StrokeThickness="1"
-                                    Stroke="#E5E7EB"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="12,8">
-                                <HorizontalStackLayout Spacing="6">
-                                    <Label Text="🧪"
-                                            FontSize="12"/>
-                                    <Label Text="Chimie"
-                                            TextColor="{StaticResource TextDark}"
-                                            FontAttributes="Bold"
-                                            FontSize="13"/>
-                                </HorizontalStackLayout>
-                            </Border>
-                        </HorizontalStackLayout>
-                    </ScrollView>
-                </VerticalStackLayout>
-
-                <!-- CARTE HERO : DEMANDE EXPRESS -->
-                <Border StrokeThickness="0"
-                        StrokeShape="RoundRectangle 20"
-                        Padding="20">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="1,1">
-                            <GradientStop Color="#5B44E9"
-                                    Offset="0.0"/>
-                            <GradientStop Color="#3B28CC"
-                                    Offset="1.0"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <VerticalStackLayout Spacing="16">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <Border BackgroundColor="#4B3ED7"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 12"
-                                    Padding="8,4"
-                                    HorizontalOptions="Start">
-                                <HorizontalStackLayout Spacing="4">
-                                    <Label Text="⚡"
-                                            FontSize="10"/>
-                                    <Label Text="Entraide solidaire"
-                                            TextColor="White"
-                                            FontSize="11"
-                                            FontAttributes="Bold"/>
-                                </HorizontalStackLayout>
-                            </Border>
-                            <Border Grid.Column="1"
-                                    BackgroundColor="#4B3ED7"
-                                    WidthRequest="32"
-                                    HeightRequest="32"
-                                    StrokeShape="RoundRectangle 16"
-                                    StrokeThickness="0">
-                                <Label Text="⏱️"
-                                        FontSize="14"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-
-                        <Label Text="Demande d'aide&#10;express"
-                                FontSize="22"
-                                FontAttributes="Bold"
-                                TextColor="White"
-                                LineHeight="1.2"/>
-                        <Label Text="Un devoir urgent pour demain ? Notifiez les&#10;tuteurs bénévoles disponibles dans votre&#10;quartier."
-                                FontSize="13"
-                                TextColor="#D1D5DB"
-                                LineHeight="1.4"/>
-
-                        <Button Text="Créer une demande ⚡"
-                                BackgroundColor="{StaticResource OrangeAccent}"
-                                TextColor="White"
-                                FontAttributes="Bold"
-                                CornerRadius="12"
-                                HeightRequest="48"
-                                Margin="0,8,0,0"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- CARTE : RAPPEL DE RÉVISION -->
-                <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="📅"
-                                    FontSize="16"
-                                    VerticalOptions="Center"/>
-                            <Label Text="Rappel de révision"
-                                    FontAttributes="Bold"
-                                    FontSize="16"
-                                    TextColor="{StaticResource TextDark}"
-                                    VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
-                        <Border Grid.Column="1"
-                                BackgroundColor="#FEF3C7"
-                                StrokeThickness="0"
+                <!-- HEADER FIXE (Ligne du haut) -->
+                <Grid Grid.Row="0"
+                      ColumnDefinitions="Auto, *, Auto, Auto"
+                      Padding="20,20,20,10"
+                      BackgroundColor="#F9FAFB">
+                        <!-- Logo miniature -->
+                        <Border WidthRequest="28"
+                                HeightRequest="28"
+                                BackgroundColor="{StaticResource LightBlue}"
                                 StrokeShape="RoundRectangle 8"
-                                Padding="8,4">
-                            <Label Text="Confirmé"
-                                    TextColor="#B45309"
-                                    FontSize="11"
-                                    FontAttributes="Bold"/>
+                                StrokeThickness="0"
+                                VerticalOptions="Center">
+                                <Label Text="📘"
+                                       FontSize="14"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
                         </Border>
-                    </Grid>
-
-                    <Border BackgroundColor="White"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            Padding="16">
-                        <VerticalStackLayout Spacing="12">
-                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                <!-- Avatar -->
-                                <Grid WidthRequest="44"
-                                        HeightRequest="44"
-                                        Margin="0,0,12,0">
-                                    <Border WidthRequest="44"
-                                            HeightRequest="44"
-                                            StrokeShape="RoundRectangle 22"
-                                            StrokeThickness="0"
-                                            BackgroundColor="#E5E7EB">
-                                        <Label Text="👨"
-                                                FontSize="28"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"/>
-                                    </Border>
-                                    <Border WidthRequest="16"
-                                            HeightRequest="16"
-                                            BackgroundColor="{StaticResource GreenSuccess}"
-                                            Stroke="White"
-                                            StrokeThickness="2"
-                                            StrokeShape="RoundRectangle 8"
-                                            HorizontalOptions="End"
-                                            VerticalOptions="End">
-                                        <Label Text="✓"
-                                                TextColor="White"
-                                                FontSize="8"
-                                                FontAttributes="Bold"
-                                                HorizontalOptions="Center"
-                                                VerticalOptions="Center"/>
-                                    </Border>
-                                </Grid>
-                                <!-- Info -->
-                                <VerticalStackLayout Grid.Column="1"
-                                        VerticalOptions="Center">
-                                    <Label Text="Thomas D."
-                                            FontAttributes="Bold"
-                                            FontSize="15"
-                                            TextColor="{StaticResource TextDark}"/>
-                                    <Label Text="Mathématiques · Lycée"
-                                            FontSize="13"
-                                            TextColor="{StaticResource TextGray}"/>
-                                </VerticalStackLayout>
-                                <!-- Heure -->
-                                <Border Grid.Column="2"
-                                        BackgroundColor="{StaticResource LightBlue}"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 8"
-                                        Padding="8,6"
-                                        VerticalOptions="Center">
-                                    <Label Text="Demain à 15:00"
-                                            TextColor="{StaticResource PrimaryBlue}"
-                                            FontSize="12"
-                                            FontAttributes="Bold"/>
-                                </Border>
-                            </Grid>
-
-                            <!-- Lieu -->
-                            <Border BackgroundColor="#F3F4F6"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 8"
-                                    Padding="12,8">
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="📍"
-                                            FontSize="14"/>
-                                    <Label Text="Médiathèque Violette Leduc (Paris 11e)"
-                                            FontSize="13"
-                                            TextColor="{StaticResource TextDark}"/>
-                                </HorizontalStackLayout>
-                            </Border>
-
-                            <!-- Footer Carte -->
-                            <Grid ColumnDefinitions="*, Auto"
-                                    Margin="0,4,0,0">
-                                <HorizontalStackLayout Spacing="6"
-                                        VerticalOptions="Center">
-                                    <Label Text="⏳"
-                                            FontSize="12"/>
-                                    <Label Text="Dans 22h 30min"
-                                            TextColor="#B45309"
-                                            FontAttributes="Bold"
-                                            FontSize="12"/>
-                                </HorizontalStackLayout>
-                                <Label Grid.Column="1"
-                                        Text="Détails · Chat"
-                                        TextColor="{StaticResource PrimaryBlue}"
-                                        FontAttributes="Bold"
-                                        FontSize="13"/>
-                            </Grid>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
-
-                <!-- SECTION : TUTEURS À PROXIMITÉ (Carrousel) -->
-                <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="*, Auto">
-                        <VerticalStackLayout>
-                            <Label Text="Tuteurs à proximité"
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    TextColor="{StaticResource TextDark}"/>
-                            <Label Text="Paris 11e · Rayon 3 km"
-                                    FontSize="13"
-                                    TextColor="{StaticResource TextGray}"/>
-                        </VerticalStackLayout>
                         <Label Grid.Column="1"
-                                Text="Voir sur la carte >"
-                                TextColor="{StaticResource PrimaryBlue}"
-                                FontAttributes="Bold"
-                                FontSize="13"
-                                VerticalOptions="Center"/>
-                    </Grid>
+                               Text="TutorLocal"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               TextColor="{StaticResource TextDark}"
+                               VerticalOptions="Center"
+                               Margin="8,0,0,0"/>
 
-                    <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never"
-                            Margin="-20,0">
-                        <HorizontalStackLayout Spacing="16"
-                                Padding="20,0">
+                        <!-- Notification -->
+                        <Label Grid.Column="2"
+                               Text="🔔"
+                               FontSize="20"
+                               VerticalOptions="Center"
+                               Margin="0,0,16,0"/>
 
-                            <!-- Carte Tuteur 1 -->
-                            <Border BackgroundColor="White"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="16"
-                                    WidthRequest="240">
-                                <Border.Shadow>
-                                    <Shadow Brush="#000000"
-                                            Offset="0,2"
-                                            Radius="10"
-                                            Opacity="0.05"/>
-                                </Border.Shadow>
-                                <VerticalStackLayout Spacing="10">
-                                    <Grid ColumnDefinitions="*, Auto">
-                                        <!-- Avatar -->
-                                        <Grid WidthRequest="50"
-                                                HeightRequest="50"
-                                                HorizontalOptions="Start">
-                                            <Border WidthRequest="50"
-                                                    HeightRequest="50"
-                                                    StrokeShape="RoundRectangle 25"
-                                                    StrokeThickness="0"
-                                                    BackgroundColor="#E5E7EB">
-                                                <Label Text="👨"
-                                                        FontSize="30"
-                                                        HorizontalOptions="Center"
-                                                        VerticalOptions="Center"/>
-                                            </Border>
-                                            <Border WidthRequest="18"
-                                                    HeightRequest="18"
-                                                    BackgroundColor="{StaticResource GreenSuccess}"
-                                                    Stroke="White"
-                                                    StrokeThickness="2"
-                                                    StrokeShape="RoundRectangle 9"
-                                                    HorizontalOptions="End"
-                                                    VerticalOptions="End">
-                                                <Label Text="✓"
-                                                        TextColor="White"
-                                                        FontSize="10"
-                                                        FontAttributes="Bold"
-                                                        HorizontalOptions="Center"
-                                                        VerticalOptions="Center"/>
-                                            </Border>
+                        <!-- Avatar Profil -->
+                        <Border Grid.Column="3"
+                                WidthRequest="32"
+                                HeightRequest="32"
+                                StrokeShape="RoundRectangle 16"
+                                StrokeThickness="0"
+                                BackgroundColor="#E5E7EB"
+                                VerticalOptions="Center">
+                                <Label Text="👤"
+                                       FontSize="20"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                        </Border>
+                </Grid>
+
+                <!-- CONTENU DÉFILANT -->
+                <ScrollView Grid.Row="1">
+                        <VerticalStackLayout Padding="20,10,20,40"
+                                             Spacing="24">
+
+                                <!-- MESSAGE DE BIENVENUE & BARRE DE RECHERCHE -->
+                                <VerticalStackLayout Spacing="16">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                                <VerticalStackLayout>
+                                                        <HorizontalStackLayout Spacing="4">
+                                                                <Label Text="Bonjour, Alex"
+                                                                       FontSize="26"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="{StaticResource TextDark}"/>
+                                                                <Label Text="👋"
+                                                                       FontSize="26"/>
+                                                        </HorizontalStackLayout>
+                                                        <Label Text="Prêt pour réviser&#10;aujourd'hui ?"
+                                                               FontSize="15"
+                                                               TextColor="{StaticResource TextGray}"
+                                                               LineHeight="1.3"/>
+                                                </VerticalStackLayout>
+
+                                                <!-- Bulle Notification Flottante -->
+                                                <Grid Grid.Column="1"
+                                                      VerticalOptions="Start"
+                                                      WidthRequest="44"
+                                                      HeightRequest="44">
+                                                        <Border BackgroundColor="{StaticResource LightBlue}"
+                                                                StrokeShape="RoundRectangle 22"
+                                                                StrokeThickness="0"/>
+                                                        <Label Text="🔔"
+                                                               FontSize="18"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center"/>
+                                                        <Border WidthRequest="10"
+                                                                HeightRequest="10"
+                                                                BackgroundColor="#EF4444"
+                                                                StrokeShape="RoundRectangle 5"
+                                                                StrokeThickness="2"
+                                                                Stroke="White"
+                                                                HorizontalOptions="End"
+                                                                VerticalOptions="Start"
+                                                                Margin="0,4,4,0"/>
+                                                </Grid>
                                         </Grid>
-                                        <!-- Note -->
-                                        <Border Grid.Column="1"
-                                                BackgroundColor="#F9FAFB"
-                                                StrokeThickness="1"
-                                                Stroke="#E5E7EB"
-                                                StrokeShape="RoundRectangle 12"
-                                                Padding="6,4"
-                                                VerticalOptions="Start">
-                                            <HorizontalStackLayout Spacing="4">
-                                                <Label Text="⭐"
-                                                        FontSize="10"
-                                                        VerticalOptions="Center"/>
-                                                <Label Text="4.9"
-                                                        FontAttributes="Bold"
-                                                        FontSize="11"
-                                                        TextColor="{StaticResource TextDark}"
-                                                        VerticalOptions="Center"/>
-                                                <Label Text="(14)"
-                                                        FontSize="11"
-                                                        TextColor="{StaticResource TextGray}"
-                                                        VerticalOptions="Center"/>
-                                            </HorizontalStackLayout>
-                                        </Border>
-                                    </Grid>
 
-                                    <!-- Info Tuteur -->
-                                    <HorizontalStackLayout Spacing="8"
-                                            Margin="0,4,0,0">
-                                        <Label Text="Thomas D."
-                                                FontAttributes="Bold"
-                                                FontSize="16"
-                                                TextColor="{StaticResource TextDark}"/>
-                                        <Border BackgroundColor="{StaticResource GreenSuccess}"
+                                        <!-- Barre de recherche -->
+                                        <Border BackgroundColor="White"
                                                 StrokeThickness="0"
-                                                StrokeShape="RoundRectangle 10"
-                                                Padding="6,2"
-                                                VerticalOptions="Center">
-                                            <Label Text="Vérifié"
-                                                    TextColor="White"
-                                                    FontSize="9"
-                                                    FontAttributes="Bold"/>
+                                                StrokeShape="RoundRectangle 16"
+                                                HeightRequest="52"
+                                                Padding="16,0">
+                                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                                        <Label Text="🔍"
+                                                               FontSize="16"
+                                                               TextColor="{StaticResource TextGray}"
+                                                               VerticalOptions="Center"/>
+                                                        <Entry Grid.Column="1"
+                                                               Placeholder="Quelle matière voulez-vous réviser"
+                                                               BackgroundColor="Transparent"
+                                                               TextColor="{StaticResource TextDark}"
+                                                               Margin="8,0"
+                                                               VerticalOptions="Center"/>
+                                                        <Label Grid.Column="2"
+                                                               Text="⚡"
+                                                               FontSize="18"
+                                                               TextColor="{StaticResource TextGray}"
+                                                               VerticalOptions="Center"/>
+                                                </Grid>
                                         </Border>
-                                    </HorizontalStackLayout>
 
-                                    <HorizontalStackLayout Spacing="4">
-                                        <Label Text="📍"
-                                                FontSize="12"/>
-                                        <Label Text="À 800m · Médiathèque"
-                                                FontSize="13"
-                                                TextColor="{StaticResource TextGray}"/>
-                                    </HorizontalStackLayout>
-
-                                    <!-- Matières -->
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Border BackgroundColor="#F3F4F6"
-                                                StrokeThickness="0"
-                                                StrokeShape="RoundRectangle 8"
-                                                Padding="6,4">
-                                            <HorizontalStackLayout Spacing="4">
-                                                <Label Text="📐"
-                                                        FontSize="10"/>
-                                                <Label Text="Mathématiques"
-                                                        FontSize="11"
-                                                        FontAttributes="Bold"
-                                                        TextColor="{StaticResource TextDark}"/>
-                                            </HorizontalStackLayout>
-                                        </Border>
-                                        <Border BackgroundColor="#F3F4F6"
-                                                StrokeThickness="0"
-                                                StrokeShape="RoundRectangle 8"
-                                                Padding="6,4">
-                                            <HorizontalStackLayout Spacing="4">
-                                                <Label Text="⚡"
-                                                        FontSize="10"/>
-                                                <Label Text="Physique"
-                                                        FontSize="11"
-                                                        FontAttributes="Bold"
-                                                        TextColor="{StaticResource TextDark}"/>
-                                            </HorizontalStackLayout>
-                                        </Border>
-                                    </HorizontalStackLayout>
-
-                                    <HorizontalStackLayout Spacing="6"
-                                            Margin="0,4,0,0">
-                                        <Label Text="🤝"
-                                                FontSize="14"/>
-                                        <Label Text="Gratuit (Bénévole)"
-                                                TextColor="{StaticResource GreenSuccess}"
-                                                FontAttributes="Bold"
-                                                FontSize="13"/>
-                                    </HorizontalStackLayout>
-
-                                    <Button Text="Demander un cours"
-                                            BackgroundColor="{StaticResource PrimaryBlue}"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            CornerRadius="10"
-                                            HeightRequest="44"
-                                            Margin="0,8,0,0"/>
+                                        <!-- Filtres (Pills) -->
+                                        <ScrollView Orientation="Horizontal"
+                                                    HorizontalScrollBarVisibility="Never">
+                                                <HorizontalStackLayout Spacing="8">
+                                                        <Border BackgroundColor="{StaticResource PrimaryBlue}"
+                                                                StrokeThickness="0"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="16,8">
+                                                                <Label Text="Tous"
+                                                                       TextColor="White"
+                                                                       FontAttributes="Bold"
+                                                                       FontSize="13"/>
+                                                        </Border>
+                                                        <Border BackgroundColor="White"
+                                                                StrokeThickness="1"
+                                                                Stroke="#E5E7EB"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="12,8">
+                                                                <HorizontalStackLayout Spacing="6">
+                                                                        <Label Text="📐"
+                                                                               FontSize="12"/>
+                                                                        <Label Text="Maths"
+                                                                               TextColor="{StaticResource TextDark}"
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="13"/>
+                                                                </HorizontalStackLayout>
+                                                        </Border>
+                                                        <Border BackgroundColor="White"
+                                                                StrokeThickness="1"
+                                                                Stroke="#E5E7EB"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="12,8">
+                                                                <HorizontalStackLayout Spacing="6">
+                                                                        <Label Text="⚡"
+                                                                               FontSize="12"/>
+                                                                        <Label Text="Physique"
+                                                                               TextColor="{StaticResource TextDark}"
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="13"/>
+                                                                </HorizontalStackLayout>
+                                                        </Border>
+                                                        <Border BackgroundColor="White"
+                                                                StrokeThickness="1"
+                                                                Stroke="#E5E7EB"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="12,8">
+                                                                <HorizontalStackLayout Spacing="6">
+                                                                        <Label Text="🧪"
+                                                                               FontSize="12"/>
+                                                                        <Label Text="Chimie"
+                                                                               TextColor="{StaticResource TextDark}"
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="13"/>
+                                                                </HorizontalStackLayout>
+                                                        </Border>
+                                                </HorizontalStackLayout>
+                                        </ScrollView>
                                 </VerticalStackLayout>
-                            </Border>
 
-                            <!-- Carte Tuteur 2 (Partiellement visible) -->
-                            <Border BackgroundColor="White"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 16"
-                                    Padding="16"
-                                    WidthRequest="240">
-                                <Border.Shadow>
-                                    <Shadow Brush="#000000"
-                                            Offset="0,2"
-                                            Radius="10"
-                                            Opacity="0.05"/>
-                                </Border.Shadow>
-                                <VerticalStackLayout Spacing="10">
-                                    <Grid WidthRequest="50"
-                                            HeightRequest="50"
-                                            HorizontalOptions="Start">
-                                        <Border WidthRequest="50"
-                                                HeightRequest="50"
-                                                StrokeShape="RoundRectangle 25"
-                                                StrokeThickness="0"
-                                                BackgroundColor="#E5E7EB">
-                                            <Label Text="👩"
-                                                    FontSize="30"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"/>
-                                        </Border>
-                                        <Border WidthRequest="18"
-                                                HeightRequest="18"
-                                                BackgroundColor="{StaticResource GreenSuccess}"
-                                                Stroke="White"
-                                                StrokeThickness="2"
-                                                StrokeShape="RoundRectangle 9"
-                                                HorizontalOptions="End"
-                                                VerticalOptions="End">
-                                            <Label Text="✓"
-                                                    TextColor="White"
-                                                    FontSize="10"
-                                                    FontAttributes="Bold"
-                                                    HorizontalOptions="Center"
-                                                    VerticalOptions="Center"/>
-                                        </Border>
-                                    </Grid>
-                                    <Label Text="Sarah M."
-                                            FontAttributes="Bold"
-                                            FontSize="16"
-                                            TextColor="{StaticResource TextDark}"
-                                            Margin="0,4,0,0"/>
-                                    <HorizontalStackLayout Spacing="4">
-                                        <Label Text="📍"
-                                                FontSize="12"/>
-                                        <Label Text="À 1.4 km · CDI Lycée"
-                                                FontSize="13"
-                                                TextColor="{StaticResource TextGray}"/>
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Border BackgroundColor="#F3F4F6"
-                                                StrokeThickness="0"
-                                                StrokeShape="RoundRectangle 8"
-                                                Padding="6,4">
-                                            <HorizontalStackLayout Spacing="4">
-                                                <Label Text="🧬"
-                                                        FontSize="10"/>
-                                                <Label Text="SVT"
-                                                        FontSize="11"
+                                <!-- CARTE HERO : DEMANDE EXPRESS -->
+                                <Border StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 20"
+                                        Padding="20">
+                                        <Border.Background>
+                                                <LinearGradientBrush EndPoint="1,1">
+                                                        <GradientStop Color="#5B44E9"
+                                                                      Offset="0.0"/>
+                                                        <GradientStop Color="#3B28CC"
+                                                                      Offset="1.0"/>
+                                                </LinearGradientBrush>
+                                        </Border.Background>
+                                        <VerticalStackLayout Spacing="16">
+                                                <Grid ColumnDefinitions="*, Auto">
+                                                        <Border BackgroundColor="#4B3ED7"
+                                                                StrokeThickness="0"
+                                                                StrokeShape="RoundRectangle 12"
+                                                                Padding="8,4"
+                                                                HorizontalOptions="Start">
+                                                                <HorizontalStackLayout Spacing="4">
+                                                                        <Label Text="⚡"
+                                                                               FontSize="10"/>
+                                                                        <Label Text="Entraide solidaire"
+                                                                               TextColor="White"
+                                                                               FontSize="11"
+                                                                               FontAttributes="Bold"/>
+                                                                </HorizontalStackLayout>
+                                                        </Border>
+                                                        <Border Grid.Column="1"
+                                                                BackgroundColor="#4B3ED7"
+                                                                WidthRequest="32"
+                                                                HeightRequest="32"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                StrokeThickness="0">
+                                                                <Label Text="⏱️"
+                                                                       FontSize="14"
+                                                                       HorizontalOptions="Center"
+                                                                       VerticalOptions="Center"/>
+                                                        </Border>
+                                                </Grid>
+
+                                                <Label Text="Demande d'aide&#10;express"
+                                                       FontSize="22"
+                                                       FontAttributes="Bold"
+                                                       TextColor="White"
+                                                       LineHeight="1.2"/>
+                                                <Label Text="Un devoir urgent pour demain ? Notifiez les&#10;tuteurs bénévoles disponibles dans votre&#10;quartier."
+                                                       FontSize="13"
+                                                       TextColor="#D1D5DB"
+                                                       LineHeight="1.4"/>
+
+                                                <Button Text="Créer une demande ⚡"
+                                                        BackgroundColor="{StaticResource OrangeAccent}"
+                                                        TextColor="White"
                                                         FontAttributes="Bold"
-                                                        TextColor="{StaticResource TextDark}"/>
-                                            </HorizontalStackLayout>
+                                                        Clicked="OnNavigateToRequestHelp"
+                                                        CornerRadius="12"
+                                                        HeightRequest="48"
+                                                        Margin="0,8,0,0"/>
+                                        </VerticalStackLayout>
+                                </Border>
+
+                                <!-- CARTE : RAPPEL DE RÉVISION -->
+                                <VerticalStackLayout Spacing="12">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                                <HorizontalStackLayout Spacing="8">
+                                                        <Label Text="📅"
+                                                               FontSize="16"
+                                                               VerticalOptions="Center"/>
+                                                        <Label Text="Rappel de révision"
+                                                               FontAttributes="Bold"
+                                                               FontSize="16"
+                                                               TextColor="{StaticResource TextDark}"
+                                                               VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                                <Border Grid.Column="1"
+                                                        BackgroundColor="#FEF3C7"
+                                                        StrokeThickness="0"
+                                                        StrokeShape="RoundRectangle 8"
+                                                        Padding="8,4">
+                                                        <Label Text="Confirmé"
+                                                               TextColor="#B45309"
+                                                               FontSize="11"
+                                                               FontAttributes="Bold"/>
+                                                </Border>
+                                        </Grid>
+
+                                        <Border BackgroundColor="White"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 16"
+                                                Padding="16">
+                                                <VerticalStackLayout Spacing="12">
+                                                        <Grid ColumnDefinitions="Auto, *, Auto">
+                                                                <!-- Avatar -->
+                                                                <Grid WidthRequest="44"
+                                                                      HeightRequest="44"
+                                                                      Margin="0,0,12,0">
+                                                                        <Border WidthRequest="44"
+                                                                                HeightRequest="44"
+                                                                                StrokeShape="RoundRectangle 22"
+                                                                                StrokeThickness="0"
+                                                                                BackgroundColor="#E5E7EB">
+                                                                                <Label Text="👨"
+                                                                                       FontSize="28"
+                                                                                       HorizontalOptions="Center"
+                                                                                       VerticalOptions="Center"/>
+                                                                        </Border>
+                                                                        <Border WidthRequest="16"
+                                                                                HeightRequest="16"
+                                                                                BackgroundColor="{StaticResource GreenSuccess}"
+                                                                                Stroke="White"
+                                                                                StrokeThickness="2"
+                                                                                StrokeShape="RoundRectangle 8"
+                                                                                HorizontalOptions="End"
+                                                                                VerticalOptions="End">
+                                                                                <Label Text="✓"
+                                                                                       TextColor="White"
+                                                                                       FontSize="8"
+                                                                                       FontAttributes="Bold"
+                                                                                       HorizontalOptions="Center"
+                                                                                       VerticalOptions="Center"/>
+                                                                        </Border>
+                                                                </Grid>
+                                                                <!-- Info -->
+                                                                <VerticalStackLayout Grid.Column="1"
+                                                                                     VerticalOptions="Center">
+                                                                        <Label Text="Thomas D."
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="15"
+                                                                               TextColor="{StaticResource TextDark}"/>
+                                                                        <Label Text="Mathématiques · Lycée"
+                                                                               FontSize="13"
+                                                                               TextColor="{StaticResource TextGray}"/>
+                                                                </VerticalStackLayout>
+                                                                <!-- Heure -->
+                                                                <Border Grid.Column="2"
+                                                                        BackgroundColor="{StaticResource LightBlue}"
+                                                                        StrokeThickness="0"
+                                                                        StrokeShape="RoundRectangle 8"
+                                                                        Padding="8,6"
+                                                                        VerticalOptions="Center">
+                                                                        <Label Text="Demain à 15:00"
+                                                                               TextColor="{StaticResource PrimaryBlue}"
+                                                                               FontSize="12"
+                                                                               FontAttributes="Bold"/>
+                                                                </Border>
+                                                        </Grid>
+
+                                                        <!-- Lieu -->
+                                                        <Border BackgroundColor="#F3F4F6"
+                                                                StrokeThickness="0"
+                                                                StrokeShape="RoundRectangle 8"
+                                                                Padding="12,8">
+                                                                <HorizontalStackLayout Spacing="8">
+                                                                        <Label Text="📍"
+                                                                               FontSize="14"/>
+                                                                        <Label Text="Médiathèque Violette Leduc (Paris 11e)"
+                                                                               FontSize="13"
+                                                                               TextColor="{StaticResource TextDark}"/>
+                                                                </HorizontalStackLayout>
+                                                        </Border>
+
+                                                        <!-- Footer Carte -->
+                                                        <Grid ColumnDefinitions="*, Auto"
+                                                              Margin="0,4,0,0">
+                                                                <HorizontalStackLayout Spacing="6"
+                                                                                       VerticalOptions="Center">
+                                                                        <Label Text="⏳"
+                                                                               FontSize="12"/>
+                                                                        <Label Text="Dans 22h 30min"
+                                                                               TextColor="#B45309"
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="12"/>
+                                                                </HorizontalStackLayout>
+                                                                <Label Grid.Column="1"
+                                                                       Text="Détails · Chat"
+                                                                       TextColor="{StaticResource PrimaryBlue}"
+                                                                       FontAttributes="Bold"
+                                                                       FontSize="13"/>
+                                                        </Grid>
+                                                </VerticalStackLayout>
                                         </Border>
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Spacing="6"
-                                            Margin="0,4,0,0">
-                                        <Label Text="🤝"
-                                                FontSize="14"/>
-                                        <Label Text="Gratuit (Bénévole)"
-                                                TextColor="{StaticResource GreenSuccess}"
-                                                FontAttributes="Bold"
-                                                FontSize="13"/>
-                                    </HorizontalStackLayout>
-                                    <Button Text="Demander un cours"
-                                            BackgroundColor="{StaticResource PrimaryBlue}"
-                                            TextColor="White"
-                                            FontAttributes="Bold"
-                                            CornerRadius="10"
-                                            HeightRequest="44"
-                                            Margin="0,8,0,0"/>
                                 </VerticalStackLayout>
-                            </Border>
 
-                        </HorizontalStackLayout>
-                    </ScrollView>
-                </VerticalStackLayout>
+                                <!-- SECTION : TUTEURS À PROXIMITÉ (Carrousel) -->
+                                <VerticalStackLayout Spacing="12">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                                <VerticalStackLayout>
+                                                        <Label Text="Tuteurs à proximité"
+                                                               FontAttributes="Bold"
+                                                               FontSize="18"
+                                                               TextColor="{StaticResource TextDark}"/>
+                                                        <Label Text="Paris 11e · Rayon 3 km"
+                                                               FontSize="13"
+                                                               TextColor="{StaticResource TextGray}"/>
+                                                </VerticalStackLayout>
+                                                <Label Grid.Column="1"
+                                                       Text="Voir sur la carte >"
+                                                       TextColor="{StaticResource PrimaryBlue}"
+                                                       FontAttributes="Bold"
+                                                       FontSize="13"
+                                                       VerticalOptions="Center"/>
+                                        </Grid>
 
-                <!-- BANNIÈRE SÉCURITÉ BAS DE PAGE -->
-                <Border BackgroundColor="White"
+                                        <ScrollView Orientation="Horizontal"
+                                                    HorizontalScrollBarVisibility="Never"
+                                                    Margin="-20,0">
+                                                <HorizontalStackLayout Spacing="16"
+                                                                       Padding="20,0">
+
+                                                        <!-- Carte Tuteur 1 -->
+                                                        <Border BackgroundColor="White"
+                                                                StrokeThickness="0"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="16"
+                                                                WidthRequest="240">
+                                                                <Border.Shadow>
+                                                                        <Shadow Brush="#000000"
+                                                                                Offset="0,2"
+                                                                                Radius="10"
+                                                                                Opacity="0.05"/>
+                                                                </Border.Shadow>
+                                                                <VerticalStackLayout Spacing="10">
+                                                                        <Grid ColumnDefinitions="*, Auto">
+                                                                                <!-- Avatar -->
+                                                                                <Grid WidthRequest="50"
+                                                                                      HeightRequest="50"
+                                                                                      HorizontalOptions="Start">
+                                                                                        <Border WidthRequest="50"
+                                                                                                HeightRequest="50"
+                                                                                                StrokeShape="RoundRectangle 25"
+                                                                                                StrokeThickness="0"
+                                                                                                BackgroundColor="#E5E7EB">
+                                                                                                <Label Text="👨"
+                                                                                                       FontSize="30"
+                                                                                                       HorizontalOptions="Center"
+                                                                                                       VerticalOptions="Center"/>
+                                                                                        </Border>
+                                                                                        <Border WidthRequest="18"
+                                                                                                HeightRequest="18"
+                                                                                                BackgroundColor="{StaticResource GreenSuccess}"
+                                                                                                Stroke="White"
+                                                                                                StrokeThickness="2"
+                                                                                                StrokeShape="RoundRectangle 9"
+                                                                                                HorizontalOptions="End"
+                                                                                                VerticalOptions="End">
+                                                                                                <Label Text="✓"
+                                                                                                       TextColor="White"
+                                                                                                       FontSize="10"
+                                                                                                       FontAttributes="Bold"
+                                                                                                       HorizontalOptions="Center"
+                                                                                                       VerticalOptions="Center"/>
+                                                                                        </Border>
+                                                                                </Grid>
+                                                                                <!-- Note -->
+                                                                                <Border Grid.Column="1"
+                                                                                        BackgroundColor="#F9FAFB"
+                                                                                        StrokeThickness="1"
+                                                                                        Stroke="#E5E7EB"
+                                                                                        StrokeShape="RoundRectangle 12"
+                                                                                        Padding="6,4"
+                                                                                        VerticalOptions="Start">
+                                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                                <Label Text="⭐"
+                                                                                                       FontSize="10"
+                                                                                                       VerticalOptions="Center"/>
+                                                                                                <Label Text="4.9"
+                                                                                                       FontAttributes="Bold"
+                                                                                                       FontSize="11"
+                                                                                                       TextColor="{StaticResource TextDark}"
+                                                                                                       VerticalOptions="Center"/>
+                                                                                                <Label Text="(14)"
+                                                                                                       FontSize="11"
+                                                                                                       TextColor="{StaticResource TextGray}"
+                                                                                                       VerticalOptions="Center"/>
+                                                                                        </HorizontalStackLayout>
+                                                                                </Border>
+                                                                        </Grid>
+
+                                                                        <!-- Info Tuteur -->
+                                                                        <HorizontalStackLayout Spacing="8"
+                                                                                               Margin="0,4,0,0">
+                                                                                <Label Text="Thomas D."
+                                                                                       FontAttributes="Bold"
+                                                                                       FontSize="16"
+                                                                                       TextColor="{StaticResource TextDark}"/>
+                                                                                <Border BackgroundColor="{StaticResource GreenSuccess}"
+                                                                                        StrokeThickness="0"
+                                                                                        StrokeShape="RoundRectangle 10"
+                                                                                        Padding="6,2"
+                                                                                        VerticalOptions="Center">
+                                                                                        <Label Text="Vérifié"
+                                                                                               TextColor="White"
+                                                                                               FontSize="9"
+                                                                                               FontAttributes="Bold"/>
+                                                                                </Border>
+                                                                        </HorizontalStackLayout>
+
+                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                <Label Text="📍"
+                                                                                       FontSize="12"/>
+                                                                                <Label Text="À 800m · Médiathèque"
+                                                                                       FontSize="13"
+                                                                                       TextColor="{StaticResource TextGray}"/>
+                                                                        </HorizontalStackLayout>
+
+                                                                        <!-- Matières -->
+                                                                        <HorizontalStackLayout Spacing="6">
+                                                                                <Border BackgroundColor="#F3F4F6"
+                                                                                        StrokeThickness="0"
+                                                                                        StrokeShape="RoundRectangle 8"
+                                                                                        Padding="6,4">
+                                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                                <Label Text="📐"
+                                                                                                       FontSize="10"/>
+                                                                                                <Label Text="Mathématiques"
+                                                                                                       FontSize="11"
+                                                                                                       FontAttributes="Bold"
+                                                                                                       TextColor="{StaticResource TextDark}"/>
+                                                                                        </HorizontalStackLayout>
+                                                                                </Border>
+                                                                                <Border BackgroundColor="#F3F4F6"
+                                                                                        StrokeThickness="0"
+                                                                                        StrokeShape="RoundRectangle 8"
+                                                                                        Padding="6,4">
+                                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                                <Label Text="⚡"
+                                                                                                       FontSize="10"/>
+                                                                                                <Label Text="Physique"
+                                                                                                       FontSize="11"
+                                                                                                       FontAttributes="Bold"
+                                                                                                       TextColor="{StaticResource TextDark}"/>
+                                                                                        </HorizontalStackLayout>
+                                                                                </Border>
+                                                                        </HorizontalStackLayout>
+
+                                                                        <HorizontalStackLayout Spacing="6"
+                                                                                               Margin="0,4,0,0">
+                                                                                <Label Text="🤝"
+                                                                                       FontSize="14"/>
+                                                                                <Label Text="Gratuit (Bénévole)"
+                                                                                       TextColor="{StaticResource GreenSuccess}"
+                                                                                       FontAttributes="Bold"
+                                                                                       FontSize="13"/>
+                                                                        </HorizontalStackLayout>
+
+                                                                        <Button Text="Demander un cours"
+                                                                                BackgroundColor="{StaticResource PrimaryBlue}"
+                                                                                TextColor="White"
+                                                                                FontAttributes="Bold"
+                                                                                CornerRadius="10"
+                                                                                HeightRequest="44"
+                                                                                Margin="0,8,0,0"/>
+                                                                </VerticalStackLayout>
+                                                        </Border>
+
+                                                        <!-- Carte Tuteur 2 (Partiellement visible) -->
+                                                        <Border BackgroundColor="White"
+                                                                StrokeThickness="0"
+                                                                StrokeShape="RoundRectangle 16"
+                                                                Padding="16"
+                                                                WidthRequest="240">
+                                                                <Border.Shadow>
+                                                                        <Shadow Brush="#000000"
+                                                                                Offset="0,2"
+                                                                                Radius="10"
+                                                                                Opacity="0.05"/>
+                                                                </Border.Shadow>
+                                                                <VerticalStackLayout Spacing="10">
+                                                                        <Grid WidthRequest="50"
+                                                                              HeightRequest="50"
+                                                                              HorizontalOptions="Start">
+                                                                                <Border WidthRequest="50"
+                                                                                        HeightRequest="50"
+                                                                                        StrokeShape="RoundRectangle 25"
+                                                                                        StrokeThickness="0"
+                                                                                        BackgroundColor="#E5E7EB">
+                                                                                        <Label Text="👩"
+                                                                                               FontSize="30"
+                                                                                               HorizontalOptions="Center"
+                                                                                               VerticalOptions="Center"/>
+                                                                                </Border>
+                                                                                <Border WidthRequest="18"
+                                                                                        HeightRequest="18"
+                                                                                        BackgroundColor="{StaticResource GreenSuccess}"
+                                                                                        Stroke="White"
+                                                                                        StrokeThickness="2"
+                                                                                        StrokeShape="RoundRectangle 9"
+                                                                                        HorizontalOptions="End"
+                                                                                        VerticalOptions="End">
+                                                                                        <Label Text="✓"
+                                                                                               TextColor="White"
+                                                                                               FontSize="10"
+                                                                                               FontAttributes="Bold"
+                                                                                               HorizontalOptions="Center"
+                                                                                               VerticalOptions="Center"/>
+                                                                                </Border>
+                                                                        </Grid>
+                                                                        <Label Text="Sarah M."
+                                                                               FontAttributes="Bold"
+                                                                               FontSize="16"
+                                                                               TextColor="{StaticResource TextDark}"
+                                                                               Margin="0,4,0,0"/>
+                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                <Label Text="📍"
+                                                                                       FontSize="12"/>
+                                                                                <Label Text="À 1.4 km · CDI Lycée"
+                                                                                       FontSize="13"
+                                                                                       TextColor="{StaticResource TextGray}"/>
+                                                                        </HorizontalStackLayout>
+                                                                        <HorizontalStackLayout Spacing="6">
+                                                                                <Border BackgroundColor="#F3F4F6"
+                                                                                        StrokeThickness="0"
+                                                                                        StrokeShape="RoundRectangle 8"
+                                                                                        Padding="6,4">
+                                                                                        <HorizontalStackLayout Spacing="4">
+                                                                                                <Label Text="🧬"
+                                                                                                       FontSize="10"/>
+                                                                                                <Label Text="SVT"
+                                                                                                       FontSize="11"
+                                                                                                       FontAttributes="Bold"
+                                                                                                       TextColor="{StaticResource TextDark}"/>
+                                                                                        </HorizontalStackLayout>
+                                                                                </Border>
+                                                                        </HorizontalStackLayout>
+                                                                        <HorizontalStackLayout Spacing="6"
+                                                                                               Margin="0,4,0,0">
+                                                                                <Label Text="🤝"
+                                                                                       FontSize="14"/>
+                                                                                <Label Text="Gratuit (Bénévole)"
+                                                                                       TextColor="{StaticResource GreenSuccess}"
+                                                                                       FontAttributes="Bold"
+                                                                                       FontSize="13"/>
+                                                                        </HorizontalStackLayout>
+                                                                        <Button Text="Demander un cours"
+                                                                                BackgroundColor="{StaticResource PrimaryBlue}"
+                                                                                TextColor="White"
+                                                                                FontAttributes="Bold"
+                                                                                CornerRadius="10"
+                                                                                HeightRequest="44"
+                                                                                Margin="0,8,0,0"/>
+                                                                </VerticalStackLayout>
+                                                        </Border>
+
+                                                </HorizontalStackLayout>
+                                        </ScrollView>
+                                </VerticalStackLayout>
+
+                                <!-- BANNIÈRE SÉCURITÉ BAS DE PAGE -->
+                                <Border BackgroundColor="White"
+                                        StrokeThickness="1"
+                                        Stroke="#E5E7EB"
+                                        StrokeShape="RoundRectangle 16"
+                                        Padding="16"
+                                        Margin="0,10,0,0">
+                                        <Grid ColumnDefinitions="Auto, *">
+                                                <Border WidthRequest="36"
+                                                        HeightRequest="36"
+                                                        BackgroundColor="{StaticResource LightBlue}"
+                                                        StrokeThickness="0"
+                                                        StrokeShape="RoundRectangle 18"
+                                                        Margin="0,0,12,0"
+                                                        VerticalOptions="Start">
+                                                        <Label Text="🛡️"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center"
+                                                               FontSize="16"/>
+                                                </Border>
+                                                <VerticalStackLayout Grid.Column="1"
+                                                                     Spacing="2">
+                                                        <Label Text="Sécurité &amp; Lieux publics"
+                                                               FontAttributes="Bold"
+                                                               FontSize="13"
+                                                               TextColor="{StaticResource TextDark}"/>
+                                                        <Label Text="Toutes les séances ont lieu dans des espaces publics vérifiés (médiathèques, centres d'animation) pour un cadre 100% sécurisant."
+                                                               FontSize="12"
+                                                               TextColor="{StaticResource TextGray}"
+                                                               LineHeight="1.3"/>
+                                                </VerticalStackLayout>
+                                        </Grid>
+                                </Border>
+
+                        </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- BARRE DE NAVIGATION INFÉRIEURE (Tab Bar Fake pour la maquette) -->
+                <Border Grid.Row="2"
+                        BackgroundColor="White"
                         StrokeThickness="1"
                         Stroke="#E5E7EB"
-                        StrokeShape="RoundRectangle 16"
-                        Padding="16"
-                        Margin="0,10,0,0">
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Border WidthRequest="36"
-                                HeightRequest="36"
-                                BackgroundColor="{StaticResource LightBlue}"
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 18"
-                                Margin="0,0,12,0"
-                                VerticalOptions="Start">
-                            <Label Text="🛡️"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    FontSize="16"/>
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1"
-                                Spacing="2">
-                            <Label Text="Sécurité &amp; Lieux publics"
-                                    FontAttributes="Bold"
-                                    FontSize="13"
-                                    TextColor="{StaticResource TextDark}"/>
-                            <Label Text="Toutes les séances ont lieu dans des espaces publics vérifiés (médiathèques, centres d'animation) pour un cadre 100% sécurisant."
-                                    FontSize="12"
-                                    TextColor="{StaticResource TextGray}"
-                                    LineHeight="1.3"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </Border>
+                        Margin="-1,0,-1,-1"
+                        Padding="10,12,10,24">
+                        <Grid ColumnDefinitions="*, *, *, *">
+                                <!-- Accueil (Actif) -->
+                                <VerticalStackLayout Grid.Column="0"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="4">
+                                        <Label Text="🏠"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"/>
+                                        <Label Text="Accueil"
+                                               TextColor="{StaticResource PrimaryBlue}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
 
-            </VerticalStackLayout>
-        </ScrollView>
+                                <!-- Carte -->
+                                <!-- Carte -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="4"
+                                                     Opacity="0.5">
+                                        <VerticalStackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnNavigateToMap"/>
+                                        </VerticalStackLayout.GestureRecognizers>
+                                        <Label Text="🧭"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"/>
+                                        <Label Text="Carte"
+                                               TextColor="{StaticResource TextDark}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
 
-        <!-- BARRE DE NAVIGATION INFÉRIEURE (Tab Bar Fake pour la maquette) -->
-        <Border Grid.Row="2"
-                BackgroundColor="White"
-                StrokeThickness="1"
-                Stroke="#E5E7EB"
-                Margin="-1,0,-1,-1"
-                Padding="10,12,10,24">
-            <Grid ColumnDefinitions="*, *, *, *">
-                <!-- Accueil (Actif) -->
-                <VerticalStackLayout Grid.Column="0"
-                        HorizontalOptions="Center"
-                        Spacing="4">
-                    <Label Text="🏠"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
-                    <Label Text="Accueil"
-                            TextColor="{StaticResource PrimaryBlue}"
-                            FontSize="11"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-
-                <!-- Carte -->
-                <!-- Carte -->
-                <VerticalStackLayout Grid.Column="1"
-                        HorizontalOptions="Center"
-                        Spacing="4"
-                        Opacity="0.5">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigateToMap"/>
-                    </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🧭"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
-                    <Label Text="Carte"
-                            TextColor="{StaticResource TextDark}"
-                            FontSize="11"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-
-                <!-- Séances -->
-                <VerticalStackLayout Grid.Column="2"
+                                <!-- Séances -->
+                                <!-- <VerticalStackLayout Grid.Column="2"
                         HorizontalOptions="Center"
                         Spacing="4"
                         Opacity="0.5">
@@ -734,24 +735,41 @@
                             FontSize="11"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"/>
-                </VerticalStackLayout>
+                </VerticalStackLayout> -->
 
-                <!-- Profil -->
-                <VerticalStackLayout Grid.Column="3"
-                        HorizontalOptions="Center"
-                        Spacing="4"
-                        Opacity="0.5">
-                    <Label Text="👤"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
-                    <Label Text="Profil"
-                            TextColor="{StaticResource TextDark}"
-                            FontSize="11"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Grid>
-        </Border>
+                                <VerticalStackLayout Grid.Column="2"
+                                                HorizontalOptions="Center"
+                                                Spacing="4"
+                                                Opacity="0.5">
+                                        <VerticalStackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnNavigateToSessions"/>
+                                        </VerticalStackLayout.GestureRecognizers>
+                                        <Label Text="📅"
+                                                        FontSize="22"
+                                                        HorizontalOptions="Center"/>
+                                        <Label Text="Séances"
+                                                        TextColor="{StaticResource TextDark}"
+                                                        FontSize="11"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
 
-    </Grid>
+                                <!-- Profil -->
+                                <VerticalStackLayout Grid.Column="3"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="4"
+                                                     Opacity="0.5">
+                                        <Label Text="👤"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"/>
+                                        <Label Text="Profil"
+                                               TextColor="{StaticResource TextDark}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                        </Grid>
+                </Border>
+
+        </Grid>
 </ContentPage>
