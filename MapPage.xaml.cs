@@ -14,6 +14,11 @@ public partial class MapPage : ContentPage
         Application.Current.MainPage = new NavigationPage(new DashboardPage());
     }
 
+    private void OnNavigateToSessions(object sender, EventArgs e)
+    {
+        Application.Current.MainPage = new NavigationPage(new SessionsPage());
+    }
+
     private async void OnNavigateToProfile(object sender, EventArgs e)
     {
         // PushAsync empile le profil par-dessus la carte. 
