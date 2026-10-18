@@ -1,0 +1,293 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TutorLocal.TutorProfilePage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F9FAFB">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryBlue">#5B44E9</Color>
+            <Color x:Key="LightBlueBg">#EEF0FF</Color>
+            <Color x:Key="TextDark">#111827</Color>
+            <Color x:Key="TextGray">#6B7280</Color>
+            <Color x:Key="GreenSuccess">#10B981</Color>
+            <Color x:Key="OrangeAccent">#F59E0B</Color>
+            <Color x:Key="CardBg">#FFFFFF</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- La grille divise l'écran : le header (Auto), le contenu défilant (*), le footer fixe (Auto) -->
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <!-- HEADER FIXE (Ligne du haut avec Titre) -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="20,20,20,10" BackgroundColor="{StaticResource CardBg}">
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <!-- Bouton retour natif -->
+                <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <!-- Mini logo et titre -->
+                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 8" StrokeThickness="0" VerticalOptions="Center">
+                    <Label Text="📘" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+                <Label Text="Détail Tuteur" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <!-- Mini avatar -->
+            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="Center">
+                <Label Text="👤" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <!-- CONTENU DÉFILANT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,16,20,40" Spacing="16">
+
+                <!-- HEADER PROFIL (Boutons flottants, Photo, Nom, Stats) -->
+                <VerticalStackLayout Spacing="16">
+                    <!-- Boutons ronds (Retour, Partager, Favoris) -->
+                    <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12">
+                        <Border BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackButtonClicked" /></Border.GestureRecognizers>
+                            <Label Text="←" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                            <Label Text="🔗" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Border Grid.Column="3" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                            <Label Text="🤍" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Avatar Central -->
+                    <Grid WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" Margin="0,-20,0,0">
+                        <Border WidthRequest="100" HeightRequest="100" StrokeShape="RoundRectangle 50" StrokeThickness="0" BackgroundColor="#E5E7EB">
+                            <Label Text="👨" FontSize="60" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <!-- Badge vérifié centré en bas -->
+                        <Border BackgroundColor="{StaticResource GreenSuccess}" StrokeThickness="2" Stroke="White" StrokeShape="RoundRectangle 12" Padding="8,4" HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,-8">
+                            <HorizontalStackLayout Spacing="4">
+                                <Label Text="✓" TextColor="White" FontSize="10" FontAttributes="Bold" />
+                                <Label Text="Vérifié" TextColor="White" FontSize="10" FontAttributes="Bold" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Infos principales -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4" Margin="0,8,0,0">
+                        <Label Text="Thomas D." FontSize="24" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
+                        <Label FontSize="14" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" LineHeight="1.3">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Étudiant en 2ᵉ année d'école d'ingénieurs&#10;" />
+                                    <Span Text="(CentraleSupélec)" TextColor="{StaticResource PrimaryBlue}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+
+                    <!-- Localisation Pilule -->
+                    <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,6" HorizontalOptions="Center">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="📍" FontSize="12" TextColor="{StaticResource PrimaryBlue}" VerticalOptions="Center" />
+                            <Label Text="Paris 11ᵉ · à 1.5 km de chez vous" TextColor="{StaticResource TextDark}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <!-- Stats (Grille de 3) -->
+                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="12" Margin="0,8,0,0">
+                        <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="8,16">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="⭐" FontSize="14" />
+                                    <Label Text="4.9" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                                </HorizontalStackLayout>
+                                <Label Text="14 avis vérifiés" FontSize="11" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="8,16">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="📚" FontSize="14" />
+                                    <Label Text="28 h" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                                </HorizontalStackLayout>
+                                <Label Text="données" FontSize="11" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="8,16">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="⚡" FontSize="14" TextColor="{StaticResource PrimaryBlue}" />
+                                    <Label Text="&lt; 1 h" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                                </HorizontalStackLayout>
+                                <Label Text="réponse rapide" FontSize="11" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- ENCART : SECURITE -->
+                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Text="🛡️" FontSize="18" Margin="0,0,12,0" VerticalOptions="Start" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Tutorat solidaire sécurisé" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                            <Label Text="Bénévolat contrôlé. Les séances en personne se déroulent exclusivement dans les bibliothèques et centres municipaux." FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- SECTION : A PROPOS -->
+                <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
+                    <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.03" /></Border.Shadow>
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="🧍" FontSize="16" />
+                            <Label Text="À propos de Thomas" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                        </HorizontalStackLayout>
+                        <Label Text="Passionné de sciences, j'aide bénévolement les élèves de collège et lycée à débloquer leurs difficultés en maths et physique. Mon approche est basée sur la patience, l'écoute et des exemples concrets du quotidien pour redonner confiance sans stress !" FontSize="14" TextColor="{StaticResource TextGray}" LineHeight="1.4" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SECTION : MATIERES & NIVEAUX -->
+                <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
+                    <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.03" /></Border.Shadow>
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="🎓" FontSize="16" />
+                            <Label Text="Matières &amp; Niveaux" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Start">
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="📐" FontSize="12"/><Label Text="Mathématiques" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}"/><Label Text="(Tous niveaux)" FontSize="13" TextColor="{StaticResource TextGray}"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="⚡" FontSize="12"/><Label Text="Physique-Chimie" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}"/><Label Text="(Collège &amp; Lycée)" FontSize="13" TextColor="{StaticResource TextGray}"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="💻" FontSize="12"/><Label Text="Algorithmique / NSI" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}"/><Label Text="(Débutant)" FontSize="13" TextColor="{StaticResource TextGray}"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SECTION : MODALITES D'APPRENTISSAGE -->
+                <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
+                    <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.03" /></Border.Shadow>
+                    <VerticalStackLayout Spacing="16">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="⚙️" FontSize="16" />
+                            <Label Text="Modalités d'apprentissage" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                        </HorizontalStackLayout>
+                        
+                        <VerticalStackLayout Spacing="12">
+                            <!-- Présentiel -->
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16">
+                                <Grid ColumnDefinitions="Auto, *">
+                                    <Border WidthRequest="32" HeightRequest="32" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16" Margin="0,0,12,0" VerticalOptions="Start">
+                                        <Label Text="📍" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="En présentiel" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                                        <Label Text="Bibliothèque Parmentier ou Médiathèque Marguerite Duras" FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Visio -->
+                            <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16">
+                                <Grid ColumnDefinitions="Auto, *">
+                                    <Border WidthRequest="32" HeightRequest="32" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16" Margin="0,0,12,0" VerticalOptions="Start">
+                                        <Label Text="💻" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="En ligne (Visio)" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                                        <Label Text="Lien interactif sécurisé fourni dans l'application" FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Gratuit -->
+                            <Border BackgroundColor="#D1FAE5" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16">
+                                <Grid ColumnDefinitions="Auto, *">
+                                    <Label Text="🤝" FontSize="20" Margin="0,0,12,0" VerticalOptions="Start" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="Séances individuelles gratuites" FontAttributes="Bold" FontSize="13" TextColor="#065F46" />
+                                        <Label Text="Engagement solidaire citoyen sans aucun frais" FontSize="12" TextColor="#059669" LineHeight="1.3" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SECTION : AVIS -->
+                <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
+                    <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.03" /></Border.Shadow>
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="💬" FontSize="16" />
+                                <Label Text="Derniers avis" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="14 avis" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="13" VerticalOptions="Center" />
+                        </Grid>
+
+                        <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16">
+                            <VerticalStackLayout Spacing="12">
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Border WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="#E5E7EB" Margin="0,0,12,0">
+                                        <Label Text="👩" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="Inès M." FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                                        <Label Text="Terminale Générale" FontSize="11" TextColor="{StaticResource TextGray}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="⭐⭐⭐⭐⭐" FontSize="10" VerticalOptions="Center" />
+                                </Grid>
+                                <Label Text="« Super pédagogue ! Thomas m'a aidée à comprendre les suites géométriques en une heure seulement. Très patient et clair ! »" FontSize="13" TextColor="{StaticResource TextDark}" FontAttributes="Italic" LineHeight="1.4" />
+                                <Label Text="Il y a 3 jours" FontSize="11" TextColor="{StaticResource TextGray}" HorizontalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- SECTION : LIEU HABITUEL -->
+                <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
+                    <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="8" Opacity="0.03" /></Border.Shadow>
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="📍" FontSize="16" />
+                            <Label Text="Lieu habituel d'échange" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" />
+                        </HorizontalStackLayout>
+                        <Label Text="Médiathèque Marguerite Duras · 115 Rue de Bagnolet, 75020 Paris" FontSize="13" TextColor="{StaticResource TextGray}" LineHeight="1.4" />
+                        <!-- Emplacement pour la mini-carte de Google Maps -->
+                        <Border BackgroundColor="#E5E7EB" HeightRequest="120" StrokeThickness="0" StrokeShape="RoundRectangle 12" Margin="0,8,0,0">
+                            <Image Source="map_background.jpg" Aspect="AspectFill" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- FOOTER FIXE (Bottom Bar Sticky) -->
+        <Border Grid.Row="2" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="#E5E7EB" Padding="20,16,20,30" Margin="-1,0,-1,-1">
+            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="12">
+                <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12">
+                    <Label Text="💬" FontSize="20" TextColor="{StaticResource PrimaryBlue}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Button Grid.Column="1" Text="📅 Planifier une séance gratuite" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

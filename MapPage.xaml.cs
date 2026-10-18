@@ -13,4 +13,11 @@ public partial class MapPage : ContentPage
         // On remplace la page active par le Dashboard
         Application.Current.MainPage = new NavigationPage(new DashboardPage());
     }
+
+    private async void OnNavigateToProfile(object sender, EventArgs e)
+    {
+        // PushAsync empile le profil par-dessus la carte. 
+        // Ainsi, le bouton retour (PopAsync) du profil ramènera naturellement à la carte.
+        await Navigation.PushAsync(new TutorProfilePage());
+    }
 }

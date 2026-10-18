@@ -178,7 +178,7 @@
 
                     <!-- Actions -->
                     <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12" Margin="0,4,0,0">
-                        <Button Text="Voir le profil complet  →" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" />
+                        <Button Text="Voir le profil complet  →" Clicked="OnNavigateToProfile" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" />
                         <Border Grid.Column="1" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" WidthRequest="52" HeightRequest="52">
                             <Label Text="💬" FontSize="20" TextColor="{StaticResource PrimaryBlue}" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
