@@ -7,12 +7,14 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
     <Grid RowDefinitions="Auto,*">
-        <Grid Padding="20" ColumnDefinitions="*,Auto" BackgroundColor="White">
+        <Grid Padding="20" ColumnDefinitions="*,Auto,Auto" BackgroundColor="White">
             <VerticalStackLayout>
                 <Label Text="Espace tuteur" FontSize="22" FontAttributes="Bold" TextColor="#111827" />
                 <Label Text="{Binding TutorName}" FontSize="14" TextColor="#6B7280" />
             </VerticalStackLayout>
-            <Button Grid.Column="1" Text="Se déconnecter" Command="{Binding LogoutCommand}"
+            <Button Grid.Column="1" Text="🔔" Command="{Binding OpenNotificationsCommand}"
+                    BackgroundColor="#EEF0FF" TextColor="#4338CA" />
+            <Button Grid.Column="2" Text="Se déconnecter" Command="{Binding LogoutCommand}"
                     BackgroundColor="#EEF0FF" TextColor="#4338CA" />
         </Grid>
         <ScrollView Grid.Row="1">

@@ -361,7 +361,7 @@ public class SessionsViewModel : ViewModelBase
             return;
 
         var searchText = await page.DisplayPromptAsync("Rechercher une séance",
-            "Tuteur, matière, sujet ou lieu", "Rechercher", "Effacer", "Ex. mathématiques",
+            "Tuteur, matière, sujet ou lieu", "Rechercher", "Annuler", "Ex. mathématiques",
             100, Keyboard.Text, _searchText);
         if (searchText != null)
         {
@@ -376,7 +376,9 @@ public class SessionsViewModel : ViewModelBase
         if (page == null)
             return;
 
-        var subjects = new[] { "Toutes", "Mathématiques", "Physique-Chimie", "SVT", "Anglais", "Français" };
+        var subjects = new[] { "Toutes" }
+            .Concat(_sessionService.Sessions.Select(session => session.Subject).Distinct().OrderBy(subject => subject))
+            .ToArray();
         var selected = await page.DisplayActionSheet("Filtrer par matière", "Annuler", null, subjects);
         if (subjects.Contains(selected))
         {

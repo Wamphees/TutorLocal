@@ -130,7 +130,7 @@ public class SessionService : ISessionService
             LocationTitle = request.Modality == SessionModality.Online ? "En visioconférence sécurisée"
                 : request.MeetingPlace,
             LocationSubtitle = request.Modality == SessionModality.Online ? "Lien crypté généré 15 min avant"
-                : "Salle d'étude libre (1ᵉʳ étage) · Paris 11e"
+                : "Lieu public choisi par l'élève"
         };
 
         Sessions.Add(session);

@@ -36,14 +36,16 @@ public sealed class TutorDashboardViewModel : ViewModelBase
     private readonly ITutorService _tutors;
     private readonly IHelpRequestService _requests;
     private readonly IChatService _chat;
+    private readonly INotificationService _notifications;
 
     public TutorDashboardViewModel(INavigationService navigation, IAuthService auth, ITutorService tutors,
-        IHelpRequestService requests, IChatService chat) : base(navigation)
+        IHelpRequestService requests, IChatService chat, INotificationService notifications) : base(navigation)
     {
         _auth = auth;
         _tutors = tutors;
         _requests = requests;
         _chat = chat;
+        _notifications = notifications;
     }
 
     public ObservableCollection<TutorRequestCardViewModel> IncomingRequests { get; } = new();
@@ -51,6 +53,14 @@ public sealed class TutorDashboardViewModel : ViewModelBase
     public string TutorName => _auth.CurrentUser?.FullName ?? "Tuteur";
 
     public bool HasRequests => IncomingRequests.Count > 0;
+
+    public int NotificationCount => _notifications.UnreadCount(_auth.CurrentUser?.Id ?? string.Empty);
+
+    public ICommand OpenNotificationsCommand => new AsyncRelayCommand(async () =>
+    {
+        await _notifications.ShowUnreadAsync(_auth.CurrentUser?.Id ?? string.Empty);
+        OnPropertyChanged(nameof(NotificationCount));
+    });
 
     public ICommand LogoutCommand => new RelayCommand(() =>
     {
@@ -64,6 +74,7 @@ public sealed class TutorDashboardViewModel : ViewModelBase
         CurrentTutor();
         RefreshRequests();
         OnPropertyChanged(nameof(TutorName));
+        OnPropertyChanged(nameof(NotificationCount));
     }
 
     internal async Task AcceptAsync(HelpRequest request)
