@@ -41,6 +41,9 @@ public class RequestHelpViewModel : ViewModelBase
     private ChoiceOption _selectedUrgency;
 
     private ChoiceOption _selectedModality;
+    private string _meetingPlace = "Médiathèque Parmentier";
+    private string _attachmentPath = string.Empty;
+    private string _attachmentName = string.Empty;
 
     public RequestHelpViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService,
         IHelpRequestService helpRequests, IChatService chatService) : base(navigation)
@@ -118,7 +121,11 @@ public class RequestHelpViewModel : ViewModelBase
         set
         {
             if (SetProperty(ref _selectedModality, value))
+            {
                 OnPropertyChanged(nameof(IsInPersonSelected));
+                OnPropertyChanged(nameof(MeetingPlaceLabel));
+                OnPropertyChanged(nameof(MeetingPlaceDistance));
+            }
         }
     }
 
@@ -142,8 +149,24 @@ public class RequestHelpViewModel : ViewModelBase
     public string DescriptionCountLabel => $"{DescriptionCount} / {DescriptionMaxLength}";
 
     public string MeetingPlaceLabel => SelectedModality?.Key == "inperson"
-        ? "Médiathèque Parmentier"
+        ? MeetingPlace
         : "Visioconférence dans l'application";
+
+    public string MeetingPlace
+    {
+        get => _meetingPlace;
+        private set
+        {
+            if (SetProperty(ref _meetingPlace, value))
+                OnPropertyChanged(nameof(MeetingPlaceLabel));
+        }
+    }
+
+    public string AttachmentName => _attachmentName;
+
+    public string AttachmentButtonLabel => string.IsNullOrWhiteSpace(AttachmentName)
+        ? "Joindre une photo du devoir"
+        : AttachmentName;
 
     public string MeetingPlaceDistance => SelectedModality?.Key == "inperson"
         ? "Paris 11e • À 450 m de chez vous"
@@ -178,6 +201,10 @@ public class RequestHelpViewModel : ViewModelBase
     public ICommand SelectInPersonCommand => new RelayCommand(() => SelectedModality = Modalities[0]);
 
     public ICommand SelectOnlineCommand => new RelayCommand(() => SelectedModality = Modalities[1]);
+
+    public ICommand EditMeetingPlaceCommand => new AsyncRelayCommand(EditMeetingPlaceAsync);
+
+    public ICommand AttachFileCommand => new AsyncRelayCommand(AttachFileAsync);
 
     public ICommand PublishCommand => new AsyncRelayCommand(PublishAsync, isBusySource: () => IsBusy);
 
@@ -222,7 +249,9 @@ public class RequestHelpViewModel : ViewModelBase
             Description = Description.Trim(),
             IsUrgent = IsUrgentSelected,
             Modality = IsInPersonSelected ? SessionModality.InPerson : SessionModality.Online,
-            MeetingPlace = MeetingPlaceLabel
+            MeetingPlace = MeetingPlaceLabel,
+            AttachmentPath = _attachmentPath,
+            AttachmentName = _attachmentName
         };
 
         _helpRequests.Publish(request);
@@ -230,13 +259,46 @@ public class RequestHelpViewModel : ViewModelBase
         // La demande apparaît immédiatement dans la messagerie du tuteur.
         _chatService.SendMessage(student.Id, tutor.Id,
             $"⚡ Nouvelle demande d'aide en {subject} ({request.Level}) : « {request.Description} »");
-
-        // La demande est acceptée par un tuteur bénévole : une séance est proposée.
-        var session = _helpRequests.Accept(request, _tutorService);
+        if (!string.IsNullOrWhiteSpace(request.AttachmentPath))
+            _chatService.SendAttachment(student.Id, tutor.Id, student.Id, request.AttachmentPath, request.AttachmentName);
 
         await AlertAsync("Demande publiée ⚡",
-            $"Votre demande a été transmise aux tuteurs bénévoles. Une séance avec {tutor.FullName} est proposée pour le {session.Date:dddd dd MMM à HH:mm}.");
+            $"Votre demande a été transmise à {tutor.FullName}. Vous recevrez une notification lorsque le tuteur aura répondu.");
 
         await Navigation.PopAsync();
+    }
+
+    private async Task EditMeetingPlaceAsync()
+    {
+        var page = Application.Current?.MainPage;
+        if (page == null)
+            return;
+
+        var place = await page.DisplayPromptAsync("Lieu de rencontre",
+            "Choisissez un lieu public de rencontre.", "Enregistrer", "Annuler",
+            "Ex. Médiathèque de proximité", 120, Keyboard.Text, MeetingPlace);
+        if (!string.IsNullOrWhiteSpace(place))
+            MeetingPlace = place.Trim();
+    }
+
+    private async Task AttachFileAsync()
+    {
+        var file = await FilePicker.Default.PickAsync(new PickOptions
+        {
+            PickerTitle = "Joindre une photo du devoir",
+            FileTypes = FilePickerFileType.Images
+        });
+        if (file == null)
+            return;
+
+        var directory = Path.Combine(FileSystem.AppDataDirectory, "Attachments");
+        Directory.CreateDirectory(directory);
+        _attachmentName = file.FileName;
+        _attachmentPath = Path.Combine(directory, $"{Guid.NewGuid():N}_{Path.GetFileName(file.FileName)}");
+        await using var source = await file.OpenReadAsync();
+        await using var destination = File.Create(_attachmentPath);
+        await source.CopyToAsync(destination);
+        OnPropertyChanged(nameof(AttachmentName));
+        OnPropertyChanged(nameof(AttachmentButtonLabel));
     }
 }

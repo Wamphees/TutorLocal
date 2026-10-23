@@ -17,6 +17,10 @@ public class ChatMessage
 
     public bool HasImage { get; set; }
 
+    public string AttachmentPath { get; set; } = string.Empty;
+
+    public string AttachmentName { get; set; } = string.Empty;
+
     /// <summary>Double coche bleue une fois le message lu.</summary>
     public bool IsRead { get; set; }
 

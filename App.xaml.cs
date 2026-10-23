@@ -14,7 +14,12 @@ public partial class App : Application
 		// Restaure la session si « Se souvenir de moi » était actif,
 		// sinon on démarre sur la page d'accueil publique.
 		if (auth.TryRestoreSession())
-			MainPage = new NavigationPage(MauiProgram.Services.GetRequiredService<DashboardPage>());
+		{
+			var startPage = auth.CurrentUser?.Role == Models.UserRole.Tutor
+				? (Page)MauiProgram.Services.GetRequiredService<TutorDashboardPage>()
+				: MauiProgram.Services.GetRequiredService<DashboardPage>();
+			MainPage = new NavigationPage(startPage);
+		}
 		else
 			MainPage = new NavigationPage(MauiProgram.Services.GetRequiredService<MainPage>());
 	}

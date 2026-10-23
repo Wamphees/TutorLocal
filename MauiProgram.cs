@@ -22,6 +22,8 @@ public static class MauiProgram
 			});
 
 		// ===== Architecture MVVM : services métier ================================
+		builder.Services.AddSingleton<LocalDatabase>();
+		builder.Services.AddSingleton<INotificationService, NotificationService>();
 		builder.Services.AddSingleton<INavigationService, NavigationService>();
 		builder.Services.AddSingleton<IAuthService, AuthService>();
 		builder.Services.AddSingleton<ITutorService, TutorService>();
@@ -41,6 +43,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<TutorProfileViewModel>();
 		builder.Services.AddTransient<MapViewModel>();
 		builder.Services.AddTransient<ProfileViewModel>();
+		builder.Services.AddTransient<TutorDashboardViewModel>();
 
 		// ===== Vues ===============================================================
 		builder.Services.AddTransient<MainPage>();
@@ -54,6 +57,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<TutorProfilePage>();
 		builder.Services.AddTransient<MapPage>();
 		builder.Services.AddTransient<ProfilePage>();
+		builder.Services.AddTransient<TutorDashboardPage>();
 
 
 #if DEBUG

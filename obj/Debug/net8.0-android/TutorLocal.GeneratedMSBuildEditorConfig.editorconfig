@@ -100,6 +100,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.SessionsP
 build_metadata.AdditionalFiles.TargetPath = Views/SessionsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views/SessionsPage.xaml
 
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/TutorDashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.TutorDashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/TutorDashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/TutorDashboardPage.xaml
+
 [/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/TutorProfilePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.TutorProfilePage.xaml

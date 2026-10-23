@@ -83,6 +83,10 @@ public class HelpRequest
 
     public string Description { get; set; } = string.Empty;
 
+    public string AttachmentPath { get; set; } = string.Empty;
+
+    public string AttachmentName { get; set; } = string.Empty;
+
     /// <summary>Urgent (sous 24h) ou planifié (cette semaine).</summary>
     public bool IsUrgent { get; set; } = true;
 
@@ -99,6 +103,7 @@ public enum HelpRequestStatus
 {
     Published,
     Accepted,
+    Rejected,
     Closed
 }
 

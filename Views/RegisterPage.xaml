@@ -93,7 +93,7 @@
                         <Grid ColumnDefinitions="*,*">
                             <!-- Élève / Parent (sélection via VM) -->
                             <Border Grid.Column="0"
-                                    BackgroundColor="{StaticResource PrimaryBlue}"
+                                    BackgroundColor="{Binding StudentRoleBackground}"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 8"
                                     Padding="0,12">
@@ -106,7 +106,7 @@
                                             VerticalOptions="Center"
                                             FontSize="14"/>
                                     <Label Text="Élève / Parent"
-                                            TextColor="White"
+                                            TextColor="{Binding StudentRoleText}"
                                             FontSize="13"
                                             FontAttributes="Bold"
                                             VerticalOptions="Center"/>
@@ -114,7 +114,7 @@
                             </Border>
                             <!-- Tuteur bénévole -->
                             <Border Grid.Column="1"
-                                    BackgroundColor="White"
+                                    BackgroundColor="{Binding TutorRoleBackground}"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 8"
                                     Padding="0,12">
@@ -127,7 +127,7 @@
                                             VerticalOptions="Center"
                                             FontSize="14"/>
                                     <Label Text="Tuteur bénévole"
-                                            TextColor="{StaticResource TextDark}"
+                                            TextColor="{Binding TutorRoleText}"
                                             FontSize="13"
                                             FontAttributes="Bold"
                                             VerticalOptions="Center"/>

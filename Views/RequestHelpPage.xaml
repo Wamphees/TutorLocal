@@ -108,9 +108,10 @@
                             
                             <!-- Bouton pièce jointe intégré -->
                             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" HorizontalOptions="Start">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Border.GestureRecognizers>
                                 <HorizontalStackLayout Spacing="6">
                                     <Label Text="📷" FontSize="14" VerticalOptions="Center"/>
-                                    <Label Text="Joindre une photo du devoir" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
+                                    <Label Text="{Binding AttachmentButtonLabel}" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                             </Border>
                         </VerticalStackLayout>
@@ -186,7 +187,9 @@
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*, Auto">
                         <Label Text="Lieu d'échange public recommandé" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
-                        <Label Grid.Column="1" Text="Modifier" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="11" />
+                        <Label Grid.Column="1" Text="Modifier" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="11">
+                            <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding EditMeetingPlaceCommand}" /></Label.GestureRecognizers>
+                        </Label>
                     </Grid>
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 16" Padding="16">
                         <VerticalStackLayout Spacing="12">

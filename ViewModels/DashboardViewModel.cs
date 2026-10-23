@@ -90,6 +90,7 @@ public class DashboardViewModel : ViewModelBase
     private readonly IAuthService _auth;
     private readonly ITutorService _tutorService;
     private readonly ISessionService _sessionService;
+    private readonly INotificationService _notifications;
 
     private string _searchText = string.Empty;
 
@@ -97,12 +98,14 @@ public class DashboardViewModel : ViewModelBase
 
     private TutoringSession? _nextSession;
 
-    public DashboardViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService, ISessionService sessionService)
+    public DashboardViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService,
+        ISessionService sessionService, INotificationService notifications)
         : base(navigation)
     {
         _auth = auth;
         _tutorService = tutorService;
         _sessionService = sessionService;
+        _notifications = notifications;
 
         SubjectFilters = new ObservableCollection<SubjectFilterItem>(
             new[] { "Tous", "Maths", "Physique", "Chimie", "SVT", "Anglais", "Français" }
@@ -126,6 +129,14 @@ public class DashboardViewModel : ViewModelBase
     public string NextSessionCountdown { get; private set; } = string.Empty;
 
     public string UserFirstName => _auth.CurrentUser?.DisplayName ?? "Élève";
+
+    public int NotificationCount => _notifications.UnreadCount(_auth.CurrentUser?.Id ?? "alex");
+
+    public ICommand OpenNotificationsCommand => new AsyncRelayCommand(async () =>
+    {
+        await _notifications.ShowUnreadAsync(_auth.CurrentUser?.Id ?? "alex");
+        OnPropertyChanged(nameof(NotificationCount));
+    });
 
     public string SearchText
     {
@@ -215,6 +226,7 @@ public class DashboardViewModel : ViewModelBase
     {
         base.OnAppearing();
         OnPropertyChanged(nameof(UserFirstName));
+        OnPropertyChanged(nameof(NotificationCount));
         RefreshTutors();
         RefreshNextSession();
     }

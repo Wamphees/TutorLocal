@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 using TutorLocal.Models;
 
 namespace TutorLocal.Services;
@@ -43,11 +44,16 @@ public class AuthResult
 public class AuthService : IAuthService
 {
     private const string UsersKey = "tutorlocal_users";
-    private const string CurrentUserKey = "tutorlocal_current_user";
+    private const string LegacyCurrentUserKey = "tutorlocal_current_user";
+    private const string CurrentUserRecord = "auth.currentUserId";
+    private const string UserRecord = "users";
+    private const int PasswordIterations = 120_000;
 
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     private readonly List<User> _users = new();
+    private readonly Dictionary<string, StoredAccount> _credentials = new();
+    private readonly LocalDatabase _database;
 
     private readonly List<SeedUser> _seedAccounts = new()
     {
@@ -56,8 +62,9 @@ public class AuthService : IAuthService
         new SeedUser("alex", "Alex Dupont", "alex@exemple.fr", "tutor123", UserRole.Student, SchoolLevel.Lycee, "👦")
     };
 
-    public AuthService()
+    public AuthService(LocalDatabase database)
     {
+        _database = database;
         LoadUsers();
     }
 
@@ -78,24 +85,30 @@ public class AuthService : IAuthService
 
         var normalized = email.Trim();
 
-        var user = _users.FirstOrDefault(u => u.Email.Equals(normalized, StringComparison.OrdinalIgnoreCase))
-                   ?? _seedAccounts.Select(s => new User
-                       {
-                           Id = s.Id,
-                           FullName = s.Name,
-                           Email = s.Email,
-                           Password = s.Password,
-                           Role = s.Role,
-                           Level = s.Level,
-                           Avatar = s.Avatar
-                       })
-                       .FirstOrDefault(u => u.Email.Equals(normalized, StringComparison.OrdinalIgnoreCase));
-
-        if (user == null)
-            return AuthResult.Fail("Aucun compte n'existe avec cet email.");
-
-        if (!user.Password.Equals(password))
-            return AuthResult.Fail("Mot de passe incorrect.");
+        var user = _users.FirstOrDefault(u => u.Email.Equals(normalized, StringComparison.OrdinalIgnoreCase));
+        if (user != null)
+        {
+            if (!_credentials.TryGetValue(user.Id, out var credential) || !VerifyPassword(password, credential))
+                return AuthResult.Fail("Mot de passe incorrect.");
+        }
+        else
+        {
+            var seed = _seedAccounts.FirstOrDefault(account =>
+                account.Email.Equals(normalized, StringComparison.OrdinalIgnoreCase));
+            if (seed == null)
+                return AuthResult.Fail("Aucun compte n'existe avec cet email.");
+            if (!seed.Password.Equals(password, StringComparison.Ordinal))
+                return AuthResult.Fail("Mot de passe incorrect.");
+            user = new User
+            {
+                Id = seed.Id,
+                FullName = seed.Name,
+                Email = seed.Email,
+                Role = seed.Role,
+                Level = seed.Level,
+                Avatar = seed.Avatar
+            };
+        }
 
         OpenSession(user, rememberMe);
         return AuthResult.Ok();
@@ -122,14 +135,13 @@ public class AuthService : IAuthService
         {
             FullName = fullName.Trim(),
             Email = email.Trim(),
-            Password = password,
             Role = role,
             Level = level,
             Avatar = role == UserRole.Tutor ? "🤝" : "👦"
         };
 
         _users.Add(user);
-        SaveUsers();
+        SaveAccount(user, password);
 
         OpenSession(user, rememberMe: false);
         return AuthResult.Ok();
@@ -137,40 +149,35 @@ public class AuthService : IAuthService
 
     public bool TryRestoreSession()
     {
-        var storedId = Preferences.Get(CurrentUserKey, string.Empty);
+        var storedId = _database.Get<string>("state", CurrentUserRecord);
         if (string.IsNullOrWhiteSpace(storedId))
             return false;
 
-        var stored = Preferences.Get(UsersKey, "[]");
-        try
+        var user = _users.FirstOrDefault(candidate => candidate.Id == storedId);
+        if (user == null)
         {
-            var users = JsonSerializer.Deserialize<List<StoredUser>>(stored, JsonOptions) ?? new();
-            var match = users.FirstOrDefault(u => u.Id == storedId);
-            if (match == null)
+            var seed = _seedAccounts.FirstOrDefault(candidate => candidate.Id == storedId);
+            if (seed == null)
                 return false;
-
-            CurrentUser = new User
+            user = new User
             {
-                Id = match.Id,
-                FullName = match.FullName,
-                Email = match.Email,
-                Password = match.Password,
-                Role = match.Role,
-                Level = match.Level,
-                Avatar = string.IsNullOrEmpty(match.Avatar) ? "👦" : match.Avatar
+                Id = seed.Id,
+                FullName = seed.Name,
+                Email = seed.Email,
+                Role = seed.Role,
+                Level = seed.Level,
+                Avatar = seed.Avatar
             };
-            return true;
         }
-        catch
-        {
-            return false;
-        }
+
+        CurrentUser = user;
+        return true;
     }
 
     public void Logout()
     {
         CurrentUser = null;
-        Preferences.Remove(CurrentUserKey);
+        _database.Delete("state", CurrentUserRecord);
     }
 
     private void OpenSession(User user, bool rememberMe)
@@ -178,52 +185,134 @@ public class AuthService : IAuthService
         CurrentUser = user;
 
         if (rememberMe)
-        {
-            Preferences.Set(CurrentUserKey, user.Id);
-            SaveUsers();
-        }
+            _database.Save("state", CurrentUserRecord, user.Id);
         else
-        {
-            Preferences.Remove(CurrentUserKey);
-        }
+            _database.Delete("state", CurrentUserRecord);
     }
 
     private void LoadUsers()
     {
+        foreach (var account in _database.Load<StoredAccount>(UserRecord))
+            AddAccount(account);
+
         var stored = Preferences.Get(UsersKey, string.Empty);
         if (string.IsNullOrWhiteSpace(stored))
             return;
 
         try
         {
-            var users = JsonSerializer.Deserialize<List<StoredUser>>(stored, JsonOptions) ?? new();
-            _users.AddRange(users.Select(u => new User
+            var legacyUsers = JsonSerializer.Deserialize<List<LegacyStoredUser>>(stored, JsonOptions) ?? new();
+            foreach (var legacy in legacyUsers)
             {
-                Id = u.Id,
-                FullName = u.FullName,
-                Email = u.Email,
-                Password = u.Password,
-                Role = u.Role,
-                Level = u.Level,
-                Avatar = string.IsNullOrEmpty(u.Avatar) ? "👦" : u.Avatar
-            }));
+                if (_users.Any(user => user.Id == legacy.Id ||
+                                       user.Email.Equals(legacy.Email, StringComparison.OrdinalIgnoreCase)) ||
+                    _seedAccounts.Any(seed => seed.Id == legacy.Id ||
+                                              seed.Email.Equals(legacy.Email, StringComparison.OrdinalIgnoreCase)))
+                    continue;
+
+                var user = new User
+                {
+                    Id = legacy.Id,
+                    FullName = legacy.FullName,
+                    Email = legacy.Email,
+                    Role = legacy.Role,
+                    Level = legacy.Level,
+                    Avatar = string.IsNullOrEmpty(legacy.Avatar) ? "👦" : legacy.Avatar
+                };
+                _users.Add(user);
+                SaveAccount(user, legacy.Password);
+            }
+
+            Preferences.Remove(UsersKey);
         }
-        catch
+        catch (JsonException exception)
         {
-            // Stockage corrompu : on repart d'une base vide.
+            System.Diagnostics.Debug.WriteLine($"Could not migrate legacy account preferences: {exception}");
+        }
+
+        var legacyCurrentId = Preferences.Get(LegacyCurrentUserKey, string.Empty);
+        if (!string.IsNullOrWhiteSpace(legacyCurrentId))
+        {
+            var exists = _users.Any(user => user.Id == legacyCurrentId) ||
+                         _seedAccounts.Any(seed => seed.Id == legacyCurrentId);
+            if (exists && _database.Get<string>("state", CurrentUserRecord) == null)
+                _database.Save("state", CurrentUserRecord, legacyCurrentId);
+            Preferences.Remove(LegacyCurrentUserKey);
         }
     }
 
-    private void SaveUsers()
+    private void AddAccount(StoredAccount account)
     {
-        // Les comptes de démonstration sont persistés en premier.
-        var toStore = _seedAccounts
-            .Select(s => new StoredUser(s.Id, s.Name, s.Email, s.Password, s.Role, s.Level, s.Avatar))
-            .Concat(_users.Select(u => new StoredUser(u.Id, u.FullName, u.Email, u.Password, u.Role, u.Level, u.Avatar)))
-            .ToList();
-
-        Preferences.Set(UsersKey, JsonSerializer.Serialize(toStore, JsonOptions));
+        var user = new User
+        {
+            Id = account.Id,
+            FullName = account.FullName,
+            Email = account.Email,
+            Role = account.Role,
+            Level = account.Level,
+            Avatar = string.IsNullOrEmpty(account.Avatar) ? "👦" : account.Avatar
+        };
+        _users.Add(user);
+        _credentials[user.Id] = account;
     }
 
-    private sealed record StoredUser(string Id, string FullName, string Email, string Password, UserRole Role, SchoolLevel Level, string Avatar);
+    private void SaveAccount(User user, string password)
+    {
+        var salt = RandomNumberGenerator.GetBytes(16);
+        var account = new StoredAccount
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Email = user.Email,
+            PasswordSalt = Convert.ToBase64String(salt),
+            PasswordHash = Convert.ToBase64String(HashPassword(password, salt)),
+            Role = user.Role,
+            Level = user.Level,
+            Avatar = user.Avatar
+        };
+        _credentials[user.Id] = account;
+        _database.Save(UserRecord, user.Id, account, searchText: $"{user.FullName} {user.Email}");
+    }
+
+    private static byte[] HashPassword(string password, byte[] salt) =>
+        Rfc2898DeriveBytes.Pbkdf2(password, salt, PasswordIterations, HashAlgorithmName.SHA256, 32);
+
+    private static bool VerifyPassword(string password, StoredAccount account)
+    {
+        var salt = Convert.FromBase64String(account.PasswordSalt);
+        var expected = Convert.FromBase64String(account.PasswordHash);
+        var actual = HashPassword(password, salt);
+        return CryptographicOperations.FixedTimeEquals(actual, expected);
+    }
+
+    private sealed class StoredAccount
+    {
+        public StoredAccount()
+        {
+        }
+
+        public string Id { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string PasswordSalt { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
+        public SchoolLevel Level { get; set; }
+        public string Avatar { get; set; } = string.Empty;
+    }
+
+    private sealed class LegacyStoredUser
+    {
+        public LegacyStoredUser()
+        {
+        }
+
+        public string Id { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
+        public SchoolLevel Level { get; set; }
+        public string Avatar { get; set; } = string.Empty;
+    }
 }

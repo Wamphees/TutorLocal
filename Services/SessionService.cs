@@ -39,17 +39,50 @@ public interface ISessionService
 
 public class SessionService : ISessionService
 {
+    private const string SessionRecord = "sessions";
+    private const string FeedbackRecord = "feedback";
+    private const string StateRecord = "state";
+    private readonly LocalDatabase _database;
     private readonly ITutorService _tutorService;
 
     /// <summary>Feedback non noté : un seul processus à la fois, suffisant pour la messagerie de séance courante.</summary>
-    public TutoringSession? SessionForRating { get; set; }
+    public TutoringSession? SessionForRating
+    {
+        get
+        {
+            var id = _database.Get<string>(StateRecord, "sessionForRating");
+            return id == null ? null : Sessions.FirstOrDefault(session => session.Id == id);
+        }
+        set
+        {
+            if (value == null)
+                _database.Delete(StateRecord, "sessionForRating");
+            else
+                _database.Save(StateRecord, "sessionForRating", value.Id);
+        }
+    }
 
     private readonly Dictionary<string, SessionFeedback> _feedbacks = new();
 
-    public SessionService(ITutorService tutorService)
+    public SessionService(ITutorService tutorService, LocalDatabase database)
     {
         _tutorService = tutorService;
-        SeedSessions();
+        _database = database;
+        var savedSessions = _database.Load<TutoringSession>(SessionRecord);
+        if (savedSessions.Count == 0)
+        {
+            SeedSessions();
+            foreach (var session in Sessions)
+                SaveSession(session);
+        }
+        else
+        {
+            foreach (var session in savedSessions)
+                Sessions.Add(session);
+        }
+
+        foreach (var feedback in _database.Load<SessionFeedback>(FeedbackRecord))
+            _feedbacks[feedback.SessionId] = feedback;
     }
 
     public ObservableCollection<TutoringSession> Sessions { get; } = new();
@@ -75,6 +108,7 @@ public class SessionService : ISessionService
             return false;
 
         session.Status = SessionStatus.Cancelled;
+        SaveSession(session);
         return true;
     }
 
@@ -89,17 +123,18 @@ public class SessionService : ISessionService
             TutorId = tutor.Id,
             Subject = request.Subject,
             SubjectIcon = request.SubjectIcon,
-            Status = SessionStatus.Pending,
+            Status = SessionStatus.Confirmed,
             Modality = request.Modality,
             Date = date,
             Topic = request.Description,
             LocationTitle = request.Modality == SessionModality.Online ? "En visioconférence sécurisée"
-                : "Médiathèque Parmentier",
+                : request.MeetingPlace,
             LocationSubtitle = request.Modality == SessionModality.Online ? "Lien crypté généré 15 min avant"
                 : "Salle d'étude libre (1ᵉʳ étage) · Paris 11e"
         };
 
         Sessions.Add(session);
+        SaveSession(session);
         return session;
     }
 
@@ -119,6 +154,7 @@ public class SessionService : ISessionService
         };
 
         Sessions.Add(session);
+        SaveSession(session);
         return session;
     }
 
@@ -137,10 +173,16 @@ public class SessionService : ISessionService
         };
 
         _feedbacks[session.Id] = feedback;
+        _database.Save(FeedbackRecord, session.Id, feedback, ownerId: session.StudentId, relatedId: session.TutorId);
+        SaveSession(session);
         _tutorService.AddRating(session.TutorId, score);
 
         return feedback;
     }
+
+    private void SaveSession(TutoringSession session) =>
+        _database.Save(SessionRecord, session.Id, session, ownerId: session.StudentId, relatedId: session.TutorId,
+            searchText: $"{session.Subject} {session.Topic}", status: session.Status.ToString(), occurredAt: session.Date);
 
     /// <summary>
     /// Historique de démonstration : cohérent avec la maquette

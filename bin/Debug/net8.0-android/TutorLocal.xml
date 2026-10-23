@@ -181,6 +181,9 @@
         <member name="T:TutorLocal.Services.NavigationService">
             <inheritdoc />
         </member>
+        <member name="T:TutorLocal.Services.LocalDatabase">
+            <summary>SQLite storage local to this installation; no network or remote server is used.</summary>
+        </member>
         <member name="T:TutorLocal.Services.ISessionService">
             <summary>
             Gestion des séances de tutorat : planification, confirmation, annulation,

@@ -55,9 +55,11 @@
                         </Border>
                         
                         <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ShareCommand}" /></Border.GestureRecognizers>
                             <Label Text="🔗" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                         <Border Grid.Column="3" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleFavoriteCommand}" /></Border.GestureRecognizers>
                             <Label Text="{Binding IsFavoriteIcon}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                     </Grid>

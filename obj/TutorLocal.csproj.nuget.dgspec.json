@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[8.0.31, )",
               "autoReferenced": true
+            },
+            "sqlite-net-pcl": {
+              "target": "Package",
+              "version": "[1.9.172, )"
             }
           },
           "imports": [

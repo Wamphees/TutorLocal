@@ -58,9 +58,26 @@ public class TutorProfileViewModel : ViewModelBase
 
     public ICommand ToggleFavoriteCommand => new RelayCommand(() =>
     {
-        _isFavorite = !_isFavorite;
+        var userId = _auth.CurrentUser?.Id;
+        if (userId == null || Tutor == null)
+            return;
+
+        _tutorService.ToggleFavorite(userId, Tutor.Id);
+        _isFavorite = _tutorService.IsFavorite(userId, Tutor.Id);
         OnPropertyChanged(nameof(IsFavoriteIcon));
         OnPropertyChanged(nameof(IsFavoriteLabel));
+    });
+
+    public ICommand ShareCommand => new AsyncRelayCommand(async () =>
+    {
+        if (Tutor == null)
+            return;
+
+        await Share.Default.RequestAsync(new ShareTextRequest
+        {
+            Title = $"Profil de {Tutor.FullName}",
+            Text = $"Découvrez le profil de {Tutor.FullName} sur TutorLocal : {Tutor.ProfileLine}"
+        });
     });
 
     /// <summary>« Planifier une séance gratuite » : crée une séance en attente et ouvre le chat.</summary>
@@ -76,6 +93,8 @@ public class TutorProfileViewModel : ViewModelBase
         base.OnAppearing();
 
         Tutor = _tutorService.SelectedTutor;
+        _isFavorite = Tutor != null && _auth.CurrentUser != null &&
+                      _tutorService.IsFavorite(_auth.CurrentUser.Id, Tutor.Id);
         OnPropertyChanged(nameof(Tutor));
         OnPropertyChanged(nameof(FullName));
         OnPropertyChanged(nameof(Avatar));
@@ -86,6 +105,8 @@ public class TutorProfileViewModel : ViewModelBase
         OnPropertyChanged(nameof(LocationPillLabel));
         OnPropertyChanged(nameof(About));
         OnPropertyChanged(nameof(HasTutor));
+        OnPropertyChanged(nameof(IsFavoriteIcon));
+        OnPropertyChanged(nameof(IsFavoriteLabel));
 
         Subjects.Clear();
         if (Tutor != null)

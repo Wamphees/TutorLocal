@@ -157,15 +157,20 @@ public class SessionsViewModel : ViewModelBase
     private readonly IAuthService _auth;
     private readonly ITutorService _tutorService;
     private readonly ISessionService _sessionService;
+    private readonly INotificationService _notifications;
 
     private SessionTab _selectedTab = SessionTab.Upcoming;
+    private string _searchText = string.Empty;
+    private string _subjectFilter = "Toutes";
 
-    public SessionsViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService, ISessionService sessionService)
+    public SessionsViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService,
+        ISessionService sessionService, INotificationService notifications)
         : base(navigation)
     {
         _auth = auth;
         _tutorService = tutorService;
         _sessionService = sessionService;
+        _notifications = notifications;
     }
 
     private enum SessionTab
@@ -184,6 +189,18 @@ public class SessionsViewModel : ViewModelBase
     public int CancelledCount => _sessionService.GetCancelled(StudentId).Count();
 
     public int TotalCount => _sessionService.Sessions.Count();
+
+    public string SearchText
+    {
+        get => _searchText;
+        private set
+        {
+            if (SetProperty(ref _searchText, value))
+                LoadSessions();
+        }
+    }
+
+    public int NotificationCount => _notifications.UnreadCount(StudentId);
 
     public bool IsUpcomingTab => _selectedTab == SessionTab.Upcoming;
 
@@ -213,9 +230,15 @@ public class SessionsViewModel : ViewModelBase
 
     // Actions d'onglet supérieur ==========================================
 
-    public ICommand OpenSearchCommand => AlertStub("La recherche avancée arrive bientôt !");
+    public ICommand OpenSearchCommand => new AsyncRelayCommand(OpenSearchAsync);
 
-    public ICommand OpenFilterCommand => AlertStub("Les préférences de filtrage arrivent bientôt !");
+    public ICommand OpenFilterCommand => new AsyncRelayCommand(OpenFilterAsync);
+
+    public ICommand OpenNotificationsCommand => new AsyncRelayCommand(async () =>
+    {
+        await _notifications.ShowUnreadAsync(StudentId);
+        OnPropertyChanged(nameof(NotificationCount));
+    });
 
     public ICommand OpenRequestHelpCommand => new AsyncRelayCommand(async () =>
     {
@@ -316,8 +339,50 @@ public class SessionsViewModel : ViewModelBase
             _ => _sessionService.GetUpcoming(student)
         };
 
-        foreach (var session in items)
+        foreach (var session in items.Where(MatchesCurrentFilters))
             Sessions.Add(new SessionDisplay(session, this));
+    }
+
+    private bool MatchesCurrentFilters(TutoringSession session)
+    {
+        var tutorName = ResolveTutor(session)?.FullName ?? string.Empty;
+        var matchesSearch = string.IsNullOrWhiteSpace(_searchText) ||
+                            $"{tutorName} {session.Subject} {session.Topic} {session.LocationTitle}"
+                                .Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+        var matchesSubject = _subjectFilter == "Toutes" ||
+                             session.Subject.Contains(_subjectFilter, StringComparison.OrdinalIgnoreCase);
+        return matchesSearch && matchesSubject;
+    }
+
+    private async Task OpenSearchAsync()
+    {
+        var page = Application.Current?.MainPage;
+        if (page == null)
+            return;
+
+        var searchText = await page.DisplayPromptAsync("Rechercher une séance",
+            "Tuteur, matière, sujet ou lieu", "Rechercher", "Effacer", "Ex. mathématiques",
+            100, Keyboard.Text, _searchText);
+        if (searchText != null)
+        {
+            SearchText = searchText;
+            LoadSessions();
+        }
+    }
+
+    private async Task OpenFilterAsync()
+    {
+        var page = Application.Current?.MainPage;
+        if (page == null)
+            return;
+
+        var subjects = new[] { "Toutes", "Mathématiques", "Physique-Chimie", "SVT", "Anglais", "Français" };
+        var selected = await page.DisplayActionSheet("Filtrer par matière", "Annuler", null, subjects);
+        if (subjects.Contains(selected))
+        {
+            _subjectFilter = selected;
+            LoadSessions();
+        }
     }
 
     private void RefreshCounts()
@@ -326,6 +391,7 @@ public class SessionsViewModel : ViewModelBase
         OnPropertyChanged(nameof(CompletedCount));
         OnPropertyChanged(nameof(CancelledCount));
         OnPropertyChanged(nameof(TotalCount));
+        OnPropertyChanged(nameof(NotificationCount));
     }
 
     private AsyncRelayCommand AlertStub(string message) =>

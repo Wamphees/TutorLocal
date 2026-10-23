@@ -46,6 +46,7 @@ public class SchoolLevelOption : ObservableObject
 public class RegisterViewModel : ViewModelBase
 {
     private readonly IAuthService _auth;
+    private readonly ITutorService _tutors;
 
     private string _fullName = string.Empty;
 
@@ -59,9 +60,10 @@ public class RegisterViewModel : ViewModelBase
 
     private bool _termsAccepted;
 
-    public RegisterViewModel(INavigationService navigation, IAuthService auth) : base(navigation)
+    public RegisterViewModel(INavigationService navigation, IAuthService auth, ITutorService tutors) : base(navigation)
     {
         _auth = auth;
+        _tutors = tutors;
         Levels = new ObservableCollection<SchoolLevelOption>
         {
             new(SchoolLevel.College, "Collège"),
@@ -107,6 +109,14 @@ public class RegisterViewModel : ViewModelBase
 
     public bool IsTutor => _role == UserRole.Tutor;
 
+    public string StudentRoleBackground => IsStudent ? "#5B44E9" : "#FFFFFF";
+
+    public string StudentRoleText => IsStudent ? "#FFFFFF" : "#111827";
+
+    public string TutorRoleBackground => IsTutor ? "#5B44E9" : "#FFFFFF";
+
+    public string TutorRoleText => IsTutor ? "#FFFFFF" : "#111827";
+
     // Sélections ==========================================================
 
     public ICommand SelectStudentCommand => new RelayCommand(() => SetRole(UserRole.Student));
@@ -140,6 +150,10 @@ public class RegisterViewModel : ViewModelBase
         _role = role;
         OnPropertyChanged(nameof(IsStudent));
         OnPropertyChanged(nameof(IsTutor));
+        OnPropertyChanged(nameof(StudentRoleBackground));
+        OnPropertyChanged(nameof(StudentRoleText));
+        OnPropertyChanged(nameof(TutorRoleBackground));
+        OnPropertyChanged(nameof(TutorRoleText));
     }
 
     private async Task RegisterAsync()
@@ -156,6 +170,14 @@ public class RegisterViewModel : ViewModelBase
         await AlertAsync("Bienvenue dans la communauté !",
             $"Votre compte a bien été créé. Bonne route {(_auth.CurrentUser?.DisplayName ?? "l'entraide")} 👋");
 
-        Navigation.SwitchTab<DashboardPage>();
+        if (_auth.CurrentUser?.Role == Models.UserRole.Tutor)
+        {
+            _tutors.EnsureTutorProfile(_auth.CurrentUser);
+            Navigation.SwitchTab<Views.TutorDashboardPage>();
+        }
+        else
+        {
+            Navigation.SwitchTab<DashboardPage>();
+        }
     }
 }

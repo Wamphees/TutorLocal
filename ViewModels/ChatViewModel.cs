@@ -15,6 +15,8 @@ public class ChatViewModel : ViewModelBase
     private string _newMessage = string.Empty;
 
     private Models.Tutor? _tutor;
+    private string _studentId = "alex";
+    private string _viewerId = string.Empty;
 
     public ChatViewModel(INavigationService navigation, IAuthService auth, ITutorService tutorService,
         IChatService chatService, ISessionService sessionService) : base(navigation)
@@ -33,6 +35,8 @@ public class ChatViewModel : ViewModelBase
         _tutor ?? _tutorService.Tutors.First();
 
     public bool HasTutor => _tutor != null;
+
+    public bool IsStudent => _auth.CurrentUser?.Role != Models.UserRole.Tutor;
 
     public string TutorHeaderLine => $"{Tutor.Avatar} {Tutor.FullName}";
 
@@ -68,18 +72,35 @@ public class ChatViewModel : ViewModelBase
     {
         base.OnAppearing();
 
-        _tutor = _tutorService.SelectedTutor;
+        var user = _auth.CurrentUser;
+        _viewerId = user?.Id ?? "alex";
+        if (user?.Role == Models.UserRole.Tutor &&
+            _chatService.Current.TutorId == user.Id &&
+            !string.IsNullOrWhiteSpace(_chatService.Current.StudentId))
+        {
+            _studentId = _chatService.Current.StudentId;
+            _tutor = _tutorService.GetById(user.Id) ?? _tutorService.EnsureTutorProfile(user);
+        }
+        else
+        {
+            _studentId = user?.Id ?? "alex";
+            _tutor = _tutorService.SelectedTutor;
+        }
+
         OnPropertyChanged(nameof(Tutor));
         OnPropertyChanged(nameof(TutorHeaderLine));
+        OnPropertyChanged(nameof(IsStudent));
 
-        var studentId = _auth.CurrentUser?.Id ?? "alex";
-        var conversation = _chatService.GetOrCreate(studentId, Tutor.Id);
+        var conversation = _chatService.GetOrCreate(_studentId, Tutor.Id);
 
         Messages.Clear();
         foreach (var message in conversation.Messages)
+        {
+            message.IsFromUser = message.SenderId == _viewerId;
             Messages.Add(message);
+        }
 
-        PlannedSession = _sessionService.GetUpcoming(studentId)
+        PlannedSession = _sessionService.GetUpcoming(_studentId)
             .FirstOrDefault(s => s.TutorId == Tutor.Id);
         OnPropertyChanged(nameof(PlannedSession));
         OnPropertyChanged(nameof(HasPlannedSession));
@@ -96,17 +117,75 @@ public class ChatViewModel : ViewModelBase
 
         NewMessage = string.Empty;
 
-        var studentId = _auth.CurrentUser?.Id ?? "alex";
-        var message = _chatService.SendMessage(studentId, Tutor.Id, text);
+        var isTutor = _auth.CurrentUser?.Role == Models.UserRole.Tutor;
+        var message = isTutor
+            ? _chatService.SendTutorMessage(_studentId, Tutor.Id, text)
+            : _chatService.SendMessage(_studentId, Tutor.Id, text);
+        message.IsFromUser = true;
         Messages.Add(message);
 
+        if (isTutor)
+            return;
+
         IsBusy = true;
+        try
+        {
+            var reply = await _chatService.WaitForTutorReplyAsync(_studentId, Tutor.Id);
+            if (reply != null)
+            {
+                reply.IsFromUser = reply.SenderId == _viewerId;
+                Messages.Add(reply);
+            }
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
 
-        // Le tuteur bénévole "respond" après un temps de réaction réaliste.
-        var reply = await _chatService.WaitForTutorReplyAsync(studentId, Tutor.Id);
-        if (reply != null)
-            Messages.Add(reply);
+    public ICommand AttachFileCommand => new AsyncRelayCommand(AttachFileAsync, isBusySource: () => IsBusy);
 
-        IsBusy = false;
+    public ICommand OpenAttachmentCommand => new AsyncRelayCommand(async parameter =>
+    {
+        if (parameter is not string path || string.IsNullOrWhiteSpace(path))
+            return;
+
+        if (!File.Exists(path))
+        {
+            await AlertAsync("Fichier introuvable", "Cette pièce jointe n'est plus disponible sur cet appareil.");
+            return;
+        }
+
+        try
+        {
+            await Launcher.Default.OpenAsync(new OpenFileRequest(Path.GetFileName(path), new ReadOnlyFile(path)));
+        }
+        catch (Exception exception)
+        {
+            await AlertAsync("Ouverture impossible", exception.Message);
+        }
+    });
+
+    private async Task AttachFileAsync()
+    {
+        var file = await FilePicker.Default.PickAsync(new PickOptions
+        {
+            PickerTitle = "Choisir une photo",
+            FileTypes = FilePickerFileType.Images
+        });
+        if (file == null)
+            return;
+
+        var directory = Path.Combine(FileSystem.AppDataDirectory, "Attachments");
+        Directory.CreateDirectory(directory);
+        var safeName = $"{Guid.NewGuid():N}_{Path.GetFileName(file.FileName)}";
+        var destination = Path.Combine(directory, safeName);
+        await using (var source = await file.OpenReadAsync())
+        await using (var target = File.Create(destination))
+            await source.CopyToAsync(target);
+
+        var message = _chatService.SendAttachment(_studentId, Tutor.Id, _viewerId, destination, file.FileName);
+        message.IsFromUser = true;
+        Messages.Add(message);
     }
 }

@@ -10,6 +10,7 @@ public class LoginViewModel : ViewModelBase
 {
     private readonly IAuthService _auth;
     private readonly ISessionService _sessions;
+    private readonly ITutorService _tutors;
 
     private string _email = string.Empty;
 
@@ -17,10 +18,12 @@ public class LoginViewModel : ViewModelBase
 
     private bool _rememberMe = true;
 
-    public LoginViewModel(INavigationService navigation, IAuthService auth, ISessionService sessions) : base(navigation)
+    public LoginViewModel(INavigationService navigation, IAuthService auth, ISessionService sessions,
+        ITutorService tutors) : base(navigation)
     {
         _auth = auth;
         _sessions = sessions;
+        _tutors = tutors;
     }
 
     public string Email
@@ -78,7 +81,15 @@ public class LoginViewModel : ViewModelBase
 
         // La connexion remplace toute la racine de l'application :
         // l'utilisateur connecté ne doit pas pouvoir "revenir" au formulaire.
-        Navigation.SwitchTab<DashboardPage>();
+        if (_auth.CurrentUser?.Role == Models.UserRole.Tutor)
+        {
+            _tutors.EnsureTutorProfile(_auth.CurrentUser);
+            Navigation.SwitchTab<TutorDashboardPage>();
+        }
+        else
+        {
+            Navigation.SwitchTab<DashboardPage>();
+        }
         return Task.CompletedTask;
     }
 

@@ -10,13 +10,15 @@ public class ProfileViewModel : ViewModelBase
     private readonly IAuthService _auth;
     private readonly ISessionService _sessionService;
     private readonly ITutorService _tutorService;
+    private readonly INotificationService _notifications;
 
     public ProfileViewModel(INavigationService navigation, IAuthService auth, ISessionService sessionService,
-        ITutorService tutorService) : base(navigation)
+        ITutorService tutorService, INotificationService notifications) : base(navigation)
     {
         _auth = auth;
         _sessionService = sessionService;
         _tutorService = tutorService;
+        _notifications = notifications;
     }
 
     public string FullName => _auth.CurrentUser?.FullName ?? "Invité";
@@ -36,17 +38,19 @@ public class ProfileViewModel : ViewModelBase
     public int CompletedCount => _sessionService.GetCompleted(StudentId).Count();
 
     /// <summary>Tuteurs rencontrés au moins une fois (favoris).</summary>
-    public int FavoriteTutors => _sessionService.Sessions
-        .Where(s => s.StudentId == StudentId && s.Status != SessionStatus.Cancelled)
-        .Select(s => s.TutorId)
-        .Distinct()
-        .Count();
+    public int FavoriteTutors => _tutorService.GetFavoriteCount(StudentId);
+
+    public int NotificationCount => _notifications.UnreadCount(StudentId);
 
     private string StudentId => _auth.CurrentUser?.Id ?? "alex";
 
     // Actions =============================================================
 
-    public ICommand OpenNotificationsCommand => AlertStub("Votre centre de notifications arrive bientôt !");
+    public ICommand OpenNotificationsCommand => new AsyncRelayCommand(async () =>
+    {
+        await _notifications.ShowUnreadAsync(StudentId);
+        OnPropertyChanged(nameof(NotificationCount));
+    });
 
     public ICommand OpenPersonalInfoCommand => AlertStub("La modification du profil arrive bientôt !");
 
@@ -89,6 +93,7 @@ public class ProfileViewModel : ViewModelBase
         OnPropertyChanged(nameof(HoursLabel));
         OnPropertyChanged(nameof(CompletedCount));
         OnPropertyChanged(nameof(FavoriteTutors));
+        OnPropertyChanged(nameof(NotificationCount));
     }
     private AsyncRelayCommand AlertStub(string message) =>
         new(async () => await AlertAsync("Bientôt disponible", message));

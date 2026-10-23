@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "c+2Gefb9OZA=",
+  "dgSpecHash": "IniCPmw83AI=",
   "success": true,
   "projectFilePath": "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,14 @@
     "/home/freddy/.nuget/packages/microsoft.maui.graphics/8.0.100/microsoft.maui.graphics.8.0.100.nupkg.sha512",
     "/home/freddy/.nuget/packages/microsoft.maui.resizetizer/8.0.100/microsoft.maui.resizetizer.8.0.100.nupkg.sha512",
     "/home/freddy/.nuget/packages/microsoft.net.illink.tasks/8.0.31/microsoft.net.illink.tasks.8.0.31.nupkg.sha512",
+    "/home/freddy/.nuget/packages/sqlite-net-pcl/1.9.172/sqlite-net-pcl.1.9.172.nupkg.sha512",
+    "/home/freddy/.nuget/packages/sqlitepclraw.bundle_green/2.1.2/sqlitepclraw.bundle_green.2.1.2.nupkg.sha512",
+    "/home/freddy/.nuget/packages/sqlitepclraw.core/2.1.2/sqlitepclraw.core.2.1.2.nupkg.sha512",
+    "/home/freddy/.nuget/packages/sqlitepclraw.lib.e_sqlite3.android/2.1.2/sqlitepclraw.lib.e_sqlite3.android.2.1.2.nupkg.sha512",
+    "/home/freddy/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.2/sqlitepclraw.provider.e_sqlite3.2.1.2.nupkg.sha512",
+    "/home/freddy/.nuget/packages/system.buffers/4.4.0/system.buffers.4.4.0.nupkg.sha512",
+    "/home/freddy/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/home/freddy/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.2/system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "/home/freddy/.nuget/packages/xamarin.android.glide/4.15.1.2/xamarin.android.glide.4.15.1.2.nupkg.sha512",
     "/home/freddy/.nuget/packages/xamarin.android.glide.annotations/4.15.1.2/xamarin.android.glide.annotations.4.15.1.2.nupkg.sha512",
     "/home/freddy/.nuget/packages/xamarin.android.glide.disklrucache/4.15.1.2/xamarin.android.glide.disklrucache.4.15.1.2.nupkg.sha512",

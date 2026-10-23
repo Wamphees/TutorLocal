@@ -21,6 +21,14 @@ public interface ITutorService
 
     void Select(Tutor tutor);
 
+    bool IsFavorite(string userId, string tutorId);
+
+    void ToggleFavorite(string userId, string tutorId);
+
+    int GetFavoriteCount(string userId);
+
+    Tutor EnsureTutorProfile(User user);
+
     /// <summary>Enregistre l'avis de l'élève et recalcule la moyenne du tuteur.</summary>
     void AddRating(string tutorId, int score);
 
@@ -29,15 +37,52 @@ public interface ITutorService
 
 public class TutorService : ITutorService
 {
+    private const string TutorRecord = "tutors";
+    private const string FavoriteRecord = "favorites";
+    private const string SelectedTutorRecord = "state";
+    private readonly LocalDatabase _database;
+    private Tutor? _selectedTutor;
+
     public ObservableCollection<Tutor> Tutors { get; } = new();
 
-    public Tutor? SelectedTutor { get; set; }
+    public Tutor? SelectedTutor
+    {
+        get
+        {
+            if (_selectedTutor != null)
+                return _selectedTutor;
+
+            var selectedId = _database.Get<string>(SelectedTutorRecord, "selectedTutor");
+            _selectedTutor = selectedId == null ? null : GetById(selectedId);
+            return _selectedTutor;
+        }
+        set
+        {
+            _selectedTutor = value;
+            if (value == null)
+                _database.Delete(SelectedTutorRecord, "selectedTutor");
+            else
+                _database.Save(SelectedTutorRecord, "selectedTutor", value.Id);
+        }
+    }
 
     public int AvailableMentorsCount => 14;
 
-    public TutorService()
+    public TutorService(LocalDatabase database)
     {
-        SeedTutors();
+        _database = database;
+        var savedTutors = _database.Load<Tutor>(TutorRecord);
+        if (savedTutors.Count == 0)
+        {
+            SeedTutors();
+            foreach (var tutor in Tutors)
+                SaveTutor(tutor);
+        }
+        else
+        {
+            foreach (var tutor in savedTutors)
+                Tutors.Add(tutor);
+        }
     }
 
     public Tutor? GetById(string tutorId) => Tutors.FirstOrDefault(t => t.Id == tutorId);
@@ -57,7 +102,47 @@ public class TutorService : ITutorService
         var total = tutor.Rating * tutor.RatingsCount + score;
         tutor.RatingsCount++;
         tutor.Rating = Math.Round(total / tutor.RatingsCount, 1);
+        SaveTutor(tutor);
     }
+
+    public bool IsFavorite(string userId, string tutorId) =>
+        _database.Get<string>(FavoriteRecord, $"{userId}:{tutorId}") != null;
+
+    public void ToggleFavorite(string userId, string tutorId)
+    {
+        var key = $"{userId}:{tutorId}";
+        if (IsFavorite(userId, tutorId))
+            _database.Delete(FavoriteRecord, key);
+        else
+            _database.Save(FavoriteRecord, key, tutorId, ownerId: userId, relatedId: tutorId);
+    }
+
+    public int GetFavoriteCount(string userId) => _database.Load<string>(FavoriteRecord, userId).Count;
+
+    public Tutor EnsureTutorProfile(User user)
+    {
+        var existing = GetById(user.Id);
+        if (existing != null)
+            return existing;
+
+        var tutor = new Tutor
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Avatar = user.Avatar,
+            ProfileLine = "Tuteur bénévole",
+            About = "Profil de tuteur bénévole.",
+            LocationLabel = "Quartier local",
+            MeetingPlace = "Médiathèque de proximité",
+            Subjects = { new TutorSubject("📘", "Aide scolaire", "Tous niveaux") }
+        };
+        Tutors.Add(tutor);
+        SaveTutor(tutor);
+        return tutor;
+    }
+
+    private void SaveTutor(Tutor tutor) =>
+        _database.Save(TutorRecord, tutor.Id, tutor, searchText: $"{tutor.FullName} {string.Join(' ', tutor.Subjects.Select(s => s.Name))}");
 
     private void SeedTutors()
     {

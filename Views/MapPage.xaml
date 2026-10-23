@@ -48,7 +48,9 @@
                     Text="🔔"
                     FontSize="20"
                     VerticalOptions="Center"
-                    Margin="0,0,16,0"/>
+                    Margin="0,0,16,0">
+                <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenNotificationsCommand}" /></Label.GestureRecognizers>
+            </Label>
 
             <!-- Avatar Profil -->
             <Border Grid.Column="3"
@@ -96,6 +98,7 @@
                                     TextColor="{StaticResource TextGray}"
                                     VerticalOptions="Center"/>
                             <Entry Grid.Column="1"
+                                    Text="{Binding SearchText, Mode=TwoWay}"
                                     Placeholder="Rechercher un quartier, une matiè..."
                                     BackgroundColor="Transparent"
                                     TextColor="{StaticResource TextDark}"
@@ -127,6 +130,7 @@
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 16"
                                 Padding="12,8">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleDistanceFilterCommand}" /></Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
                                 <Label Text="📍"
                                         FontSize="12"/>
@@ -140,6 +144,7 @@
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 16"
                                 Padding="12,8">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleAvailabilityFilterCommand}" /></Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
                                 <Label Text="⚡"
                                         FontSize="12"/>
@@ -153,6 +158,7 @@
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 16"
                                 Padding="12,8">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleMathFilterCommand}" /></Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
                                 <Label Text="∑"
                                         FontSize="12"
@@ -184,6 +190,7 @@
                                 Radius="8"
                                 Opacity="0.15"/>
                     </Border.Shadow>
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding FindMyLocationCommand}" /></Border.GestureRecognizers>
                     <Label Text="🎯"
                             FontSize="20"
                             HorizontalOptions="Center"

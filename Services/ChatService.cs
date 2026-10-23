@@ -16,6 +16,10 @@ public interface IChatService
     /// <summary>Ajoute le message de l'élève au fil.</summary>
     ChatMessage SendMessage(string studentId, string tutorId, string content);
 
+    ChatMessage SendTutorMessage(string studentId, string tutorId, string content);
+
+    ChatMessage SendAttachment(string studentId, string tutorId, string senderId, string path, string fileName);
+
     /// <summary>Génère la réponse du tuteur après un temps de réaction réaliste.</summary>
     Task<ChatMessage?> WaitForTutorReplyAsync(string studentId, string tutorId);
 }
@@ -34,15 +38,21 @@ public class ChatService : IChatService
     private int _replyIndex;
 
     private readonly ITutorService _tutorService;
+    private readonly LocalDatabase _database;
 
     private readonly List<Conversation> _conversations = new();
 
     public Conversation Current { get; private set; } = new();
 
-    public ChatService(ITutorService tutorService)
+    public ChatService(ITutorService tutorService, LocalDatabase database)
     {
         _tutorService = tutorService;
-        SeedConversations();
+        _database = database;
+        var savedConversations = _database.Load<Conversation>("conversations");
+        if (savedConversations.Count == 0)
+            SeedConversations();
+        else
+            _conversations.AddRange(savedConversations);
     }
 
     public Conversation GetOrCreate(string studentId, string tutorId)
@@ -57,6 +67,7 @@ public class ChatService : IChatService
         conversation = new Conversation { StudentId = studentId, TutorId = tutorId };
         _conversations.Add(conversation);
         Current = conversation;
+        Save(conversation);
         return conversation;
     }
 
@@ -76,6 +87,42 @@ public class ChatService : IChatService
         foreach (var m in conversation.Messages.Where(m => m.IsFromUser && !m.IsRead))
             m.IsRead = true;
 
+        Save(conversation);
+        return message;
+    }
+
+    public ChatMessage SendTutorMessage(string studentId, string tutorId, string content)
+    {
+        var conversation = GetOrCreate(studentId, tutorId);
+        var message = new ChatMessage
+        {
+            SenderId = tutorId,
+            IsFromUser = false,
+            Content = content,
+            SentAt = DateTime.Now
+        };
+        conversation.Messages.Add(message);
+        foreach (var previous in conversation.Messages.Where(item => item.SenderId == studentId && !item.IsRead))
+            previous.IsRead = true;
+        Save(conversation);
+        return message;
+    }
+
+    public ChatMessage SendAttachment(string studentId, string tutorId, string senderId, string path, string fileName)
+    {
+        var conversation = GetOrCreate(studentId, tutorId);
+        var message = new ChatMessage
+        {
+            SenderId = senderId,
+            IsFromUser = senderId == studentId,
+            Content = $"📎 {fileName}",
+            SentAt = DateTime.Now,
+            HasImage = true,
+            AttachmentPath = path,
+            AttachmentName = fileName
+        };
+        conversation.Messages.Add(message);
+        Save(conversation);
         return message;
     }
 
@@ -94,6 +141,7 @@ public class ChatService : IChatService
             SentAt = DateTime.Now
         };
         conversation.Messages.Add(reply);
+        Save(conversation);
         return reply;
     }
 
@@ -145,5 +193,39 @@ public class ChatService : IChatService
 
         _conversations.Add(thomas);
         Current = thomas;
+        Save(thomas);
+    }
+
+    private void Save(Conversation conversation) =>
+        _database.Save("conversations", conversation.Id, CreateStorageCopy(conversation), ownerId: conversation.StudentId,
+            relatedId: conversation.TutorId, searchText: string.Join(' ', conversation.Messages.Select(message => message.Content)),
+            occurredAt: conversation.Messages.LastOrDefault()?.SentAt);
+
+    private static Conversation CreateStorageCopy(Conversation conversation)
+    {
+        var copy = new Conversation
+        {
+            Id = conversation.Id,
+            StudentId = conversation.StudentId,
+            TutorId = conversation.TutorId,
+            PlannedSessionDate = conversation.PlannedSessionDate,
+            PlannedSessionPlace = conversation.PlannedSessionPlace
+        };
+        foreach (var message in conversation.Messages)
+        {
+            copy.Messages.Add(new ChatMessage
+            {
+                Id = message.Id,
+                SenderId = message.SenderId,
+                IsFromUser = message.SenderId == conversation.StudentId,
+                Content = message.Content,
+                SentAt = message.SentAt,
+                HasImage = message.HasImage,
+                AttachmentPath = message.AttachmentPath,
+                AttachmentName = message.AttachmentName,
+                IsRead = message.IsRead
+            });
+        }
+        return copy;
     }
 }

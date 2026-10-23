@@ -1,4 +1,4 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Name="RootPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:TutorLocal.ViewModels"
              x:Class="TutorLocal.Views.ChatPage"
@@ -54,7 +54,7 @@
                             </HorizontalStackLayout>
                             <Label Text="{Binding Tutor.Subjects[0], StringFormat='Tuteur de {0}'}" FontSize="13" TextColor="{StaticResource TextGray}" />
                         </VerticalStackLayout>
-                        <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0" IsVisible="{Binding IsStudent}">
                             <Label Text="🎥" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                         <Border Grid.Column="3" BackgroundColor="#E5E7EB" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
@@ -106,7 +106,11 @@
                                         <Border BackgroundColor="{StaticResource BubbleTutor}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" Padding="16,12" MaximumWidthRequest="280">
                                             <Border.StrokeShape><RoundRectangle CornerRadius="16,16,16,4" /></Border.StrokeShape>
                                             <Border.Shadow><Shadow Brush="#000000" Offset="0,1" Radius="2" Opacity="0.05" /></Border.Shadow>
-                                            <Label Text="{Binding Content}" FontSize="14" TextColor="{StaticResource TextDark}" LineHeight="1.4" />
+                                            <Label Text="{Binding Content}" FontSize="14" TextColor="{StaticResource TextDark}" LineHeight="1.4">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.OpenAttachmentCommand}" CommandParameter="{Binding AttachmentPath}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
                                         </Border>
                                         <Label Text="{Binding TimeLabel}" FontSize="10" TextColor="{StaticResource TextGray}" Margin="4,0,0,0" />
                                     </VerticalStackLayout>
@@ -118,7 +122,11 @@
                                     <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="End">
                                         <Border BackgroundColor="{StaticResource BubbleUser}" StrokeThickness="0" Padding="16,12" MaximumWidthRequest="280">
                                             <Border.StrokeShape><RoundRectangle CornerRadius="16,16,4,16" /></Border.StrokeShape>
-                                            <Label Text="{Binding Content}" FontSize="14" TextColor="White" LineHeight="1.4" />
+                                            <Label Text="{Binding Content}" FontSize="14" TextColor="White" LineHeight="1.4">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.OpenAttachmentCommand}" CommandParameter="{Binding AttachmentPath}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
                                         </Border>
                                         <HorizontalStackLayout HorizontalOptions="End" Spacing="4" Margin="0,0,4,0">
                                             <Label Text="{Binding TimeLabel}" FontSize="10" TextColor="{StaticResource TextGray}" />
@@ -145,14 +153,18 @@
                 
                 <!-- Zone de texte et boutons -->
                 <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12" VerticalOptions="End">
-                    <Label Text="📎" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                    <Label Text="📎" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center">
+                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Label.GestureRecognizers>
+                    </Label>
                     
                     <Border Grid.Column="1" BackgroundColor="#F3F4F6" StrokeThickness="0" StrokeShape="RoundRectangle 20" HeightRequest="44" Padding="16,0">
                         <!-- L'Entry est nommé pour pouvoir récupérer son texte en C# -->
                         <Entry x:Name="MessageEntry" Placeholder="Écrire un message bienveillant..." Text="{Binding NewMessage}" ReturnCommand="{Binding SendCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" FontSize="14" VerticalOptions="Center" />
                     </Border>
                     
-                    <Label Grid.Column="2" Text="📷" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                    <Label Grid.Column="2" Text="📷" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center">
+                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Label.GestureRecognizers>
+                    </Label>
                     
                     <!-- Bouton Envoyer avec Clicked -->
                     <Border Grid.Column="3" BackgroundColor="{StaticResource PrimaryBlue}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
