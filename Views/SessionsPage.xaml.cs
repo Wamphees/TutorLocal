@@ -1,24 +1,21 @@
-namespace TutorLocal;
+using TutorLocal.ViewModels;
+
+namespace TutorLocal.Views;
 
 public partial class SessionsPage : ContentPage
 {
-    public SessionsPage()
+    private readonly SessionsViewModel _viewModel;
+
+    public SessionsPage(SessionsViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private void OnNavigateToDashboard(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        Application.Current.MainPage = new NavigationPage(new DashboardPage());
+        base.OnAppearing();
+        _viewModel.OnAppearing();
     }
-
-    private void OnNavigateToMap(object sender, EventArgs e)
-    {
-        Application.Current.MainPage = new NavigationPage(new MapPage());
-    }
-
-    private async void OnNavigateToRating(object sender, EventArgs e)
-{
-    await Navigation.PushAsync(new RatingPage());
-}
 }

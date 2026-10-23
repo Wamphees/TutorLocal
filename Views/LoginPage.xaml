@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.LoginPage"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
+             x:Class="TutorLocal.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -24,7 +25,7 @@
                 <!-- Bouton Retour -->
                 <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 12" StrokeThickness="0">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
                     </Border.GestureRecognizers>
                     <Label Text="←" TextColor="{StaticResource TextDark}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Border>
@@ -89,7 +90,7 @@
                 <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" HeightRequest="52" Padding="12,0">
                     <Grid ColumnDefinitions="Auto, *">
                         <Label Text="✉️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
-                        <Entry Grid.Column="1" Placeholder="alex@exemple.fr" Keyboard="Email" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Placeholder="alex@exemple.fr" Keyboard="Email" Text="{Binding Email}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
                     </Grid>
                 </Border>
             </VerticalStackLayout>
@@ -98,25 +99,36 @@
             <VerticalStackLayout Spacing="8" Margin="0,0,0,24">
                 <Grid ColumnDefinitions="*, Auto">
                     <Label Text="Mot de passe" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
-                    <Label Grid.Column="1" Text="Mot de passe oublié ?" FontSize="13" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="Mot de passe oublié ?" FontSize="13" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold">
+                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" /></Label.GestureRecognizers>
+                    </Label>
                 </Grid>
                 <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" HeightRequest="52" Padding="12,0">
                     <Grid ColumnDefinitions="Auto, *, Auto">
                         <Label Text="🔒" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
-                        <Entry Grid.Column="1" Placeholder="••••••••" IsPassword="True" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Placeholder="••••••••" IsPassword="True" Text="{Binding Password}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
                         <Label Grid.Column="2" Text="👁️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
                     </Grid>
                 </Border>
             </VerticalStackLayout>
 
+            <!-- MESSAGE D'ERREUR DE VALIDATION -->
+            <Border BackgroundColor="#FEF2F2" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" IsVisible="{Binding HasError}" Margin="0,0,0,16">
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="⚠️" FontSize="14" VerticalOptions="Center" />
+                    <Label Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="13" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+
             <!-- OPTIONS CONNEXION (Se souvenir & Biométrie) -->
             <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,24">
                 <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                    <CheckBox Color="{StaticResource PrimaryBlue}" IsChecked="True" />
+                    <CheckBox Color="{StaticResource PrimaryBlue}" IsChecked="{Binding RememberMe, Mode=TwoWay}" />
                     <Label Text="Se souvenir de moi" TextColor="{StaticResource TextDark}" FontSize="14" VerticalOptions="Center" />
                 </HorizontalStackLayout>
                 
                 <Border Grid.Column="1" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BiometryCommand}" /></Border.GestureRecognizers>
                     <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                         <Label Text="👆" FontSize="12" VerticalOptions="Center"/>
                         <Label Text="Biométrie" TextColor="{StaticResource TextDark}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
@@ -125,7 +137,7 @@
             </Grid>
 
             <!-- BOUTON SE CONNECTER -->
-            <Button Text="Se connecter  →" Clicked="OnLoginClicked" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
+            <Button Text="Se connecter  →" Command="{Binding LoginCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
 
             <!-- SEPARATEUR OU -->
             <Grid ColumnDefinitions="*, Auto, *" VerticalOptions="Center" Margin="0,0,0,24">
@@ -136,6 +148,7 @@
 
             <!-- CONNEXION ENT -->
             <Border BackgroundColor="White" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16,12" Margin="0,0,0,12">
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding EntLoginCommand}" /></Border.GestureRecognizers>
                 <Grid ColumnDefinitions="Auto, *, Auto">
                     <Border WidthRequest="36" HeightRequest="36" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" VerticalOptions="Center" Margin="0,0,12,0">
                         <Label Text="🏛️" HorizontalOptions="Center" VerticalOptions="Center" />
@@ -150,6 +163,7 @@
 
             <!-- CONNEXION GOOGLE -->
             <Border BackgroundColor="White" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16,12" Margin="0,0,0,24">
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GoogleLoginCommand}" /></Border.GestureRecognizers>
                 <Grid ColumnDefinitions="Auto, *, Auto">
                     <Label Text="G" TextColor="#EA4335" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Margin="8,0,20,0" />
                     <Label Grid.Column="1" Text="Continuer avec Google" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
@@ -173,7 +187,7 @@
                 <Label Text="Pas encore inscrit ?" TextColor="{StaticResource TextGray}" FontSize="14" VerticalOptions="Center"/>
                 <Label Text="Créer un compte →" TextColor="{StaticResource PrimaryBlue}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigateToRegister" />
+                        <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>

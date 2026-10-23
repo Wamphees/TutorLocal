@@ -1,14 +1,21 @@
-namespace TutorLocal;
+using TutorLocal.ViewModels;
+
+namespace TutorLocal.Views;
 
 public partial class RequestHelpPage : ContentPage
 {
-    public RequestHelpPage()
+    private readonly RequestHelpViewModel _viewModel;
+
+    public RequestHelpPage(RequestHelpViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private async void OnBackButtonClicked(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        await Navigation.PopAsync();
+        base.OnAppearing();
+        _viewModel.OnAppearing();
     }
 }

@@ -1,14 +1,21 @@
-namespace TutorLocal;
+using TutorLocal.ViewModels;
+
+namespace TutorLocal.Views;
 
 public partial class RegisterPage : ContentPage
 {
-    public RegisterPage()
+    private readonly RegisterViewModel _viewModel;
+
+    public RegisterPage(RegisterViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private async void OnNavigateToLogin(object sender, EventArgs e)
-{
-    await Navigation.PushAsync(new LoginPage());
-}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _viewModel.OnAppearing();
+    }
 }

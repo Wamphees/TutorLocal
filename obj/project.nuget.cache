@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RzglE2pMzuw=",
+  "dgSpecHash": "c+2Gefb9OZA=",
   "success": true,
-  "projectFilePath": "/home/freddy/Documents/MAUI/TutorLocal/TutorLocal.csproj",
+  "projectFilePath": "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj",
   "expectedPackageFiles": [
     "/home/freddy/.nuget/packages/googlegson/2.10.1.4/googlegson.2.10.1.4.nupkg.sha512",
     "/home/freddy/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",

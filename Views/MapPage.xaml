@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.MapPage"
+             x:Class="TutorLocal.Views.MapPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -256,7 +257,7 @@
                         StrokeShape="RoundRectangle 10"
                         Padding="8,4">
                     <HorizontalStackLayout Spacing="4">
-                        <Label Text="Thomas D."
+                        <Label Text="{Binding FullName}"
                                 TextColor="White"
                                 FontAttributes="Bold"
                                 FontSize="11"/>
@@ -355,7 +356,7 @@
                         <VerticalStackLayout Grid.Column="1"
                                 VerticalOptions="Center"
                                 Spacing="2">
-                            <Label Text="Thomas D."
+                            <Label Text="{Binding FullName}"
                                     FontAttributes="Bold"
                                     FontSize="18"
                                     TextColor="{StaticResource TextDark}"/>
@@ -376,7 +377,7 @@
                                 StrokeShape="RoundRectangle 12"
                                 Padding="8,6"
                                 VerticalOptions="Start">
-                            <Label Text="⭐ 4.9 (14 avis)"
+                            <Label Text="{Binding RatingLabel}"
                                     TextColor="#B45309"
                                     FontAttributes="Bold"
                                     FontSize="11"/>
@@ -387,7 +388,7 @@
                     <HorizontalStackLayout Spacing="8">
                         <Label Text="🕒"
                                 FontSize="14"/>
-                        <Label Text="Disponible aujourd'hui dès 15h"
+                        <Label Text="{Binding AvailabilityLabel}"
                                 TextColor="{StaticResource TextDark}"
                                 FontSize="14"/>
                     </HorizontalStackLayout>
@@ -398,16 +399,7 @@
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 8"
                                 Padding="12,6">
-                            <Label Text="Mathématiques - Lycée"
-                                    TextColor="{StaticResource PrimaryBlue}"
-                                    FontAttributes="Bold"
-                                    FontSize="12"/>
-                        </Border>
-                        <Border BackgroundColor="{StaticResource LightBlueBg}"
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 8"
-                                Padding="12,6">
-                            <Label Text="Physique-Chimie"
+                            <Label Text="{Binding SubjectsLabel}"
                                     TextColor="{StaticResource PrimaryBlue}"
                                     FontAttributes="Bold"
                                     FontSize="12"/>
@@ -422,7 +414,7 @@
                         <HorizontalStackLayout Spacing="8">
                             <Label Text="📍"
                                     FontSize="16"/>
-                            <Label Text="À 800 mètres (Bibliothèque Parmentier)"
+                            <Label Text="{Binding DistanceLabel}"
                                     TextColor="{StaticResource TextGray}"
                                     FontSize="14"/>
                         </HorizontalStackLayout>
@@ -433,7 +425,7 @@
                             ColumnSpacing="12"
                             Margin="0,4,0,0">
                         <Button Text="Voir le profil complet  →"
-                                Clicked="OnNavigateToProfile"
+                                Command="{Binding ShowProfileCommand}"
                                 BackgroundColor="{StaticResource PrimaryBlue}"
                                 TextColor="White"
                                 FontAttributes="Bold"
@@ -445,7 +437,7 @@
                                 StrokeShape="RoundRectangle 12"
                                 WidthRequest="52"
                                 HeightRequest="52">
-                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNavigateToChat" /></Border.GestureRecognizers>
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenChatCommand}" /></Border.GestureRecognizers>
                             <Label Text="💬"
                                     FontSize="20"
                                     TextColor="{StaticResource PrimaryBlue}"
@@ -472,7 +464,7 @@
                         Spacing="4"
                         Opacity="0.5">
                     <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigateToDashboard"/>
+                        <TapGestureRecognizer Command="{Binding GoToDashboardCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
                     <Label Text="🏠"
                             FontSize="22"
@@ -510,7 +502,7 @@
                         Opacity="0.5">
                     <!-- C'est cette balise qui rend le bouton cliquable -->
                     <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigateToSessions"/>
+                        <TapGestureRecognizer Command="{Binding GoToSessionsCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
 
                     <Label Text="📅"
@@ -528,6 +520,7 @@
                         HorizontalOptions="Center"
                         Spacing="4"
                         Opacity="0.5">
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding GoToProfileCommand}" /></VerticalStackLayout.GestureRecognizers>
                     <Label Text="👤"
                             FontSize="22"
                             HorizontalOptions="Center"/>

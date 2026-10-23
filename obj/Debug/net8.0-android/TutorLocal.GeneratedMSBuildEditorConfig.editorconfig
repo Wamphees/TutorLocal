@@ -12,96 +12,96 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TutorLocal
-build_property.ProjectDir = /home/freddy/Documents/MAUI/TutorLocal/
+build_property.ProjectDir = /home/freddy/Documents/MAUI/TutorLocal_opencode/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[/home/freddy/Documents/MAUI/TutorLocal/App.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[/home/freddy/Documents/MAUI/TutorLocal/AppShell.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[/home/freddy/Documents/MAUI/TutorLocal/ChatPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.ChatPage.xaml
-build_metadata.AdditionalFiles.TargetPath = ChatPage.xaml
-build_metadata.AdditionalFiles.RelativePath = ChatPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/DashboardPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.DashboardPage.xaml
-build_metadata.AdditionalFiles.TargetPath = DashboardPage.xaml
-build_metadata.AdditionalFiles.RelativePath = DashboardPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/LoginPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.LoginPage.xaml
-build_metadata.AdditionalFiles.TargetPath = LoginPage.xaml
-build_metadata.AdditionalFiles.RelativePath = LoginPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/MainPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.MainPage.xaml
-build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
-build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/MapPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.MapPage.xaml
-build_metadata.AdditionalFiles.TargetPath = MapPage.xaml
-build_metadata.AdditionalFiles.RelativePath = MapPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/ProfilePage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.ProfilePage.xaml
-build_metadata.AdditionalFiles.TargetPath = ProfilePage.xaml
-build_metadata.AdditionalFiles.RelativePath = ProfilePage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/RatingPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RatingPage.xaml
-build_metadata.AdditionalFiles.TargetPath = RatingPage.xaml
-build_metadata.AdditionalFiles.RelativePath = RatingPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/RegisterPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RegisterPage.xaml
-build_metadata.AdditionalFiles.TargetPath = RegisterPage.xaml
-build_metadata.AdditionalFiles.RelativePath = RegisterPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/RequestHelpPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.RequestHelpPage.xaml
-build_metadata.AdditionalFiles.TargetPath = RequestHelpPage.xaml
-build_metadata.AdditionalFiles.RelativePath = RequestHelpPage.xaml
-
-[/home/freddy/Documents/MAUI/TutorLocal/Resources/Styles/Colors.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Colors.xaml
 
-[/home/freddy/Documents/MAUI/TutorLocal/Resources/Styles/Styles.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
 
-[/home/freddy/Documents/MAUI/TutorLocal/SessionsPage.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/ChatPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.SessionsPage.xaml
-build_metadata.AdditionalFiles.TargetPath = SessionsPage.xaml
-build_metadata.AdditionalFiles.RelativePath = SessionsPage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.ChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/ChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/ChatPage.xaml
 
-[/home/freddy/Documents/MAUI/TutorLocal/TutorProfilePage.xaml]
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/DashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.TutorProfilePage.xaml
-build_metadata.AdditionalFiles.TargetPath = TutorProfilePage.xaml
-build_metadata.AdditionalFiles.RelativePath = TutorProfilePage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.DashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/DashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/DashboardPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/LoginPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/MainPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/MapPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.MapPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/MapPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/MapPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/ProfilePage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/RatingPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.RatingPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/RatingPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/RatingPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/RegisterPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.RegisterPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/RegisterPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/RegisterPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/RequestHelpPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.RequestHelpPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/RequestHelpPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/RequestHelpPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/SessionsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.SessionsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/SessionsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/SessionsPage.xaml
+
+[/home/freddy/Documents/MAUI/TutorLocal_opencode/Views/TutorProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = TutorLocal.Views.TutorProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/TutorProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/TutorProfilePage.xaml

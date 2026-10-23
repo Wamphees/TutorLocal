@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/freddy/Documents/MAUI/TutorLocal/TutorLocal.csproj": {}
+    "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj": {}
   },
   "projects": {
-    "/home/freddy/Documents/MAUI/TutorLocal/TutorLocal.csproj": {
+    "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/freddy/Documents/MAUI/TutorLocal/TutorLocal.csproj",
+        "projectUniqueName": "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj",
         "projectName": "TutorLocal",
-        "projectPath": "/home/freddy/Documents/MAUI/TutorLocal/TutorLocal.csproj",
+        "projectPath": "/home/freddy/Documents/MAUI/TutorLocal_opencode/TutorLocal.csproj",
         "packagesPath": "/home/freddy/.nuget/packages/",
-        "outputPath": "/home/freddy/Documents/MAUI/TutorLocal/obj/",
+        "outputPath": "/home/freddy/Documents/MAUI/TutorLocal_opencode/obj/",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [

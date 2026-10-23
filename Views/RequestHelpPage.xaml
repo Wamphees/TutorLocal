@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.RequestHelpPage"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
+             x:Class="TutorLocal.Views.RequestHelpPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -23,7 +24,7 @@
         <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="20,20,20,10" BackgroundColor="{StaticResource CardBg}">
             <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                 <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
-                    <Label.GestureRecognizers><TapGestureRecognizer Tapped="OnBackButtonClicked" /></Label.GestureRecognizers>
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding BackCommand}" /></Label.GestureRecognizers>
                 </Label>
                 <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 8" StrokeThickness="0" VerticalOptions="Center">
                     <Label Text="📘" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -84,11 +85,12 @@
                         <Label Grid.Column="1" Text="Requis" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="11" />
                     </Grid>
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="12,12">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ChooseSubjectLevelCommand}" /></Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto, *, Auto">
                             <Border WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Margin="0,0,12,0">
                                 <Label Text="📐" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" />
                             </Border>
-                            <Label Grid.Column="1" Text="Mathématiques — Lycée (1ère)" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding SubjectLevelLabel}" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
                             <Label Grid.Column="2" Text="▼" TextColor="{StaticResource TextGray}" FontSize="12" VerticalOptions="Center" />
                         </Grid>
                     </Border>
@@ -98,11 +100,11 @@
                 <VerticalStackLayout Spacing="8">
                     <Grid ColumnDefinitions="*, Auto">
                         <Label Text="Décrivez votre difficulté ou chapitre" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
-                        <Label Grid.Column="1" Text="142 / 500" TextColor="{StaticResource TextGray}" FontSize="11" />
+                        <Label Grid.Column="1" Text="{Binding DescriptionCountLabel}" TextColor="{StaticResource TextGray}" FontSize="11" />
                     </Grid>
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 16" Padding="16">
                         <VerticalStackLayout Spacing="16">
-                            <Editor Text="Je bloque sur le calcul des dérivées partielles et l'application directe sur le tableau de variations de ma feuille d'exercices n°4 distribuée mardi." TextColor="{StaticResource TextDark}" BackgroundColor="Transparent" FontSize="14" AutoSize="TextChanges" />
+                            <Editor Text="{Binding Description}" Placeholder="Décrivez votre difficulté ou chapitre à réviser..." TextColor="{StaticResource TextDark}" BackgroundColor="Transparent" FontSize="14" AutoSize="TextChanges" />
                             
                             <!-- Bouton pièce jointe intégré -->
                             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" HorizontalOptions="Start">
@@ -121,6 +123,7 @@
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
                         <!-- Option : Urgent (Sélectionnée) -->
                         <Border Grid.Column="0" BackgroundColor="#FFE4B5" StrokeThickness="1" Stroke="{StaticResource OrangeWarning}" StrokeShape="RoundRectangle 12" Padding="12">
+                                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectUrgentCommand}" /></Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="6">
                                 <Grid ColumnDefinitions="Auto, *">
                                     <Border BackgroundColor="{StaticResource OrangeWarning}" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
@@ -138,6 +141,7 @@
                         
                         <!-- Option : Planifié (Non sélectionnée) -->
                         <Border Grid.Column="1" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="12">
+                                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectPlannedCommand}" /></Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="6">
                                 <Grid ColumnDefinitions="Auto, *">
                                     <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
@@ -158,8 +162,9 @@
                     <Label Text="Modalité souhaitée" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
                     <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="4">
                         <Grid ColumnDefinitions="*,*">
-                            <!-- Actif -->
+                            <!-- Actif (lié à l'état du VM) -->
                             <Border Grid.Column="0" BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInPersonCommand}" /></Border.GestureRecognizers>
                                 <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="4" Opacity="0.05" /></Border.Shadow>
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="🏛️" VerticalOptions="Center" FontSize="14" />
@@ -167,8 +172,9 @@
                                     <Label Text="✓" TextColor="{StaticResource GreenSuccess}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12"/>
                                 </HorizontalStackLayout>
                             </Border>
-                            <!-- Inactif -->
+                            <!-- Inactif (lié à l'état du VM) -->
                             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectOnlineCommand}" /></HorizontalStackLayout.GestureRecognizers>
                                 <Label Text="💻" VerticalOptions="Center" FontSize="14" />
                                 <Label Text="En visio" TextColor="{StaticResource TextGray}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
                             </HorizontalStackLayout>
@@ -190,10 +196,10 @@
                                 </Border>
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                     <HorizontalStackLayout Spacing="4">
-                                        <Label Text="Médiathèque Parmentier" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
+                                        <Label Text="{Binding MeetingPlaceLabel}" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
                                         <Label Text="✓" TextColor="#064E3B" FontAttributes="Bold" FontSize="12" />
                                     </HorizontalStackLayout>
-                                    <Label Text="Paris 11e • À 450 m de chez vous" FontSize="12" TextColor="{StaticResource TextGray}" />
+                                    <Label Text="{Binding MeetingPlaceDistance}" FontSize="12" TextColor="{StaticResource TextGray}" />
                                 </VerticalStackLayout>
                             </Grid>
                             
@@ -224,7 +230,10 @@
 
         <!-- FOOTER FIXE (Bouton d'action Sticky) -->
         <Border Grid.Row="2" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="#E5E7EB" Padding="20,16,20,30" Margin="-1,0,-1,-1">
-            <Button Text="🚀 Publier ma demande d'aide" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
+            <VerticalStackLayout Spacing="8">
+                <Label Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="12" IsVisible="{Binding HasError}" />
+            <Button Text="🚀 Publier ma demande d'aide" Command="{Binding PublishCommand}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
+            </VerticalStackLayout>
         </Border>
 
     </Grid>

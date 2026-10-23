@@ -1,6 +1,7 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Name="RootPage" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.RegisterPage"
+             x:Class="TutorLocal.Views.RegisterPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -90,12 +91,15 @@
                             StrokeShape="RoundRectangle 12"
                             Padding="4">
                         <Grid ColumnDefinitions="*,*">
-                            <!-- Actif -->
+                            <!-- Élève / Parent (sélection via VM) -->
                             <Border Grid.Column="0"
                                     BackgroundColor="{StaticResource PrimaryBlue}"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 8"
                                     Padding="0,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectStudentCommand}"/>
+                                </Border.GestureRecognizers>
                                 <HorizontalStackLayout HorizontalOptions="Center"
                                         Spacing="6">
                                     <Label Text="🎓"
@@ -108,20 +112,27 @@
                                             VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                             </Border>
-                            <!-- Inactif -->
-                            <HorizontalStackLayout Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    Spacing="6">
-                                <Label Text="🤝"
-                                        VerticalOptions="Center"
-                                        FontSize="14"/>
-                                <Label Text="Tuteur bénévole"
-                                        TextColor="{StaticResource TextDark}"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        VerticalOptions="Center"/>
-                            </HorizontalStackLayout>
+                            <!-- Tuteur bénévole -->
+                            <Border Grid.Column="1"
+                                    BackgroundColor="White"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="0,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectTutorCommand}"/>
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout HorizontalOptions="Center"
+                                        Spacing="6">
+                                    <Label Text="🤝"
+                                            VerticalOptions="Center"
+                                            FontSize="14"/>
+                                    <Label Text="Tuteur bénévole"
+                                            TextColor="{StaticResource TextDark}"
+                                            FontSize="13"
+                                            FontAttributes="Bold"
+                                            VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </Border>
                         </Grid>
                     </Border>
 
@@ -166,6 +177,7 @@
                                         VerticalOptions="Center"/>
                                 <Entry Grid.Column="1"
                                         Placeholder="ex. Alex Dupont"
+                                        Text="{Binding FullName}"
                                         BackgroundColor="Transparent"
                                         TextColor="{StaticResource TextDark}"
                                         Margin="8,0,0,0"
@@ -192,6 +204,7 @@
                                 <Entry Grid.Column="1"
                                         Placeholder="alex@exemple.fr"
                                         Keyboard="Email"
+                                        Text="{Binding Email}"
                                         BackgroundColor="Transparent"
                                         TextColor="{StaticResource TextDark}"
                                         Margin="8,0,0,0"
@@ -218,6 +231,7 @@
                                 <Entry Grid.Column="1"
                                         Placeholder="••••••••"
                                         IsPassword="True"
+                                        Text="{Binding Password}"
                                         BackgroundColor="Transparent"
                                         TextColor="{StaticResource TextDark}"
                                         Margin="8,0,0,0"
@@ -244,37 +258,25 @@
                                     FontAttributes="Bold"/>
                         </Grid>
                         <Grid ColumnDefinitions="*, *, *"
-                                ColumnSpacing="8">
-                            <Border BackgroundColor="{StaticResource PrimaryBlue}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 8"
-                                    Padding="0,10">
-                                <Label Text="Collège"
-                                        TextColor="White"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Center"/>
-                            </Border>
-                            <Border BackgroundColor="{StaticResource LightBlueBg}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 8"
-                                    Padding="0,10">
-                                <Label Text="Lycée"
-                                        TextColor="{StaticResource TextDark}"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Center"/>
-                            </Border>
-                            <Border BackgroundColor="{StaticResource LightBlueBg}"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 8"
-                                    Padding="0,10">
-                                <Label Text="Supérieur"
-                                        TextColor="{StaticResource TextDark}"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Center"/>
-                            </Border>
+                                ColumnSpacing="8"
+                                BindableLayout.ItemsSource="{Binding Levels}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BackgroundColor="{Binding BackgroundColor}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8"
+                                            Padding="0,10">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.SelectLevelCommand}" CommandParameter="{Binding}"/>
+                                        </Border.GestureRecognizers>
+                                        <Label Text="{Binding Label}"
+                                                TextColor="{Binding TextColor}"
+                                                FontSize="13"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"/>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
                         </Grid>
                     </VerticalStackLayout>
 
@@ -283,7 +285,8 @@
                             Margin="0,4,0,0"
                             ColumnSpacing="12">
                         <CheckBox Color="{StaticResource PrimaryBlue}"
-                                VerticalOptions="Start"/>
+                                VerticalOptions="Start"
+                                IsChecked="{Binding TermsAccepted, Mode=TwoWay}"/>
                         <Label Grid.Column="1"
                                 FontSize="13"
                                 TextColor="{StaticResource TextGray}"
@@ -301,8 +304,17 @@
                         </Label>
                     </Grid>
 
+                    <!-- MESSAGE D'ERREUR (=validations du VM) -->
+                    <Label Text="{Binding ErrorMessage}"
+                            TextColor="#B91C1C"
+                            FontSize="13"
+                            IsVisible="{Binding HasError}"
+                            Margin="0,4,0,0"/>
+
                     <!-- BOUTON SUBMIT -->
                     <Button Text="⚡ S'inscrire gratuitement"
+                            Command="{Binding RegisterCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
                             BackgroundColor="{StaticResource PrimaryBlue}"
                             TextColor="White"
                             CornerRadius="12"
@@ -399,7 +411,7 @@
                         FontAttributes="Bold"
                         TextDecorations="Underline">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNavigateToLogin"/>
+                        <TapGestureRecognizer Command="{Binding GoToLoginCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>

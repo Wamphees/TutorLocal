@@ -9,6 +9,11 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Convertisseurs de binding partagés par toutes les vues (messagerie, listes...) -->
+            <local:InverseBoolConverter x:Key="InverseBool" />
+            <local:BoolToStringConverter x:Key="ReadMark" TrueValue="✓✓" FalseValue="✓" />
+            <local:CountToVisibilityConverter x:Key="AnyToVisible" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

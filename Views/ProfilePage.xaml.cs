@@ -1,32 +1,21 @@
-namespace TutorLocal;
+using TutorLocal.ViewModels;
+
+namespace TutorLocal.Views;
 
 public partial class ProfilePage : ContentPage
 {
-    public ProfilePage()
+    private readonly ProfileViewModel _viewModel;
+
+    public ProfilePage(ProfileViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private void OnNavigateToDashboard(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        Application.Current.MainPage = new NavigationPage(new DashboardPage());
+        base.OnAppearing();
+        _viewModel.OnAppearing();
     }
-
-    private void OnNavigateToMap(object sender, EventArgs e)
-    {
-        Application.Current.MainPage = new NavigationPage(new MapPage());
-    }
-
-    private void OnNavigateToSessions(object sender, EventArgs e)
-    {
-        Application.Current.MainPage = new NavigationPage(new SessionsPage());
-    }
-
-    private void OnLogoutClicked(object sender, EventArgs e)
-    {
-        // Retourne à la page d'accueil principale pour simuler une déconnexion
-        Application.Current.MainPage = new NavigationPage(new MainPage());
-    }
-
-    
 }

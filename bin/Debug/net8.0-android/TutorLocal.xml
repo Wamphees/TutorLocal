@@ -4,5 +4,377 @@
         <name>TutorLocal</name>
     </assembly>
     <members>
+        <member name="T:TutorLocal.InverseBoolConverter">
+            <summary>Utile pour convertir une valeur booléenne en opposition (UI de chat, visibilité...).</summary>
+        </member>
+        <member name="T:TutorLocal.BoolToStringConverter">
+            <summary>Convertisseur booléen-compilé vers une chaîne sélectionnable par le XAML.</summary>
+        </member>
+        <member name="T:TutorLocal.CountToVisibilityConverter">
+            <summary>Rend un élément visible seulement si la ressource est renseignée.</summary>
+        </member>
+        <member name="P:TutorLocal.MauiProgram.Services">
+            <summary>Accès global au conteneur de services (nécessaire avant l'attachement du handler).</summary>
+        </member>
+        <member name="T:TutorLocal.Models.ChatMessage">
+            <summary>Message échangé dans la messagerie sécurisée entre un élève et un tuteur.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.ChatMessage.IsRead">
+            <summary>Double coche bleue une fois le message lu.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.ChatMessage.StatusLabel">
+            <summary>Heure + accusés de réception.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.Conversation">
+            <summary>Conversation entre un élève et un tuteur.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Conversation.PlannedSessionDate">
+            <summary>Carte "Séance confirmée" affichée en haut du fil si une séance est programmée.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.Tutor">
+            <summary>Tuteur bénévole proposant des séances d'entraide gratuites.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.IsVerified">
+            <summary>Indique si le tuteur a été vérifié par l'équipe TutorLocal.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.Subjects">
+            <summary>Matières enseignées : paires (icône, libellé).</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.DistanceMeters">
+            <summary>Distance en mètres depuis le domicile de l'élève.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.MeetingPlace">
+            <summary>Lieu public habituel (médiathèque, bibliothèque…).</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.ProfileLine">
+            <summary>Présentation du tuteur sous forme "Profil / Formation".</summary>
+        </member>
+        <member name="P:TutorLocal.Models.Tutor.Reviews">
+            <summary>Derniers avis vérifiés reçus par le tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.TutorSubject">
+            <summary>Matière enseignée par un tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.TutorReview">
+            <summary>Avis laissé par un élève sur un tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.SessionStatus">
+            <summary>Statut d'une séance de tutorat.</summary>
+        </member>
+        <member name="F:TutorLocal.Models.SessionStatus.Pending">
+            <summary>En attente de confirmation par le tuteur.</summary>
+        </member>
+        <member name="F:TutorLocal.Models.SessionStatus.Confirmed">
+            <summary>Confirmée par le tuteur.</summary>
+        </member>
+        <member name="F:TutorLocal.Models.SessionStatus.Completed">
+            <summary>Terminée.</summary>
+        </member>
+        <member name="F:TutorLocal.Models.SessionStatus.Cancelled">
+            <summary>Annulée.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.SessionModality">
+            <summary>Modalité de la séance.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.TutoringSession">
+            <summary>Séance de tutorat entre un élève et un tuteur bénévole.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.TutoringSession.Date">
+            <summary>Date et heure de début de la séance.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.TutoringSession.DurationMinutes">
+            <summary>Durée en minutes.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.TutoringSession.FeedbackLeft">
+            <summary>Indique si l'élève a déjà laissé un avis après une séance terminée.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.TutoringSession.Topic">
+            <summary>Sujet de travail évoqué (décrivez votre difficulté).</summary>
+        </member>
+        <member name="P:TutorLocal.Models.TutoringSession.ModalityIcon">
+            <summary>Icône selon la modalité : présentiel ou visio.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.HelpRequest">
+            <summary>Demande d'aide express publiée par un élève.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.HelpRequest.IsUrgent">
+            <summary>Urgent (sous 24h) ou planifié (cette semaine).</summary>
+        </member>
+        <member name="T:TutorLocal.Models.SessionFeedback">
+            <summary>Avis détaillé soumis après une séance.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.UserRole">
+            <summary>Rôle d'un compte utilisateur.</summary>
+        </member>
+        <member name="T:TutorLocal.Models.SchoolLevel">
+            <summary>Niveau scolaire de l'utilisateur (élève).</summary>
+        </member>
+        <member name="T:TutorLocal.Models.User">
+            <summary>Utilisateur de l'application (élève, parent ou tuteur bénévole).</summary>
+        </member>
+        <member name="P:TutorLocal.Models.User.Avatar">
+            <summary>Avatar emoji affiché dans l'application.</summary>
+        </member>
+        <member name="T:TutorLocal.Services.IAuthService">
+            <summary>
+            Service d'authentification et de gestion du « compte » de l'utilisateur.
+            Persiste localement les comptes (Preferences) : rôle de "backend" de démonstration.
+            </summary>
+        </member>
+        <member name="P:TutorLocal.Services.IAuthService.CurrentUser">
+            <summary>Utilisateur connecté, ou null si visiteur anonyme.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IAuthService.EmailExists(System.String)">
+            <summary>Indique si un compte est enregistré avec cet email.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IAuthService.Login(System.String,System.String,System.Boolean)">
+            <summary>Connexion : valide les identifiants puis ouvre la session.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IAuthService.Register(System.String,System.String,System.String,TutorLocal.Models.SchoolLevel,TutorLocal.Models.UserRole,System.Boolean)">
+            <summary>Inscription d'un nouveau compte, puis ouverture automatique de la session.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IAuthService.TryRestoreSession">
+            <summary>Tente de restaurer une session persistée (option « se souvenir de moi »).</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IAuthService.Logout">
+            <summary>Ferme la session courante.</summary>
+        </member>
+        <member name="T:TutorLocal.Services.IChatService">
+            <summary>
+            Messagerie sécurisée élève ↔ tuteur. Les réponses du tuteur sont simulées
+            (bénévole virtuel de démonstration) avec un temps de réponse réaliste.
+            </summary>
+        </member>
+        <member name="P:TutorLocal.Services.IChatService.Current">
+            <summary>Conversation courante (entre l'élève connecté et le tuteur sélectionné).</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IChatService.SendMessage(System.String,System.String,System.String)">
+            <summary>Ajoute le message de l'élève au fil.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.IChatService.WaitForTutorReplyAsync(System.String,System.String)">
+            <summary>Génère la réponse du tuteur après un temps de réaction réaliste.</summary>
+        </member>
+        <member name="T:TutorLocal.Services.IHelpRequestService">
+            <summary>
+            Demandes d'aide express : publication, acceptation par un tuteur,
+            transformation en séance planifiée.
+            </summary>
+        </member>
+        <member name="M:TutorLocal.Services.IHelpRequestService.Accept(TutorLocal.Models.HelpRequest,TutorLocal.Services.ITutorService)">
+            <summary>Simule l'acceptation de la demande par un tuteur bénévole du quartier.</summary>
+        </member>
+        <member name="T:TutorLocal.Services.INavigationService">
+            <summary>
+            Encapsule la navigation de l'application de façon découplée des ViewModels.
+            Les vues sont résolues via l'injection de dépendances.
+            </summary>
+        </member>
+        <member name="M:TutorLocal.Services.INavigationService.PushAsync``1">
+            <summary>Empile une vue par-dessus la pile de navigation.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.INavigationService.PopAsync">
+            <summary>Revient à la vue précédente.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.INavigationService.SwitchTab``1">
+            <summary>Remplace la page racine (changement d'onglet bas de page ou de contexte).</summary>
+        </member>
+        <member name="T:TutorLocal.Services.NavigationService">
+            <inheritdoc />
+        </member>
+        <member name="T:TutorLocal.Services.ISessionService">
+            <summary>
+            Gestion des séances de tutorat : planification, confirmation, annulation,
+            suivi et avis de fin de séance.
+            </summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.GetUpcoming(System.String)">
+            <summary>Séances à venir de l'élève (en attente + confirmées), triées par date.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.GetCompleted(System.String)">
+            <summary>Séances terminées.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.GetCancelled(System.String)">
+            <summary>Séances annulées.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.Cancel(System.String)">
+            <summary>Annule une séance à venir.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.CreateFromRequest(TutorLocal.Models.HelpRequest)">
+            <summary>Crée une séance à partir d'une demande d'aide acceptée.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.Schedule(System.String,TutorLocal.Models.Tutor,System.String,System.DateTime,TutorLocal.Models.SessionModality)">
+            <summary>Programme une séance avec un tuteur depuis sa fiche.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ISessionService.SaveFeedback(TutorLocal.Models.TutoringSession,System.Int32,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>Enregistre l'avis de fin de séance (score + tags + commentaire).</summary>
+        </member>
+        <member name="P:TutorLocal.Services.SessionService.SessionForRating">
+            <summary>Feedback non noté : un seul processus à la fois, suffisant pour la messagerie de séance courante.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.SessionService.SeedSessions">
+            <summary>
+            Historique de démonstration : cohérent avec la maquette
+            (2 à venir, 5 terminées dont 1 sans avis, 1 annulée).
+            </summary>
+        </member>
+        <member name="T:TutorLocal.Services.ITutorService">
+            <summary>
+            Annuaire des tuteurs bénévoles disponibles autour de l'élève.
+            Gère aussi le tuteur « sélectionné » (fiche détaillée, chat, demande de cours).
+            </summary>
+        </member>
+        <member name="P:TutorLocal.Services.ITutorService.SelectedTutor">
+            <summary>Tuteur sélectionné avant l'ouverture d'une fiche ou d'une conversation.</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ITutorService.GetTutors(System.String)">
+            <summary>Recherche par matière (« Tous » retourne l'annuaire complet).</summary>
+        </member>
+        <member name="M:TutorLocal.Services.ITutorService.AddRating(System.String,System.Int32)">
+            <summary>Enregistre l'avis de l'élève et recalcule la moyenne du tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.ChatViewModel">
+            <summary>ViewModel de la messagerie élève ↔ tuteur.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ChatViewModel.PlannedSession">
+            <summary>Séance planifiée avec ce tuteur (carte bleue en haut du fil).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.TutorCardViewModel">
+            <summary>Tuteur affiché dans le carrousel « à proximité » du tableau de bord.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.TutorCardViewModel.RequestCourseCommand">
+            <summary>Commande « Demander un cours » de la carte : ouvre la messagerie du tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.SubjectFilterItem">
+            <summary>Pill de filtre par matière du tableau de bord.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.DashboardViewModel">
+            <summary>ViewModel du tableau de bord : accueil de l'élève connecté.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.DashboardViewModel.NextSessionStatusLabel">
+            <summary>Badge d'état de la carte « Rappel de révision ».</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.DashboardViewModel.NextSessionCountdown">
+            <summary>Compte à rebours dynamique (« Dans 22h 30min »).</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.DashboardViewModel.NextSession">
+            <summary>Première séance à venir (carte « Rappel de révision »).</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.DashboardViewModel.NextSessionTitle">
+            <summary>Sujet de la prochaine séance pour la carte "Rappel de révision".</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.DashboardViewModel.OpenTutorCardCommand">
+            <summary>Tap sur une carte tuteur du carrousel : ouvre la fiche détaillée.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.LoginViewModel">
+            <summary>ViewModel de la page de connexion : saisie, validation et authentification.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.MainViewModel">
+            <summary>ViewModel de la page d'accueil publique (avant connexion).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.MapViewModel">
+            <summary>ViewModel de la carte des tuteurs à proximité (vue plan).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.ObservableObject">
+            <summary>
+            Base de tous les ViewModels : gestion des notifications de changement
+            de propriété (INotifyPropertyChanged) et de l'état de chargement.
+            </summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ObservableObject.IsBusy">
+            <summary>Indique qu'une opération asynchrone est en cours (désactive l'UI).</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ObservableObject.ErrorMessage">
+            <summary>Message d'erreur de validation ou d'exécution à afficher à l'utilisateur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.ProfileViewModel">
+            <summary>ViewModel de la page « Mon Profil ».</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ProfileViewModel.HoursLabel">
+            <summary>Heures de cours suivies = séances terminées.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ProfileViewModel.FavoriteTutors">
+            <summary>Tuteurs rencontrés au moins une fois (favoris).</summary>
+        </member>
+        <member name="M:TutorLocal.ViewModels.ProfileViewModel.ConfirmAsync(System.String,System.String,System.String)">
+            <summary>Demande une confirmation null-safe à l'utilisateur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RatingStar">
+            <summary>Étoile de la barre de notation.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.RatingStar.Glyph">
+            <summary>Étoile remplie (sélectionnée) ou vide.</summary>
+        </member>
+        <member name="M:TutorLocal.ViewModels.RatingStar.Refresh">
+            <summary>Rafraîchit l'affichage de l'étoile (appelé par le VM après un changement de note).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RatingTag">
+            <summary>Tag / point fort sélectionnable dans l'avis.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RatingViewModel">
+            <summary>ViewModel de la page d'évaluation de fin de séance.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.SchoolLevelOption">
+            <summary>Option du sélecteur de niveau scolaire (pill sélectionnable).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RegisterViewModel">
+            <summary>ViewModel de la page d'inscription : création de compte élève ou tuteur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RelayCommand">
+            <summary>Commande synchrone avec état d'exécution.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.AsyncRelayCommand">
+            <summary>Commande asynchrone : désactive automatiquement IsBusy pendant l'exécution.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.ChoiceOption">
+            <summary>Option d'urgence et de modalité de la demande d'aide.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.RequestHelpViewModel">
+            <summary>ViewModel du formulaire « Demande d'aide express ».</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.RequestHelpViewModel.ChooseSubjectLevelCommand">
+            <summary>Ouvre un simple sélecteur de matière (Parser = index d'option).</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.SessionDisplay">
+            <summary>
+            Adapter d'affichage d'une séance pour l'UI de la page "Mes séances".
+            Expose des libellés pré-calculés, cohérents avec les statuts.
+            </summary>
+        </member>
+        <member name="F:TutorLocal.ViewModels.SessionDisplay._owner">
+            <summary>Contexte de la liste (VM parent) pour les commandes globales.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.SessionDisplay.AccentColor">
+            <summary>Liseré coloré à gauche de la carte.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.SessionsViewModel">
+            <summary>ViewModel de la page « Mes séances » : onglets, filtres, actions.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.SessionsViewModel.StudentId">
+            <summary>Identifiant de l'élève connecté (compte de démonstration sinon).</summary>
+        </member>
+        <member name="M:TutorLocal.ViewModels.SessionsViewModel.ConfirmAsync(System.String,System.String,System.String)">
+            <summary>Demande une confirmation null-safe à l'utilisateur.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.TutorProfileViewModel">
+            <summary>ViewModel de la fiche détaillée d'un tuteur bénévole.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.TutorProfileViewModel.PlanSessionCommand">
+            <summary>« Planifier une séance gratuite » : crée une séance en attente et ouvre le chat.</summary>
+        </member>
+        <member name="T:TutorLocal.ViewModels.ViewModelBase">
+            <summary>
+            Base de tous les ViewModels de page : accès au service de navigation
+            et utilitaires communs (état, alertes, observable collection).
+            </summary>
+        </member>
+        <member name="M:TutorLocal.ViewModels.ViewModelBase.OnAppearing">
+            <summary>Se déclenche à l'apparition de la vue (rechargement des données).</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.ViewModelBase.BackCommand">
+            <summary>Commande de navigation « retour ».</summary>
+        </member>
+        <member name="M:TutorLocal.Views.TaskExtensions.FireAndForget(System.Threading.Tasks.Task)">
+            <summary>Évite que des exceptions de défilement fassent planter l'application.</summary>
+        </member>
     </members>
 </doc>

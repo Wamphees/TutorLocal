@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.ProfilePage"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
+             x:Class="TutorLocal.Views.ProfilePage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -35,15 +36,15 @@
                 <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
                     <Grid WidthRequest="80" HeightRequest="80" HorizontalOptions="Center">
                         <Border WidthRequest="80" HeightRequest="80" StrokeShape="RoundRectangle 40" StrokeThickness="0" BackgroundColor="#E5E7EB">
-                            <Label Text="👦" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="{Binding Avatar}" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
                         <Border WidthRequest="24" HeightRequest="24" BackgroundColor="{StaticResource PrimaryBlue}" Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 12" HorizontalOptions="End" VerticalOptions="End">
                             <Label Text="✏️" TextColor="White" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                     </Grid>
                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="Alex Dupont" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
-                        <Label Text="Élève - Lycée (1ère)" FontSize="14" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding FullName}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding LevelLabel}" FontSize="14" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
@@ -51,13 +52,13 @@
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                            <Label Text="12" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding HoursLabel}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" HorizontalTextAlignment="Center" />
                             <Label Text="Heures de cours" FontSize="12" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="1" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                            <Label Text="3" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding FavoriteTutors}" FontSize="20" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" HorizontalTextAlignment="Center" />
                             <Label Text="Tuteurs favoris" FontSize="12" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
@@ -68,6 +69,7 @@
                     <Label Text="Général" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextGray}" Margin="0,0,0,4" />
                     
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenPersonalInfoCommand}" /></Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto, *, Auto">
                             <Label Text="👤" FontSize="18" Margin="0,0,12,0" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="Informations personnelles" FontSize="14" TextColor="{StaticResource TextDark}" FontAttributes="Bold" VerticalOptions="Center" />
@@ -76,6 +78,7 @@
                     </Border>
 
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenPaymentCommand}" /></Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto, *, Auto">
                             <Label Text="💳" FontSize="18" Margin="0,0,12,0" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="Abonnement &amp; Paiement" FontSize="14" TextColor="{StaticResource TextDark}" FontAttributes="Bold" VerticalOptions="Center" />
@@ -84,6 +87,7 @@
                     </Border>
 
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenNotificationsCommand}" /></Border.GestureRecognizers>
                         <Grid ColumnDefinitions="Auto, *, Auto">
                             <Label Text="🔔" FontSize="18" Margin="0,0,12,0" VerticalOptions="Center" />
                             <Label Grid.Column="1" Text="Notifications" FontSize="14" TextColor="{StaticResource TextDark}" FontAttributes="Bold" VerticalOptions="Center" />
@@ -95,7 +99,7 @@
                 <!-- Déconnexion -->
                 <Border BackgroundColor="#FEF2F2" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" Margin="0,12,0,0">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnLogoutClicked" />
+                        <TapGestureRecognizer Command="{Binding LogoutCommand}" />
                     </Border.GestureRecognizers>
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
                         <Label Text="🚪" FontSize="16" VerticalOptions="Center" />
@@ -111,19 +115,19 @@
             <Grid ColumnDefinitions="*, *, *, *">
                 <!-- Accueil -->
                 <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4" Opacity="0.5">
-                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnNavigateToDashboard" /></VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding GoToDashboardCommand}" /></VerticalStackLayout.GestureRecognizers>
                     <Label Text="🏠" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Accueil" TextColor="{StaticResource TextDark}" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <!-- Carte -->
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="4" Opacity="0.5">
-                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnNavigateToMap" /></VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding GoToMapCommand}" /></VerticalStackLayout.GestureRecognizers>
                     <Label Text="🧭" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Carte" TextColor="{StaticResource TextDark}" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <!-- Séances -->
                 <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4" Opacity="0.5">
-                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnNavigateToSessions" /></VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding GoToSessionsCommand}" /></VerticalStackLayout.GestureRecognizers>
                     <Label Text="📅" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Séances" TextColor="{StaticResource TextDark}" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" />
                 </VerticalStackLayout>

@@ -1,17 +1,21 @@
-namespace TutorLocal;
+using TutorLocal.ViewModels;
+
+namespace TutorLocal.Views;
 
 public partial class RatingPage : ContentPage
 {
-    public RatingPage()
+    private readonly RatingViewModel _viewModel;
+
+    public RatingPage(RatingViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private async void OnCloseClicked(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        // On ferme la page d'évaluation pour retourner à la page précédente
-        await Navigation.PopAsync();
+        base.OnAppearing();
+        _viewModel.OnAppearing();
     }
-
-    
 }

@@ -1,6 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TutorLocal.RatingPage"
+             xmlns:vm="clr-namespace:TutorLocal.ViewModels"
+             x:Class="TutorLocal.Views.RatingPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F9FAFB">
 
@@ -23,7 +24,7 @@
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Padding="20">
             <Border WidthRequest="36" HeightRequest="36" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 18" StrokeThickness="0">
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCloseClicked" />
+                    <TapGestureRecognizer Command="{Binding CloseCommand}" />
                 </Border.GestureRecognizers>
                 <Label Text="✕" FontSize="16" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" VerticalOptions="Center" />
             </Border>
@@ -57,7 +58,7 @@
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Comment s'est passée votre séance de&#10;révision avec " />
-                                <Span Text="Thomas D." FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
+                                <Span Text="{Binding TutorName}" FontAttributes="Bold" TextColor="{StaticResource TextDark}" />
                                 <Span Text=" ?" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -71,14 +72,18 @@
                         
                         <!-- Notation Étoiles -->
                         <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                                <Label Text="★" FontSize="36" TextColor="{StaticResource StarYellow}" />
-                                <Label Text="★" FontSize="36" TextColor="{StaticResource StarYellow}" />
-                                <Label Text="★" FontSize="36" TextColor="{StaticResource StarYellow}" />
-                                <Label Text="★" FontSize="36" TextColor="{StaticResource StarYellow}" />
-                                <Label Text="★" FontSize="36" TextColor="{StaticResource StarYellow}" />
+                            <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" BindableLayout.ItemsSource="{Binding Stars}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding Glyph}" FontSize="36" TextColor="{Binding Color}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
                             </HorizontalStackLayout>
-                            <Label Text="Excellent ! Très pédagogue et encourageant" TextColor="#B45309" FontAttributes="Bold" FontSize="13" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding ScoreLabel}" TextColor="#B45309" FontAttributes="Bold" FontSize="13" HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
 
                         <BoxView HeightRequest="1" Color="{StaticResource LightBlueBg}" />
@@ -87,50 +92,33 @@
                         <VerticalStackLayout Spacing="12">
                             <Label Text="Qu'avez-vous particulièrement apprécié ?" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
                             <!-- FlexLayout permet aux badges de passer à la ligne automatiquement comme dans la maquette -->
-                            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Start">
-                                <!-- Tag Actif -->
-                                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,8" Margin="0,0,8,8">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="★" TextColor="{StaticResource PrimaryBlue}" FontSize="12" VerticalOptions="Center"/>
-                                        <Label Text="Pédagogue &amp; Patient" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <!-- Tag Actif -->
-                                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,8" Margin="0,0,8,8">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="🕒" FontSize="12" VerticalOptions="Center"/>
-                                        <Label Text="Ponctuel" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <!-- Tag Actif -->
-                                <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,8" Margin="0,0,8,8">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="💡" FontSize="12" VerticalOptions="Center"/>
-                                        <Label Text="Explications claires" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <!-- Tag Inactif -->
-                                <Border BackgroundColor="{StaticResource TagBgInactive}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,8" Margin="0,0,8,8">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="🤝" FontSize="12" VerticalOptions="Center"/>
-                                        <Label Text="Bienveillant" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                                <!-- Tag Inactif -->
-                                <Border BackgroundColor="{StaticResource TagBgInactive}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,8" Margin="0,0,8,8">
-                                    <HorizontalStackLayout Spacing="6">
-                                        <Label Text="🎯" FontSize="12" VerticalOptions="Center"/>
-                                        <Label Text="Méthodique" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </Border>
-                            </FlexLayout>
+                            <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Start"
+                                    BindableLayout.ItemsSource="{Binding Tags}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BackgroundColor="{Binding BackgroundColor}"
+                                                    StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 16"
+                                                    Padding="12,8"
+                                                    Margin="0,0,8,8">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                                                </Border.GestureRecognizers>
+                                                <HorizontalStackLayout Spacing="6">
+                                                    <Label Text="{Binding Icon}" FontSize="12" VerticalOptions="Center"/>
+                                                    <Label Text="{Binding Label}" TextColor="{Binding TextColor}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
                         </VerticalStackLayout>
 
                         <!-- Champ de texte -->
                         <VerticalStackLayout Spacing="8">
-                            <Label Text="Votre message pour Thomas" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
+                            <Label Text="{Binding TutorFirstName, StringFormat='Votre message pour {0}'}" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
                             <Border BackgroundColor="#F5F7FA" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" HeightRequest="100">
-                                <Editor Placeholder="Laissez un petit mot de remerciement pour encourager Thomas et guider les autres élèves de votre quartier..." TextColor="{StaticResource TextDark}" PlaceholderColor="{StaticResource TextGray}" BackgroundColor="Transparent" FontSize="14" />
+                                <Editor Placeholder="Laissez un petit mot de remerciement pour encourager ce tuteur et guider les autres élèves de votre quartier..." Text="{Binding Comment}" TextColor="{StaticResource TextDark}" PlaceholderColor="{StaticResource TextGray}" BackgroundColor="Transparent" FontSize="14" />
                             </Border>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -154,11 +142,12 @@
 
         <!-- FOOTER : Actions -->
         <VerticalStackLayout Grid.Row="2" Padding="20,10,20,30" Spacing="16" BackgroundColor="#F9FAFB">
-            <Button Text="🤍 Soumettre mon avis" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
+            <Button Text="🤍 Soumettre mon avis" Command="{Binding SubmitCommand}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
             
+            <Label Grid.Row="2" Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="12" HorizontalOptions="Center" IsVisible="{Binding HasError}" Margin="0,-8,0,0" />
             <Label Text="Passer pour l'instant" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCloseClicked" />
+                    <TapGestureRecognizer Command="{Binding CloseCommand}" />
                 </Label.GestureRecognizers>
             </Label>
         </VerticalStackLayout>
