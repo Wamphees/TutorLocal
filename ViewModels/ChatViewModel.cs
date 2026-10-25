@@ -38,7 +38,7 @@ public class ChatViewModel : ViewModelBase
 
     public bool IsStudent => _auth.CurrentUser?.Role != Models.UserRole.Tutor;
 
-    public string TutorHeaderLine => $"{Tutor.Avatar} {Tutor.FullName}";
+    public string TutorHeaderLine => Tutor.FullName;
 
     public string NewMessage
     {

@@ -59,7 +59,7 @@ public class AuthService : IAuthService
     {
         // Compte de démonstration : page de connexion de la maquette.
         // L'Id "alex" est celui utilisé par les données de démonstration (séances, chats...).
-        new SeedUser("alex", "Alex Dupont", "alex@exemple.fr", "tutor123", UserRole.Student, SchoolLevel.Lycee, "👦")
+        new SeedUser("alex", "Alex Dupont", "alex@exemple.fr", "tutor123", UserRole.Student, SchoolLevel.Lycee)
     };
 
     public AuthService(LocalDatabase database)
@@ -70,7 +70,7 @@ public class AuthService : IAuthService
 
     public User? CurrentUser { get; private set; }
 
-    private sealed record SeedUser(string Id, string Name, string Email, string Password, UserRole Role, SchoolLevel Level, string Avatar);
+    private sealed record SeedUser(string Id, string Name, string Email, string Password, UserRole Role, SchoolLevel Level);
 
     public bool EmailExists(string email) =>
         _users.Any(u => u.Email.Equals(email.Trim(), StringComparison.OrdinalIgnoreCase)) ||
@@ -105,8 +105,7 @@ public class AuthService : IAuthService
                 FullName = seed.Name,
                 Email = seed.Email,
                 Role = seed.Role,
-                Level = seed.Level,
-                Avatar = seed.Avatar
+                Level = seed.Level
             };
         }
 
@@ -136,8 +135,7 @@ public class AuthService : IAuthService
             FullName = fullName.Trim(),
             Email = email.Trim(),
             Role = role,
-            Level = level,
-            Avatar = role == UserRole.Tutor ? "🤝" : "👦"
+            Level = level
         };
 
         _users.Add(user);
@@ -165,8 +163,7 @@ public class AuthService : IAuthService
                 FullName = seed.Name,
                 Email = seed.Email,
                 Role = seed.Role,
-                Level = seed.Level,
-                Avatar = seed.Avatar
+                Level = seed.Level
             };
         }
 
@@ -216,8 +213,7 @@ public class AuthService : IAuthService
                     FullName = legacy.FullName,
                     Email = legacy.Email,
                     Role = legacy.Role,
-                    Level = legacy.Level,
-                    Avatar = string.IsNullOrEmpty(legacy.Avatar) ? "👦" : legacy.Avatar
+                    Level = legacy.Level
                 };
                 _users.Add(user);
                 SaveAccount(user, legacy.Password);
@@ -249,8 +245,7 @@ public class AuthService : IAuthService
             FullName = account.FullName,
             Email = account.Email,
             Role = account.Role,
-            Level = account.Level,
-            Avatar = string.IsNullOrEmpty(account.Avatar) ? "👦" : account.Avatar
+            Level = account.Level
         };
         _users.Add(user);
         _credentials[user.Id] = account;
@@ -267,8 +262,7 @@ public class AuthService : IAuthService
             PasswordSalt = Convert.ToBase64String(salt),
             PasswordHash = Convert.ToBase64String(HashPassword(password, salt)),
             Role = user.Role,
-            Level = user.Level,
-            Avatar = user.Avatar
+            Level = user.Level
         };
         _credentials[user.Id] = account;
         _database.Save(UserRecord, user.Id, account, searchText: $"{user.FullName} {user.Email}");

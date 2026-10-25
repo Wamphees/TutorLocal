@@ -122,7 +122,6 @@ public class SessionService : ISessionService
             StudentId = request.StudentId,
             TutorId = tutor.Id,
             Subject = request.Subject,
-            SubjectIcon = request.SubjectIcon,
             Status = SessionStatus.Confirmed,
             Modality = request.Modality,
             Date = date,
@@ -145,7 +144,6 @@ public class SessionService : ISessionService
             StudentId = studentId,
             TutorId = tutor.Id,
             Subject = subject,
-            SubjectIcon = tutor.Subjects.FirstOrDefault(s => s.Name.Equals(subject, StringComparison.OrdinalIgnoreCase))?.Icon ?? "📘",
             Status = SessionStatus.Pending,
             Modality = modality,
             Date = date,
@@ -198,7 +196,6 @@ public class SessionService : ISessionService
             StudentId = "alex",
             TutorId = "tutor-thomas",
             Subject = "Mathématiques",
-            SubjectIcon = "📐",
             Status = SessionStatus.Pending,
             Modality = SessionModality.InPerson,
             Date = now.Date.AddDays(1).Add(new TimeSpan(15, 30, 0)),
@@ -213,7 +210,6 @@ public class SessionService : ISessionService
             StudentId = "alex",
             TutorId = "tutor-sarah",
             Subject = "Physique-Chimie",
-            SubjectIcon = "⚡",
             Status = SessionStatus.Confirmed,
             Modality = SessionModality.Online,
             Date = now.Date.AddDays(4).Add(new TimeSpan(10, 0, 0)),
@@ -228,7 +224,6 @@ public class SessionService : ISessionService
             StudentId = "alex",
             TutorId = "tutor-lucas",
             Subject = "Anglais",
-            SubjectIcon = "🇬🇧",
             Status = SessionStatus.Completed,
             Modality = SessionModality.InPerson,
             Date = now.Date.AddDays(-13).Add(new TimeSpan(17, 0, 0)),
@@ -241,10 +236,10 @@ public class SessionService : ISessionService
         // Séances passées déjà évaluées (historique).
         var past = new[]
         {
-            new { TutorId = "tutor-thomas", Subject = "Mathématiques", Icon = "📐", Days = 17 },
-            new { TutorId = "tutor-sarah", Subject = "SVT", Icon = "🧬", Days = 24 },
-            new { TutorId = "tutor-thomas", Subject = "Physique-Chimie", Icon = "⚡", Days = 31 },
-            new { TutorId = "tutor-mehdi", Subject = "Français", Icon = "✍️", Days = 45 }
+            new { TutorId = "tutor-thomas", Subject = "Mathématiques", Days = 17 },
+            new { TutorId = "tutor-sarah", Subject = "SVT", Days = 24 },
+            new { TutorId = "tutor-thomas", Subject = "Physique-Chimie", Days = 31 },
+            new { TutorId = "tutor-mehdi", Subject = "Français", Days = 45 }
         };
 
         foreach (var p in past)
@@ -254,7 +249,6 @@ public class SessionService : ISessionService
                 StudentId = "alex",
                 TutorId = p.TutorId,
                 Subject = p.Subject,
-                SubjectIcon = p.Icon,
                 Status = SessionStatus.Completed,
                 Modality = SessionModality.InPerson,
                 Date = now.Date.AddDays(-p.Days).Add(new TimeSpan(16, 0, 0)),
@@ -270,7 +264,6 @@ public class SessionService : ISessionService
             StudentId = "alex",
             TutorId = "tutor-claire",
             Subject = "Histoire-Géographie",
-            SubjectIcon = "🗺️",
             Status = SessionStatus.Cancelled,
             Modality = SessionModality.InPerson,
             Date = now.Date.AddDays(-7).Add(new TimeSpan(14, 0, 0)),

@@ -24,27 +24,19 @@
         <!-- HEADER FIXE (Navigation & Tuteur) -->
         <VerticalStackLayout Grid.Row="0" Spacing="0">
             <!-- Navigation -->
-            <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,20,20,10" BackgroundColor="{StaticResource CardBg}">
-                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                    <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
-                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding BackCommand}" /></Label.GestureRecognizers>
-                    </Label>
-                    <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 8" StrokeThickness="0" VerticalOptions="Center">
-                        <Label Text="📘" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    </Border>
-                    <Label Text="Messagerie" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
-                </HorizontalStackLayout>
-                <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="Center">
-                    <Label Text="👤" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </Border>
-            </Grid>
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center" Padding="20,20,20,10" BackgroundColor="{StaticResource CardBg}">
+                <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding BackCommand}" /></Label.GestureRecognizers>
+                </Label>
+                <Label Text="Messagerie" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
 
             <!-- Info Tuteur -->
             <Border BackgroundColor="#F9FAFB" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 0" Padding="20,12">
                 <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12">
                         <Grid WidthRequest="44" HeightRequest="44">
-                            <Border WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0" BackgroundColor="#E5E7EB"><Label Text="{Binding Tutor.Avatar}" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                            <Border WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0" BackgroundColor="#5B44E9"><Label Text="{Binding Tutor.Initials}" TextColor="White" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
                             <Border WidthRequest="16" HeightRequest="16" BackgroundColor="{StaticResource GreenSuccess}" Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 8" HorizontalOptions="End" VerticalOptions="End"/>
                         </Grid>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -54,18 +46,14 @@
                             </HorizontalStackLayout>
                             <Label Text="{Binding Tutor.Subjects[0], StringFormat='Tuteur de {0}'}" FontSize="13" TextColor="{StaticResource TextGray}" />
                         </VerticalStackLayout>
-                        <Border Grid.Column="2" BackgroundColor="{StaticResource LightBlueBg}" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0" IsVisible="{Binding IsStudent}">
-                            <Label Text="🎥" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Border Grid.Column="3" BackgroundColor="#E5E7EB" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
+                        <Border Grid.Column="2" BackgroundColor="#E5E7EB" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" StrokeThickness="0">
                             <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenTutorProfileCommand}" /></Border.GestureRecognizers>
-                            <Label Text="ℹ️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Label Text="i" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Border>
                     </Grid>
                     <!-- Bannière Sécurité -->
                     <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,6">
                         <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
-                            <Label Text="🛡️" FontSize="12" VerticalOptions="Center"/>
                             <Label Text="Espace sécurisé • Répond généralement en 10 min" FontSize="11" TextColor="{StaticResource TextGray}" FontAttributes="Bold" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Border>
@@ -79,15 +67,10 @@
 
                 <!-- Carte : séance planifiée avec ce tuteur -->
                 <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16" IsVisible="{Binding HasPlannedSession}">
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Border WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource PrimaryBlue}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Margin="0,0,12,0" VerticalOptions="Start">
-                            <Label Text="📅" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" Spacing="4">
-                            <Label Text="{Binding PlannedSessionTitle}" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource PrimaryBlue}" />
-                            <Label Text="{Binding PlannedSessionLine}" FontSize="13" TextColor="{StaticResource TextDark}" LineHeight="1.3" />
-                        </VerticalStackLayout>
-                    </Grid>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding PlannedSessionTitle}" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource PrimaryBlue}" />
+                        <Label Text="{Binding PlannedSessionLine}" FontSize="13" TextColor="{StaticResource TextDark}" LineHeight="1.3" />
+                    </VerticalStackLayout>
                 </Border>
 
                 <Label Text="Aujourd'hui" FontSize="12" TextColor="{StaticResource TextGray}" HorizontalOptions="Center" />
@@ -99,8 +82,8 @@
                                 <!-- Message du tuteur -->
                                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="8"
                                       IsVisible="{Binding IsFromUser, Converter={StaticResource InverseBool}}">
-                                    <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="End">
-                                        <Label Text="{Binding BindingContext.Tutor.Avatar, Source={x:Reference ChatScrollView}}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="0" BackgroundColor="#5B44E9" VerticalOptions="End">
+                                        <Label Text="{Binding BindingContext.Tutor.Initials, Source={x:Reference ChatScrollView}}" TextColor="White" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                     <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Start">
                                         <Border BackgroundColor="{StaticResource BubbleTutor}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" Padding="16,12" MaximumWidthRequest="280">
@@ -147,27 +130,21 @@
             <VerticalStackLayout Spacing="8">
                 <!-- Conseil -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,0,0,8">
-                    <Label Text="💡" FontSize="12" />
                     <Label Text="Conseil : prépare 2 questions précises pour ta séance" FontSize="11" TextColor="{StaticResource TextDark}" FontAttributes="Bold" />
                 </HorizontalStackLayout>
                 
                 <!-- Zone de texte et boutons -->
-                <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12" VerticalOptions="End">
-                    <Label Text="📎" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center">
+                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="End">
+                    <Label Text="Joindre" FontSize="14" TextColor="{StaticResource TextGray}" VerticalOptions="Center">
                         <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Label.GestureRecognizers>
                     </Label>
-                    
                     <Border Grid.Column="1" BackgroundColor="#F3F4F6" StrokeThickness="0" StrokeShape="RoundRectangle 20" HeightRequest="44" Padding="16,0">
                         <!-- L'Entry est nommé pour pouvoir récupérer son texte en C# -->
                         <Entry x:Name="MessageEntry" Placeholder="Écrire un message bienveillant..." Text="{Binding NewMessage}" ReturnCommand="{Binding SendCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" FontSize="14" VerticalOptions="Center" />
                     </Border>
-                    
-                    <Label Grid.Column="2" Text="📷" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center">
-                        <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Label.GestureRecognizers>
-                    </Label>
-                    
+
                     <!-- Bouton Envoyer avec Clicked -->
-                    <Border Grid.Column="3" BackgroundColor="{StaticResource PrimaryBlue}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
+                    <Border Grid.Column="2" BackgroundColor="{StaticResource PrimaryBlue}" WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 22" StrokeThickness="0">
                         <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SendCommand}" /></Border.GestureRecognizers>
                         <Label Text="➤" TextColor="White" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
                     </Border>

@@ -20,48 +20,38 @@
 
         <!-- HEADER FIXE (Ligne du haut) -->
         <Grid Grid.Row="0"
-                ColumnDefinitions="Auto, *, Auto, Auto"
+                ColumnDefinitions="*, Auto, Auto"
                 Padding="20,20,20,10"
                 BackgroundColor="#FFFFFF">
-            <!-- Logo miniature -->
-            <Border WidthRequest="28"
-                    HeightRequest="28"
-                    BackgroundColor="{StaticResource LightBlueBg}"
-                    StrokeShape="RoundRectangle 8"
-                    StrokeThickness="0"
-                    VerticalOptions="Center">
-                <Label Text="📍"
-                        FontSize="14"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
-            </Border>
-            <Label Grid.Column="1"
+            <Label Grid.Column="0"
                     Text="TutorLocal"
                     FontAttributes="Bold"
                     FontSize="16"
                     TextColor="{StaticResource TextDark}"
-                    VerticalOptions="Center"
-                    Margin="8,0,0,0"/>
+                    VerticalOptions="Center"/>
 
             <!-- Notification -->
-            <Label Grid.Column="2"
-                    Text="🔔"
-                    FontSize="20"
+            <Label Grid.Column="1"
+                    Text="●"
+                    FontSize="14"
+                    TextColor="{StaticResource TextDark}"
                     VerticalOptions="Center"
                     Margin="0,0,16,0">
                 <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenNotificationsCommand}" /></Label.GestureRecognizers>
             </Label>
 
             <!-- Avatar Profil -->
-            <Border Grid.Column="3"
+            <Border Grid.Column="2"
                     WidthRequest="32"
                     HeightRequest="32"
                     StrokeShape="RoundRectangle 16"
                     StrokeThickness="0"
-                    BackgroundColor="#E5E7EB"
+                    BackgroundColor="{StaticResource PrimaryBlue}"
                     VerticalOptions="Center">
-                <Label Text="👤"
-                        FontSize="20"
+                <Label Text="{Binding UserInitials}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="12"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"/>
             </Border>
@@ -79,46 +69,23 @@
                     Spacing="12"
                     VerticalOptions="Start">
                 <!-- Recherche -->
-                <Grid ColumnDefinitions="*, Auto"
-                        ColumnSpacing="12">
-                    <Border BackgroundColor="White"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            HeightRequest="52"
-                            Padding="16,0">
-                        <Border.Shadow>
-                            <Shadow Brush="#000000"
-                                    Offset="0,2"
-                                    Radius="10"
-                                    Opacity="0.1"/>
-                        </Border.Shadow>
-                        <Grid ColumnDefinitions="Auto, *">
-                            <Label Text="🔍"
-                                    FontSize="16"
-                                    TextColor="{StaticResource TextGray}"
-                                    VerticalOptions="Center"/>
-                            <Entry Grid.Column="1"
-                                    Text="{Binding SearchText, Mode=TwoWay}"
-                                    Placeholder="Rechercher un quartier, une matiè..."
-                                    BackgroundColor="Transparent"
-                                    TextColor="{StaticResource TextDark}"
-                                    Margin="8,0"
-                                    VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
-                    <!-- Bouton Filtres -->
-                    <Border Grid.Column="1"
-                            BackgroundColor="{StaticResource LightBlueBg}"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 16"
-                            WidthRequest="52"
-                            HeightRequest="52">
-                        <Label Text="⚙️"
-                                FontSize="18"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"/>
-                    </Border>
-                </Grid>
+                <Border BackgroundColor="White"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16"
+                        HeightRequest="52"
+                        Padding="16,0">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000"
+                                Offset="0,2"
+                                Radius="10"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Entry Text="{Binding SearchText, Mode=TwoWay}"
+                            Placeholder="Rechercher un quartier, une matiè..."
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource TextDark}"
+                            VerticalOptions="Center"/>
+                </Border>
 
                 <!-- Filtres rapides -->
                 <ScrollView Orientation="Horizontal"
@@ -132,8 +99,6 @@
                                 Padding="12,8">
                             <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleDistanceFilterCommand}" /></Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
-                                <Label Text="📍"
-                                        FontSize="12"/>
                                 <Label Text="À moins de 2 km"
                                         TextColor="White"
                                         FontAttributes="Bold"
@@ -146,8 +111,6 @@
                                 Padding="12,8">
                             <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleAvailabilityFilterCommand}" /></Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
-                                <Label Text="⚡"
-                                        FontSize="12"/>
                                 <Label Text="Dispo aujourd'hui"
                                         TextColor="{StaticResource TextDark}"
                                         FontAttributes="Bold"
@@ -191,24 +154,9 @@
                                 Opacity="0.15"/>
                     </Border.Shadow>
                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding FindMyLocationCommand}" /></Border.GestureRecognizers>
-                    <Label Text="🎯"
-                            FontSize="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
-                </Border>
-                <Border BackgroundColor="White"
-                        WidthRequest="48"
-                        HeightRequest="48"
-                        StrokeShape="RoundRectangle 24"
-                        StrokeThickness="0">
-                    <Border.Shadow>
-                        <Shadow Brush="#000000"
-                                Offset="0,2"
-                                Radius="8"
-                                Opacity="0.15"/>
-                    </Border.Shadow>
-                    <Label Text="📚"
-                            FontSize="20"
+                    <Label Text="◎"
+                            FontSize="22"
+                            TextColor="{StaticResource PrimaryBlue}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"/>
                 </Border>
@@ -228,35 +176,21 @@
                             HeightRequest="60"
                             StrokeShape="RoundRectangle 30"
                             StrokeThickness="0"/>
-                    <!-- Photo Tuteur -->
+                    <!-- Pastille tuteur -->
                     <Border WidthRequest="40"
                             HeightRequest="40"
                             StrokeShape="RoundRectangle 20"
                             StrokeThickness="2"
                             Stroke="White"
-                            BackgroundColor="#E5E7EB"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                        <Label Text="👨"
-                                FontSize="24"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"/>
-                    </Border>
-                    <!-- Badge matière -->
-                    <Border WidthRequest="18"
-                            HeightRequest="18"
                             BackgroundColor="{StaticResource PrimaryBlue}"
-                            StrokeShape="RoundRectangle 9"
-                            Stroke="White"
-                            StrokeThickness="2"
-                            HorizontalOptions="End"
-                            VerticalOptions="Start"
-                            Margin="4">
-                        <Label Text="🎓"
-                                FontSize="8"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"/>
-                    </Border>
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    <Label Text="{Binding TutorInitials}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
                 </Grid>
                 <!-- Label nom -->
                 <Border BackgroundColor="{StaticResource PrimaryBlue}"
@@ -342,12 +276,13 @@
                                     HeightRequest="60"
                                     StrokeShape="RoundRectangle 30"
                                     StrokeThickness="0"
-                                    BackgroundColor="#E5E7EB">
-                                <Label Text="👨"
-                                        FontSize="36"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center"/>
-                            </Border>
+                                    BackgroundColor="{StaticResource PrimaryBlue}"/>
+                            <Label Text="{Binding TutorInitials}"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
                             <Border WidthRequest="16"
                                     HeightRequest="16"
                                     BackgroundColor="{StaticResource GreenSuccess}"
@@ -393,8 +328,6 @@
 
                     <!-- Dispo -->
                     <HorizontalStackLayout Spacing="8">
-                        <Label Text="🕒"
-                                FontSize="14"/>
                         <Label Text="{Binding AvailabilityLabel}"
                                 TextColor="{StaticResource TextDark}"
                                 FontSize="14"/>
@@ -419,8 +352,6 @@
                             StrokeShape="RoundRectangle 12"
                             Padding="12,12">
                         <HorizontalStackLayout Spacing="8">
-                            <Label Text="📍"
-                                    FontSize="16"/>
                             <Label Text="{Binding DistanceLabel}"
                                     TextColor="{StaticResource TextGray}"
                                     FontSize="14"/>
@@ -445,12 +376,13 @@
                                 WidthRequest="52"
                                 HeightRequest="52">
                                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenChatCommand}" /></Border.GestureRecognizers>
-                            <Label Text="💬"
-                                    FontSize="20"
+                            <Label Text="…"
+                                    FontSize="22"
+                                    FontAttributes="Bold"
                                     TextColor="{StaticResource PrimaryBlue}"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"/>
-                                    
+
                         </Border>
                     </Grid>
                 </VerticalStackLayout>
@@ -473,9 +405,6 @@
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GoToDashboardCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🏠"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
                     <Label Text="Accueil"
                             TextColor="{StaticResource TextDark}"
                             FontSize="11"
@@ -487,9 +416,6 @@
                 <VerticalStackLayout Grid.Column="1"
                         HorizontalOptions="Center"
                         Spacing="4">
-                    <Label Text="🧭"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
                     <Label Text="Carte"
                             TextColor="{StaticResource PrimaryBlue}"
                             FontSize="11"
@@ -499,7 +425,6 @@
 
                 <!-- Séances -->
                 <!-- <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4" Opacity="0.5">
-                    <Label Text="📅" FontSize="22" HorizontalOptions="Center" />
                     <Label Text="Séances" TextColor="{StaticResource TextDark}" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" />
                 </VerticalStackLayout> -->
                 <!-- Séances -->
@@ -512,9 +437,6 @@
                         <TapGestureRecognizer Command="{Binding GoToSessionsCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
 
-                    <Label Text="📅"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
                     <Label Text="Séances"
                             TextColor="{StaticResource TextDark}"
                             FontSize="11"
@@ -528,9 +450,6 @@
                         Spacing="4"
                         Opacity="0.5">
                     <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding GoToProfileCommand}" /></VerticalStackLayout.GestureRecognizers>
-                    <Label Text="👤"
-                            FontSize="22"
-                            HorizontalOptions="Center"/>
                     <Label Text="Profil"
                             TextColor="{StaticResource TextDark}"
                             FontSize="11"

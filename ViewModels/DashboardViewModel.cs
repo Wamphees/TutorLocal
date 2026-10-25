@@ -23,8 +23,6 @@ public class TutorCardViewModel : ObservableObject
 
     public string FullName => Tutor.FullName;
 
-    public string Avatar => Tutor.Avatar;
-
     public string RatingLabel => Tutor.RatingLabel;
 
     public string DistanceLabel => Tutor.DistanceLabel;
@@ -175,6 +173,9 @@ public class DashboardViewModel : ViewModelBase
     public string NextSessionTitle => NextSession == null ? string.Empty : $"{NextSession.Subject} · {SessionTimeLabel(NextSession)}";
 
     public string NextSessionTutorName => SessionTutor(NextSession)?.FullName ?? string.Empty;
+
+    public string NextSessionTutorInitials =>
+        SessionTutor(NextSession)?.Initials ?? (NextSession == null ? string.Empty : "T");
 
     public string NextSessionTutorSubject =>
         NextSession == null ? string.Empty : $"{NextSession.Subject} · {SessionTutor(NextSession)?.ProfileLine ?? "Bénévole"}";

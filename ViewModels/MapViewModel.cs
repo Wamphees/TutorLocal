@@ -38,11 +38,13 @@ public class MapViewModel : ViewModelBase
 
     public int NotificationCount => _notifications.UnreadCount(_auth.CurrentUser?.Id ?? "alex");
 
+    public string UserInitials => _auth.CurrentUser?.Initials ?? "U";
+
     public string FullName => Tutor?.FullName ?? "Tuteur";
 
-    public string Avatar => Tutor?.Avatar ?? "👤";
+    public string TutorInitials => Tutor?.Initials ?? "T";
 
-    public string RatingLabel => Tutor is { } t ? $"⭐ {t.Rating:0.#} ({t.RatingsCount} avis)" : string.Empty;
+    public string RatingLabel => Tutor is { } t ? $"★ {t.Rating:0.#} ({t.RatingsCount} avis)" : string.Empty;
 
     public string AvailabilityLabel => Tutor?.AvailabilityLabel ?? string.Empty;
 
@@ -142,7 +144,6 @@ public class MapViewModel : ViewModelBase
         base.OnAppearing();
         OnPropertyChanged(nameof(Tutor));
         OnPropertyChanged(nameof(FullName));
-        OnPropertyChanged(nameof(Avatar));
         OnPropertyChanged(nameof(RatingLabel));
         OnPropertyChanged(nameof(AvailabilityLabel));
         OnPropertyChanged(nameof(SubjectsLabel));
@@ -173,7 +174,6 @@ public class MapViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(Tutor));
         OnPropertyChanged(nameof(FullName));
-        OnPropertyChanged(nameof(Avatar));
         OnPropertyChanged(nameof(RatingLabel));
         OnPropertyChanged(nameof(AvailabilityLabel));
         OnPropertyChanged(nameof(SubjectsLabel));

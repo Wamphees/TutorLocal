@@ -31,7 +31,19 @@ public class User
     public SchoolLevel Level { get; set; } = SchoolLevel.Lycee;
 
     /// <summary>Avatar emoji affiché dans l'application.</summary>
-    public string Avatar { get; set; } = "👦";
+    public string Avatar { get; set; } = string.Empty;
+
+    /// <summary>Initiales discrètes affichées à la place des avatars illustrés.</summary>
+    public string Initials
+    {
+        get
+        {
+            var parts = FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0)
+                return "U";
+            return string.Concat(parts.Take(2).Select(p => char.ToUpperInvariant(p[0])));
+        }
+    }
 
     public string DisplayName => Role == UserRole.Tutor ? FullName : FullName.Split(' ')[0];
 

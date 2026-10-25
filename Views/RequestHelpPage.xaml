@@ -26,14 +26,9 @@
                 <Label Text="←" FontSize="24" TextColor="{StaticResource TextDark}" VerticalOptions="Center">
                     <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding BackCommand}" /></Label.GestureRecognizers>
                 </Label>
-                <Border WidthRequest="28" HeightRequest="28" BackgroundColor="{StaticResource LightBlueBg}" StrokeShape="RoundRectangle 8" StrokeThickness="0" VerticalOptions="Center">
-                    <Label Text="📘" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </Border>
                 <Label Text="Demande De Cours" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
             </HorizontalStackLayout>
-            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="#E5E7EB" VerticalOptions="Center">
-                <Label Text="👤" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-            </Border>
+            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" StrokeThickness="0" BackgroundColor="{StaticResource PrimaryBlue}" VerticalOptions="Center"/>
         </Grid>
 
         <!-- FORMULAIRE DEFILANT -->
@@ -59,9 +54,9 @@
                     <Grid ColumnDefinitions="Auto, *, Auto">
                         <!-- Avatars superposés (Simulation) -->
                         <Grid WidthRequest="60" Margin="0,0,12,0" VerticalOptions="Center">
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="#CBD5E1" HorizontalOptions="Start"><Label Text="👨" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="#94A3B8" HorizontalOptions="Center"><Label Text="👩" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
-                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="#64748B" HorizontalOptions="End"><Label Text="🧔" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="{StaticResource PrimaryBlue}" Opacity="0.7" HorizontalOptions="Start"/>
+                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="{StaticResource PrimaryBlue}" Opacity="0.85" HorizontalOptions="Center"/>
+                            <Border WidthRequest="28" HeightRequest="28" StrokeShape="RoundRectangle 14" StrokeThickness="2" Stroke="White" BackgroundColor="{StaticResource PrimaryBlue}" HorizontalOptions="End"/>
                         </Grid>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                             <Label FontSize="12" TextColor="{StaticResource TextDark}">
@@ -86,12 +81,9 @@
                     </Grid>
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="12,12">
                             <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ChooseSubjectLevelCommand}" /></Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="Auto, *, Auto">
-                            <Border WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Margin="0,0,12,0">
-                                <Label Text="📐" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" />
-                            </Border>
-                            <Label Grid.Column="1" Text="{Binding SubjectLevelLabel}" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
-                            <Label Grid.Column="2" Text="▼" TextColor="{StaticResource TextGray}" FontSize="12" VerticalOptions="Center" />
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label Text="{Binding SubjectLevelLabel}" TextColor="{StaticResource TextDark}" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="▼" TextColor="{StaticResource TextGray}" FontSize="12" VerticalOptions="Center" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -110,7 +102,6 @@
                             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" HorizontalOptions="Start">
                                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding AttachFileCommand}" /></Border.GestureRecognizers>
                                 <HorizontalStackLayout Spacing="6">
-                                    <Label Text="📷" FontSize="14" VerticalOptions="Center"/>
                                     <Label Text="{Binding AttachmentButtonLabel}" TextColor="{StaticResource PrimaryBlue}" FontAttributes="Bold" FontSize="12" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                             </Border>
@@ -122,17 +113,17 @@
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Niveau d'urgence" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
-                        <!-- Option : Urgent (Sélectionnée) -->
-                        <Border Grid.Column="0" BackgroundColor="#FFE4B5" StrokeThickness="1" Stroke="{StaticResource OrangeWarning}" StrokeShape="RoundRectangle 12" Padding="12">
+                        <!-- Option : Urgent -->
+                        <Border Grid.Column="0" BackgroundColor="{Binding IsUrgentSelected, Converter={StaticResource UrgentChipBg}}" StrokeThickness="1" Stroke="{Binding IsUrgentSelected, Converter={StaticResource UrgentChipStroke}}" StrokeShape="RoundRectangle 12" Padding="12">
                                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectUrgentCommand}" /></Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="6">
                                 <Grid ColumnDefinitions="Auto, *">
                                     <Border BackgroundColor="{StaticResource OrangeWarning}" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
-                                        <HorizontalStackLayout Spacing="4"><Label Text="🔥" FontSize="10"/><Label Text="Urgent" TextColor="White" FontSize="10" FontAttributes="Bold"/></HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4"><Label Text="Urgent" TextColor="White" FontSize="10" FontAttributes="Bold"/></HorizontalStackLayout>
                                     </Border>
-                                    <!-- Radio Button Actif -->
-                                    <Border Grid.Column="1" WidthRequest="16" HeightRequest="16" StrokeShape="RoundRectangle 8" StrokeThickness="2" Stroke="{StaticResource TextDark}" BackgroundColor="Transparent" HorizontalOptions="End">
-                                        <BoxView Color="{StaticResource TextDark}" WidthRequest="8" HeightRequest="8" CornerRadius="4" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <!-- Radio : actif si Urgent sélectionné -->
+                                    <Border Grid.Column="1" WidthRequest="16" HeightRequest="16" StrokeShape="RoundRectangle 8" StrokeThickness="2" Stroke="{Binding IsUrgentSelected, Converter={StaticResource UrgentChipStroke}}" HorizontalOptions="End">
+                                        <BoxView Color="#F59E0B" WidthRequest="8" HeightRequest="8" CornerRadius="4" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsUrgentSelected}"/>
                                     </Border>
                                 </Grid>
                                 <Label Text="Aujourd'hui" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" Margin="0,4,0,0"/>
@@ -140,16 +131,18 @@
                             </VerticalStackLayout>
                         </Border>
                         
-                        <!-- Option : Planifié (Non sélectionnée) -->
-                        <Border Grid.Column="1" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="12">
+                        <!-- Option : Planifié -->
+                        <Border Grid.Column="1" BackgroundColor="{Binding IsPlannedSelected, Converter={StaticResource PlannedChipBg}}" StrokeThickness="1" Stroke="{Binding IsPlannedSelected, Converter={StaticResource UrgentChipStroke}}" StrokeShape="RoundRectangle 12" Padding="12">
                                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectPlannedCommand}" /></Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="6">
                                 <Grid ColumnDefinitions="Auto, *">
                                     <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
-                                        <HorizontalStackLayout Spacing="4"><Label Text="📅" FontSize="10"/><Label Text="Planifié" TextColor="{StaticResource TextDark}" FontSize="10" FontAttributes="Bold"/></HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4"><Label Text="Planifié" TextColor="{StaticResource TextDark}" FontSize="10" FontAttributes="Bold"/></HorizontalStackLayout>
                                     </Border>
-                                    <!-- Radio Button Inactif -->
-                                    <Border Grid.Column="1" WidthRequest="16" HeightRequest="16" StrokeShape="RoundRectangle 8" StrokeThickness="2" Stroke="{StaticResource TextGray}" BackgroundColor="Transparent" HorizontalOptions="End" />
+                                    <!-- Radio : actif si Planifié sélectionné -->
+                                    <Border Grid.Column="1" WidthRequest="16" HeightRequest="16" StrokeShape="RoundRectangle 8" StrokeThickness="2" Stroke="{Binding IsPlannedSelected, Converter={StaticResource UrgentChipStroke}}" HorizontalOptions="End">
+                                        <BoxView Color="#5B44E9" WidthRequest="8" HeightRequest="8" CornerRadius="4" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding IsPlannedSelected}"/>
+                                    </Border>
                                 </Grid>
                                 <Label Text="Cette semaine" FontAttributes="Bold" FontSize="16" TextColor="{StaticResource TextDark}" Margin="0,4,0,0"/>
                                 <Label Text="Créneau flexible" FontSize="12" TextColor="{StaticResource TextGray}" />
@@ -163,22 +156,23 @@
                     <Label Text="Modalité souhaitée" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
                     <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="4">
                         <Grid ColumnDefinitions="*,*">
-                            <!-- Actif (lié à l'état du VM) -->
-                            <Border Grid.Column="0" BackgroundColor="{StaticResource CardBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                            <!-- En présentiel (état lié au VM) -->
+                            <Border Grid.Column="0" BackgroundColor="{Binding IsInPersonSelected, Converter={StaticResource SegActiveBg}}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
                                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInPersonCommand}" /></Border.GestureRecognizers>
                                 <Border.Shadow><Shadow Brush="#000000" Offset="0,2" Radius="4" Opacity="0.05" /></Border.Shadow>
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
-                                    <Label Text="🏛️" VerticalOptions="Center" FontSize="14" />
-                                    <Label Text="En présentiel" TextColor="{StaticResource PrimaryBlue}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                    <Label Text="✓" TextColor="{StaticResource GreenSuccess}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12"/>
+                                    <Label Text="En présentiel" TextColor="{Binding IsInPersonSelected, Converter={StaticResource SegText}}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <Label Text="✓" TextColor="{StaticResource GreenSuccess}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" IsVisible="{Binding IsInPersonSelected}"/>
                                 </HorizontalStackLayout>
                             </Border>
-                            <!-- Inactif (lié à l'état du VM) -->
-                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
-                                <HorizontalStackLayout.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectOnlineCommand}" /></HorizontalStackLayout.GestureRecognizers>
-                                <Label Text="💻" VerticalOptions="Center" FontSize="14" />
-                                <Label Text="En visio" TextColor="{StaticResource TextGray}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                            </HorizontalStackLayout>
+                            <!-- En visio (état lié au VM) -->
+                            <Border Grid.Column="1" BackgroundColor="{Binding IsOnlineSelected, Converter={StaticResource SegActiveBg}}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectOnlineCommand}" /></Border.GestureRecognizers>
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="En visio" TextColor="{Binding IsOnlineSelected, Converter={StaticResource SegText}}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
+                                    <Label Text="✓" TextColor="{StaticResource GreenSuccess}" FontAttributes="Bold" VerticalOptions="Center" FontSize="12" IsVisible="{Binding IsOnlineSelected}"/>
+                                </HorizontalStackLayout>
+                            </Border>
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
@@ -193,18 +187,13 @@
                     </Grid>
                     <Border BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 16" Padding="16">
                         <VerticalStackLayout Spacing="12">
-                            <Grid ColumnDefinitions="Auto, *">
-                                <Border WidthRequest="40" HeightRequest="40" BackgroundColor="#34D399" StrokeThickness="0" StrokeShape="RoundRectangle 12" Margin="0,0,12,0">
-                                    <Label Text="📍" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18" />
-                                </Border>
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                    <HorizontalStackLayout Spacing="4">
-                                        <Label Text="{Binding MeetingPlaceLabel}" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
-                                        <Label Text="✓" TextColor="#064E3B" FontAttributes="Bold" FontSize="12" />
-                                    </HorizontalStackLayout>
-                                    <Label Text="{Binding MeetingPlaceDistance}" FontSize="12" TextColor="{StaticResource TextGray}" />
-                                </VerticalStackLayout>
-                            </Grid>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="{Binding MeetingPlaceLabel}" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
+                                    <Label Text="✓" TextColor="#064E3B" FontAttributes="Bold" FontSize="12" />
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding MeetingPlaceDistance}" FontSize="12" TextColor="{StaticResource TextGray}" />
+                            </VerticalStackLayout>
                             
                             <!-- Mini Map intégrée dans la carte -->
                             <Border BackgroundColor="#E5E7EB" HeightRequest="100" StrokeThickness="0" StrokeShape="RoundRectangle 8">
@@ -212,7 +201,7 @@
                                     <Image Source="map_background.jpg" Aspect="AspectFill" />
                                     <!-- Label de sécurité superposé sur la carte -->
                                     <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="8,4" HorizontalOptions="Start" VerticalOptions="End" Margin="8">
-                                        <HorizontalStackLayout Spacing="4"><Label Text="🔒" FontSize="10"/><Label Text="Espace public sécurisé" FontAttributes="Bold" FontSize="10" TextColor="{StaticResource TextDark}"/></HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="4"><Label Text="Espace public sécurisé" FontAttributes="Bold" FontSize="10" TextColor="{StaticResource TextDark}"/></HorizontalStackLayout>
                                     </Border>
                                 </Grid>
                             </Border>
@@ -222,10 +211,7 @@
 
                 <!-- ENCART INFO SÉCURITÉ BAS DE PAGE -->
                 <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" Margin="0,0,0,20">
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Label Text="🛡️" FontSize="16" TextColor="{StaticResource PrimaryBlue}" Margin="0,0,12,0" VerticalOptions="Start" />
-                        <Label Grid.Column="1" Text="Tous les cours sont gratuits et dispensés par des bénévoles certifiés dans des tiers-lieux partenaires ou en visioconférence surveillée." FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
-                    </Grid>
+                    <Label Text="Tous les cours sont gratuits et dispensés par des bénévoles certifiés dans des tiers-lieux partenaires ou en visioconférence surveillée." FontSize="12" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
                 </Border>
 
             </VerticalStackLayout>
@@ -235,7 +221,7 @@
         <Border Grid.Row="2" BackgroundColor="{StaticResource CardBg}" StrokeThickness="1" Stroke="#E5E7EB" Padding="20,16,20,30" Margin="-1,0,-1,-1">
             <VerticalStackLayout Spacing="8">
                 <Label Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="12" IsVisible="{Binding HasError}" />
-            <Button Text="🚀 Publier ma demande d'aide" Command="{Binding PublishCommand}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
+            <Button Text="Publier ma demande d'aide" Command="{Binding PublishCommand}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="52" FontSize="15" />
             </VerticalStackLayout>
         </Border>
 

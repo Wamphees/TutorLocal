@@ -25,7 +25,7 @@ public class ProfileViewModel : ViewModelBase
 
     public string LevelLabel => _auth.CurrentUser?.LevelLabel ?? "Élève";
 
-    public string Avatar => _auth.CurrentUser?.Avatar ?? "👦";
+    public string Initials => _auth.CurrentUser?.Initials ?? "U";
 
     public int UpcomingCount => _sessionService.GetUpcoming(StudentId).Count();
 
@@ -88,7 +88,7 @@ public class ProfileViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(FullName));
         OnPropertyChanged(nameof(LevelLabel));
-        OnPropertyChanged(nameof(Avatar));
+        OnPropertyChanged(nameof(Initials));
         OnPropertyChanged(nameof(UpcomingCount));
         OnPropertyChanged(nameof(HoursLabel));
         OnPropertyChanged(nameof(CompletedCount));

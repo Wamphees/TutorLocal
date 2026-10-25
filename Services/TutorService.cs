@@ -129,12 +129,11 @@ public class TutorService : ITutorService
         {
             Id = user.Id,
             FullName = user.FullName,
-            Avatar = user.Avatar,
             ProfileLine = "Tuteur bénévole",
             About = "Profil de tuteur bénévole.",
             LocationLabel = "Quartier local",
             MeetingPlace = "Médiathèque de proximité",
-            Subjects = { new TutorSubject("📘", "Aide scolaire", "Tous niveaux") }
+            Subjects = { new TutorSubject("Aide scolaire", "Tous niveaux") }
         };
         Tutors.Add(tutor);
         SaveTutor(tutor);
@@ -150,12 +149,12 @@ public class TutorService : ITutorService
         {
             Id = "tutor-thomas",
             FullName = "Thomas D.",
-            Avatar = "👨",
+
             Subjects =
             {
-                new TutorSubject("📐", "Mathématiques", "Tous niveaux"),
-                new TutorSubject("⚡", "Physique-Chimie", "Collège & Lycée"),
-                new TutorSubject("💻", "Algorithmique / NSI", "Débutant")
+                new TutorSubject("Mathématiques", "Tous niveaux"),
+                new TutorSubject("Physique-Chimie", "Collège & Lycée"),
+                new TutorSubject("Algorithmique / NSI", "Débutant")
             },
             Rating = 4.9,
             RatingsCount = 14,
@@ -182,11 +181,11 @@ public class TutorService : ITutorService
         {
             Id = "tutor-sarah",
             FullName = "Sarah M.",
-            Avatar = "👩",
+
             Subjects =
             {
-                new TutorSubject("🧬", "SVT", "Lycée"),
-                new TutorSubject("🧪", "Chimie", "Collège & Lycée")
+                new TutorSubject("SVT", "Lycée"),
+                new TutorSubject("Chimie", "Collège & Lycée")
             },
             Rating = 4.8,
             RatingsCount = 11,
@@ -209,11 +208,11 @@ public class TutorService : ITutorService
         {
             Id = "tutor-lucas",
             FullName = "Lucas B.",
-            Avatar = "🧔",
+
             Subjects =
             {
-                new TutorSubject("🇬🇧", "Anglais", "Lycée"),
-                new TutorSubject("🗣️", "Expression orale", "Tous niveaux")
+                new TutorSubject("Anglais", "Lycée"),
+                new TutorSubject("Expression orale", "Tous niveaux")
             },
             Rating = 4.7,
             RatingsCount = 9,
@@ -236,11 +235,11 @@ public class TutorService : ITutorService
         {
             Id = "tutor-mehdi",
             FullName = "Mehdi K.",
-            Avatar = "🧑",
+
             Subjects =
             {
-                new TutorSubject("✍️", "Français", "Collège & Lycée"),
-                new TutorSubject("📚", "Philosophie", "Lycée")
+                new TutorSubject("Français", "Collège & Lycée"),
+                new TutorSubject("Philosophie", "Lycée")
             },
             Rating = 4.6,
             RatingsCount = 7,
@@ -263,11 +262,11 @@ public class TutorService : ITutorService
         {
             Id = "tutor-claire",
             FullName = "Claire R.",
-            Avatar = "👩‍🦰",
+
             Subjects =
             {
-                new TutorSubject("🗺️", "Histoire-Géographie", "Lycée"),
-                new TutorSubject("⚖️", "EMC", "Collège")
+                new TutorSubject("Histoire-Géographie", "Lycée"),
+                new TutorSubject("EMC", "Collège")
             },
             Rating = 4.75,
             RatingsCount = 6,

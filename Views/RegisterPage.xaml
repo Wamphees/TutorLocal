@@ -20,41 +20,20 @@
         <VerticalStackLayout Padding="20,40,20,30"
                 Spacing="0">
 
-            <!-- HEADER : Logo et Titres -->
+            <!-- TITRES -->
             <VerticalStackLayout Spacing="12"
                     HorizontalOptions="Center"
                     Margin="0,0,0,24">
-                <!-- Icône centrale -->
-                <Border WidthRequest="48"
-                        HeightRequest="48"
-                        BackgroundColor="{StaticResource PrimaryBlue}"
-                        StrokeShape="RoundRectangle 14"
-                        StrokeThickness="0"
-                        HorizontalOptions="Center">
-                    <Label Text="📖"
-                            TextColor="White"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            FontSize="22"/>
-                </Border>
-
                 <!-- Badge Entraide -->
                 <Border BackgroundColor="{StaticResource LightBlueBg}"
                         StrokeShape="RoundRectangle 20"
                         StrokeThickness="0"
                         Padding="12,6"
                         HorizontalOptions="Center">
-                    <HorizontalStackLayout Spacing="6"
-                            VerticalOptions="Center">
-                        <Label Text="👥"
-                                FontSize="12"
-                                VerticalOptions="Center"/>
-                        <Label Text="TutorLocal Entraide"
-                                TextColor="{StaticResource PrimaryBlue}"
-                                FontSize="12"
-                                FontAttributes="Bold"
-                                VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
+                    <Label Text="TutorLocal Entraide"
+                            TextColor="{StaticResource PrimaryBlue}"
+                            FontSize="12"
+                            FontAttributes="Bold"/>
                 </Border>
 
                 <!-- Textes -->
@@ -101,15 +80,11 @@
                                     <TapGestureRecognizer Command="{Binding SelectStudentCommand}"/>
                                 </Border.GestureRecognizers>
                                 <HorizontalStackLayout HorizontalOptions="Center"
-                                        Spacing="6">
-                                    <Label Text="🎓"
-                                            VerticalOptions="Center"
-                                            FontSize="14"/>
+                                        VerticalOptions="Center">
                                     <Label Text="Élève / Parent"
                                             TextColor="{Binding StudentRoleText}"
                                             FontSize="13"
-                                            FontAttributes="Bold"
-                                            VerticalOptions="Center"/>
+                                            FontAttributes="Bold"/>
                                 </HorizontalStackLayout>
                             </Border>
                             <!-- Tuteur bénévole -->
@@ -122,15 +97,11 @@
                                     <TapGestureRecognizer Command="{Binding SelectTutorCommand}"/>
                                 </Border.GestureRecognizers>
                                 <HorizontalStackLayout HorizontalOptions="Center"
-                                        Spacing="6">
-                                    <Label Text="🤝"
-                                            VerticalOptions="Center"
-                                            FontSize="14"/>
+                                        VerticalOptions="Center">
                                     <Label Text="Tuteur bénévole"
                                             TextColor="{Binding TutorRoleText}"
                                             FontSize="13"
-                                            FontAttributes="Bold"
-                                            VerticalOptions="Center"/>
+                                            FontAttributes="Bold"/>
                                 </HorizontalStackLayout>
                             </Border>
                         </Grid>
@@ -141,23 +112,16 @@
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 12"
                             Padding="16">
-                        <Grid ColumnDefinitions="Auto, *">
-                            <Label Text="📘"
-                                    FontSize="20"
-                                    Margin="0,0,12,0"
-                                    VerticalOptions="Center"/>
-                            <VerticalStackLayout Grid.Column="1"
-                                    Spacing="2">
-                                <Label Text="Profil apprenant"
-                                        FontAttributes="Bold"
-                                        FontSize="13"
-                                        TextColor="{StaticResource TextDark}"/>
-                                <Label Text="Accès gratuit aux sessions d'entraide encadrées en médiathèques partenaires."
-                                        FontSize="12"
-                                        TextColor="{StaticResource TextGray}"
-                                        LineHeight="1.3"/>
-                            </VerticalStackLayout>
-                        </Grid>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Profil apprenant"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    TextColor="{StaticResource TextDark}"/>
+                            <Label Text="Accès gratuit aux sessions d'entraide encadrées en médiathèques partenaires."
+                                    FontSize="12"
+                                    TextColor="{StaticResource TextGray}"
+                                    LineHeight="1.3"/>
+                        </VerticalStackLayout>
                     </Border>
 
                     <!-- CHAMP : NOM -->
@@ -171,18 +135,11 @@
                                 StrokeShape="RoundRectangle 12"
                                 HeightRequest="48"
                                 Padding="12,0">
-                            <Grid ColumnDefinitions="Auto, *">
-                                <Label Text="👤"
-                                        TextColor="{StaticResource TextGray}"
-                                        VerticalOptions="Center"/>
-                                <Entry Grid.Column="1"
-                                        Placeholder="ex. Alex Dupont"
-                                        Text="{Binding FullName}"
-                                        BackgroundColor="Transparent"
-                                        TextColor="{StaticResource TextDark}"
-                                        Margin="8,0,0,0"
-                                        VerticalOptions="Center"/>
-                            </Grid>
+                            <Entry Placeholder="ex. Alex Dupont"
+                                    Text="{Binding FullName}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource TextDark}"
+                                    VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
 
@@ -197,19 +154,12 @@
                                 StrokeShape="RoundRectangle 12"
                                 HeightRequest="48"
                                 Padding="12,0">
-                            <Grid ColumnDefinitions="Auto, *">
-                                <Label Text="✉️"
-                                        TextColor="{StaticResource TextGray}"
-                                        VerticalOptions="Center"/>
-                                <Entry Grid.Column="1"
-                                        Placeholder="alex@exemple.fr"
-                                        Keyboard="Email"
-                                        Text="{Binding Email}"
-                                        BackgroundColor="Transparent"
-                                        TextColor="{StaticResource TextDark}"
-                                        Margin="8,0,0,0"
-                                        VerticalOptions="Center"/>
-                            </Grid>
+                            <Entry Placeholder="alex@exemple.fr"
+                                    Keyboard="Email"
+                                    Text="{Binding Email}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="{StaticResource TextDark}"
+                                    VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
 
@@ -224,22 +174,24 @@
                                 StrokeShape="RoundRectangle 12"
                                 HeightRequest="48"
                                 Padding="12,0">
-                            <Grid ColumnDefinitions="Auto, *, Auto">
-                                <Label Text="🔒"
-                                        TextColor="{StaticResource TextGray}"
-                                        VerticalOptions="Center"/>
-                                <Entry Grid.Column="1"
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Entry VerticalOptions="Center"
                                         Placeholder="••••••••"
-                                        IsPassword="True"
+                                        IsPassword="{Binding IsPasswordHidden}"
                                         Text="{Binding Password}"
                                         BackgroundColor="Transparent"
-                                        TextColor="{StaticResource TextDark}"
-                                        Margin="8,0,0,0"
-                                        VerticalOptions="Center"/>
-                                <Label Grid.Column="2"
-                                        Text="👁️"
-                                        TextColor="{StaticResource TextGray}"
-                                        VerticalOptions="Center"/>
+                                        TextColor="{StaticResource TextDark}"/>
+                                <Label Grid.Column="1"
+                                        Text="{Binding TogglePasswordText}"
+                                        TextColor="{StaticResource PrimaryBlue}"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        Padding="8,0"
+                                        VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TogglePasswordCommand}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Grid>
                         </Border>
                     </VerticalStackLayout>
@@ -297,7 +249,11 @@
                                     <Span Text="J'accepte la "/>
                                     <Span Text="charte d'entraide bienveillante"
                                             TextColor="{StaticResource PrimaryBlue}"
-                                            TextDecorations="Underline"/>
+                                            TextDecorations="Underline">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ViewTermsCommand}"/>
+                                        </Span.GestureRecognizers>
+                                    </Span>
                                     <Span Text=" et les conditions d'utilisation."/>
                                 </FormattedString>
                             </Label.FormattedText>
@@ -312,7 +268,7 @@
                             Margin="0,4,0,0"/>
 
                     <!-- BOUTON SUBMIT -->
-                    <Button Text="⚡ S'inscrire gratuitement"
+                    <Button Text="S'inscrire gratuitement"
                             Command="{Binding RegisterCommand}"
                             IsEnabled="{Binding IsNotBusy}"
                             BackgroundColor="{StaticResource PrimaryBlue}"
@@ -347,21 +303,15 @@
                             BackgroundColor="White"
                             StrokeShape="RoundRectangle 12"
                             HeightRequest="52">
-                        <HorizontalStackLayout HorizontalOptions="Center"
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoogleRegisterCommand}"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Continuer avec Google"
+                                HorizontalOptions="Center"
                                 VerticalOptions="Center"
-                                Spacing="10">
-                            <!-- Fausse icône Google en attendant l'image SVG -->
-                            <Label Text="G"
-                                    TextColor="#EA4335"
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    VerticalOptions="Center"/>
-                            <Label Text="Continuer avec Google"
-                                    TextColor="{StaticResource TextDark}"
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
+                                TextColor="{StaticResource TextDark}"
+                                FontAttributes="Bold"
+                                FontSize="14"/>
                     </Border>
 
                 </VerticalStackLayout>
@@ -373,30 +323,16 @@
                     StrokeShape="RoundRectangle 12"
                     Padding="16"
                     Margin="0,24,0,24">
-                <Grid ColumnDefinitions="Auto, *">
-                    <Border BackgroundColor="#34D399"
-                            WidthRequest="32"
-                            HeightRequest="32"
-                            StrokeShape="RoundRectangle 16"
-                            StrokeThickness="0"
-                            Margin="0,0,12,0">
-                        <Label Text="🛡️"
-                                FontSize="16"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center"/>
-                    </Border>
-                    <VerticalStackLayout Grid.Column="1"
-                            Spacing="2"
-                            VerticalOptions="Center">
-                        <Label Text="Garantie neutralité &amp; gratuité"
-                                FontAttributes="Bold"
-                                FontSize="12"
-                                TextColor="#059669"/>
-                        <Label Text="Partenariat avec les collèges &amp; médiathèques"
-                                FontSize="11"
-                                TextColor="{StaticResource TextGray}"/>
-                    </VerticalStackLayout>
-                </Grid>
+                <VerticalStackLayout Spacing="2"
+                        VerticalOptions="Center">
+                    <Label Text="Garantie neutralité &amp; gratuité"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            TextColor="#059669"/>
+                    <Label Text="Partenariat avec les collèges &amp; médiathèques"
+                            FontSize="11"
+                            TextColor="{StaticResource TextGray}"/>
+                </VerticalStackLayout>
             </Border>
 
             <!-- FOOTER LOGIN -->

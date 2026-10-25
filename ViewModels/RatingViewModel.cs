@@ -38,15 +38,12 @@ public class RatingTag : ObservableObject
 {
     private readonly RatingViewModel _owner;
 
-    public RatingTag(RatingViewModel owner, string icon, string label)
+    public RatingTag(RatingViewModel owner, string label)
     {
         _owner = owner;
-        Icon = icon;
         Label = label;
         IsSelected = false;
     }
-
-    public string Icon { get; }
 
     public string Label { get; }
 
@@ -95,11 +92,11 @@ public class RatingViewModel : ViewModelBase
         Stars = new ObservableCollection<RatingStar>(Enumerable.Range(1, 5).Select(i => new RatingStar(this, i)));
         Tags = new ObservableCollection<RatingTag>
         {
-            new(this, "★", "Pédagogue & Patient"),
-            new(this, "🕒", "Ponctuel"),
-            new(this, "💡", "Explications claires"),
-            new(this, "🤝", "Bienveillant"),
-            new(this, "🎯", "Méthodique")
+            new(this, "Pédagogue & Patient"),
+            new(this, "Ponctuel"),
+            new(this, "Explications claires"),
+            new(this, "Bienveillant"),
+            new(this, "Méthodique")
         };
     }
 

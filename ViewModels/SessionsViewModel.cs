@@ -24,8 +24,7 @@ public class SessionDisplay : ObservableObject
 
     public string TutorName => Owner()?.ResolveTutor(Session)?.FullName ?? "Tuteur";
 
-    public string TutorAvatar => Owner()?.ResolveTutor(Session)?.Avatar ?? "👤";
-
+    public string TutorInitials => Owner()?.ResolveTutor(Session)?.Initials ?? "T";
     public string SubjectLine => $"{Session.Subject} · {Session.Topic}";
 
     public SessionStatus Status => Session.Status;
@@ -38,14 +37,6 @@ public class SessionDisplay : ObservableObject
         SessionStatus.Confirmed => "Confirmée par la tutrice",
         SessionStatus.Completed => $"Terminée le {Session.Date:dd MMM}",
         _ => "Annulée"
-    };
-
-    public string StatusBadgeIcon => Status switch
-    {
-        SessionStatus.Pending => "🕒",
-        SessionStatus.Confirmed => "✓",
-        SessionStatus.Completed => "✓",
-        _ => "✕"
     };
 
     public bool IsUpcoming => Session.IsUpcoming;
@@ -87,7 +78,7 @@ public class SessionDisplay : ObservableObject
 
     public string SubjectDetailLine => Status == SessionStatus.Completed
         ? $"Séance de {Session.Subject} · {Session.Topic}"
-        : $"{Session.SubjectIcon} {Session.Subject}";
+        : $"{Session.Subject} · {Session.Topic}";
 
     public string DateLine => $"{Session.Date:dddd dd MMMM} · {Session.Date:HH'h'mm} - {Session.Date.AddMinutes(Session.DurationMinutes):HH'h'mm}";
 

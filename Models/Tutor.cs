@@ -7,7 +7,19 @@ public class Tutor
 
     public string FullName { get; set; } = string.Empty;
 
-    public string Avatar { get; set; } = "👨";
+    public string Avatar { get; set; } = string.Empty;
+
+    /// <summary>Initiales discrètes affichées à la place des avatars illustrés.</summary>
+    public string Initials
+    {
+        get
+        {
+            var parts = FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0)
+                return "T";
+            return string.Concat(parts.Take(2).Select(p => char.ToUpperInvariant(p[0])));
+        }
+    }
 
     /// <summary>Indique si le tuteur a été vérifié par l'équipe TutorLocal.</summary>
     public bool IsVerified { get; set; } = true;
@@ -54,14 +66,11 @@ public class Tutor
 /// <summary>Matière enseignée par un tuteur.</summary>
 public class TutorSubject
 {
-    public TutorSubject(string icon, string name, string levels)
+    public TutorSubject(string name, string levels)
     {
-        Icon = icon;
         Name = name;
         Levels = levels;
     }
-
-    public string Icon { get; set; }
 
     public string Name { get; set; }
 
@@ -92,5 +101,5 @@ public class TutorReview
 
     public string TimeAgo { get; set; }
 
-    public string StarsLabel => new('⭐', Stars);
+    public string StarsLabel => new('★', Stars);
 }

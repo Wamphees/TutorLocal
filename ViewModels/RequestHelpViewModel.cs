@@ -8,18 +8,15 @@ namespace TutorLocal.ViewModels;
 /// <summary>Option d'urgence et de modalité de la demande d'aide.</summary>
 public class ChoiceOption
 {
-    public ChoiceOption(string key, string label, string icon)
+    public ChoiceOption(string key, string label)
     {
         Key = key;
         Label = label;
-        Icon = icon;
     }
 
     public string Key { get; }
 
     public string Label { get; }
-
-    public string Icon { get; }
 
     public override string ToString() => Label;
 }
@@ -55,27 +52,27 @@ public class RequestHelpViewModel : ViewModelBase
 
         SubjectLevels = new ObservableCollection<ChoiceOption>
         {
-            new("maths-lycee", "Mathématiques — Lycée (1ère)", "📐"),
-            new("maths-college", "Mathématiques — Collège (3e)", "📐"),
-            new("physique-lycee", "Physique-Chimie — Lycée (1ère)", "⚡"),
-            new("svt-lycee", "SVT — Lycée (Terminale)", "🧬"),
-            new("anglais-lycee", "Anglais — Lycée", "🗣️"),
-            new("francais-lycee", "Français — Lycée (2nde)", "✍️"),
-            new("histoire-lycee", "Histoire-Géographie — Lycée", "🗺️")
+            new("maths-lycee", "Mathématiques — Lycée (1ère)"),
+            new("maths-college", "Mathématiques — Collège (3e)"),
+            new("physique-lycee", "Physique-Chimie — Lycée (1ère)"),
+            new("svt-lycee", "SVT — Lycée (Terminale)"),
+            new("anglais-lycee", "Anglais — Lycée"),
+            new("francais-lycee", "Français — Lycée (2nde)"),
+            new("histoire-lycee", "Histoire-Géographie — Lycée")
         };
         _selectedSubjectLevel = SubjectLevels[0];
 
         Urgencies = new ObservableCollection<ChoiceOption>
         {
-            new("urgent", "Aujourd'hui", "🔥"),
-            new("planned", "Cette semaine", "📅")
+            new("urgent", "Aujourd'hui"),
+            new("planned", "Cette semaine")
         };
         _selectedUrgency = Urgencies[0];
 
         Modalities = new ObservableCollection<ChoiceOption>
         {
-            new("inperson", "En présentiel", "🏛️"),
-            new("online", "En visio", "💻")
+            new("inperson", "En présentiel"),
+            new("online", "En visio")
         };
         _selectedModality = Modalities[0];
     }
@@ -123,6 +120,7 @@ public class RequestHelpViewModel : ViewModelBase
             if (SetProperty(ref _selectedModality, value))
             {
                 OnPropertyChanged(nameof(IsInPersonSelected));
+                OnPropertyChanged(nameof(IsOnlineSelected));
                 OnPropertyChanged(nameof(MeetingPlaceLabel));
                 OnPropertyChanged(nameof(MeetingPlaceDistance));
             }
@@ -130,6 +128,8 @@ public class RequestHelpViewModel : ViewModelBase
     }
 
     public bool IsInPersonSelected => SelectedModality?.Key == "inperson";
+
+    public bool IsOnlineSelected => SelectedModality?.Key == "online";
 
     public string Description
     {
@@ -237,14 +237,12 @@ public class RequestHelpViewModel : ViewModelBase
 
         var parts = SelectedSubjectLevel.Label.Split('—');
         var subject = parts[0].Trim();
-        var icon = SelectedSubjectLevel.Icon;
 
         var request = new HelpRequest
         {
             StudentId = student.Id,
             TutorId = tutor.Id,
             Subject = subject,
-            SubjectIcon = icon,
             Level = parts.Length > 1 ? parts[1].Trim() : student.LevelLabel,
             Description = Description.Trim(),
             IsUrgent = IsUrgentSelected,

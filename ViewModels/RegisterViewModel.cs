@@ -60,6 +60,8 @@ public class RegisterViewModel : ViewModelBase
 
     private bool _termsAccepted;
 
+    private bool _isPasswordHidden = true;
+
     public RegisterViewModel(INavigationService navigation, IAuthService auth, ITutorService tutors) : base(navigation)
     {
         _auth = auth;
@@ -105,6 +107,19 @@ public class RegisterViewModel : ViewModelBase
         set => SetProperty(ref _termsAccepted, value);
     }
 
+    /// <summary>L'Entry masque la saisie tant que l'utilisateur n'a pas demandé à l'afficher.</summary>
+    public bool IsPasswordHidden
+    {
+        get => _isPasswordHidden;
+        private set
+        {
+            if (SetProperty(ref _isPasswordHidden, value))
+                OnPropertyChanged(nameof(TogglePasswordText));
+        }
+    }
+
+    public string TogglePasswordText => _isPasswordHidden ? "Afficher" : "Masquer";
+
     public bool IsStudent => _role == UserRole.Student;
 
     public bool IsTutor => _role == UserRole.Tutor;
@@ -133,6 +148,19 @@ public class RegisterViewModel : ViewModelBase
         SelectedLevel = option;
     });
 
+    // Affichage du mot de passe ==============================================
+
+    public ICommand TogglePasswordCommand => new RelayCommand(() => IsPasswordHidden = !_isPasswordHidden);
+
+    // Charte d'entraide ======================================================
+
+    public ICommand ViewTermsCommand => new AsyncRelayCommand(async () =>
+    {
+        await AlertAsync("Charte d'entraide bienveillante",
+            "TutoLocal est un réseau bénévole et gratuit : ponctualité, respect, pédagogie sans jugement " +
+            "et bienveillance entre élèves, parents et tuteurs (version de démonstration).");
+    });
+
     // Actions =============================================================
 
     public ICommand RegisterCommand => new AsyncRelayCommand(RegisterAsync, isBusySource: () => IsBusy);
@@ -140,6 +168,12 @@ public class RegisterViewModel : ViewModelBase
     public ICommand GoToLoginCommand => new AsyncRelayCommand(async () =>
     {
         await Navigation.PushAsync<LoginPage>();
+    });
+
+    public ICommand GoogleRegisterCommand => new AsyncRelayCommand(async () =>
+    {
+        await AlertAsync("Continuer avec Google",
+            "La connexion Google est prévue pour la prochaine version (démonstration).");
     });
 
     private void SetRole(UserRole role)
@@ -168,7 +202,7 @@ public class RegisterViewModel : ViewModelBase
         }
 
         await AlertAsync("Bienvenue dans la communauté !",
-            $"Votre compte a bien été créé. Bonne route {(_auth.CurrentUser?.DisplayName ?? "l'entraide")} 👋");
+            $"Votre compte a bien été créé. Bonne route {(_auth.CurrentUser?.DisplayName ?? "l'entraide")} !");
 
         if (_auth.CurrentUser?.Role == Models.UserRole.Tutor)
         {

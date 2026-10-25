@@ -34,6 +34,9 @@
         <member name="T:TutorLocal.Models.Tutor">
             <summary>Tuteur bénévole proposant des séances d'entraide gratuites.</summary>
         </member>
+        <member name="P:TutorLocal.Models.Tutor.Initials">
+            <summary>Initiales discrètes affichées à la place des avatars illustrés.</summary>
+        </member>
         <member name="P:TutorLocal.Models.Tutor.IsVerified">
             <summary>Indique si le tuteur a été vérifié par l'équipe TutorLocal.</summary>
         </member>
@@ -91,7 +94,7 @@
         <member name="P:TutorLocal.Models.TutoringSession.Topic">
             <summary>Sujet de travail évoqué (décrivez votre difficulté).</summary>
         </member>
-        <member name="P:TutorLocal.Models.TutoringSession.ModalityIcon">
+        <member name="P:TutorLocal.Models.TutoringSession.ModalityLabel">
             <summary>Icône selon la modalité : présentiel ou visio.</summary>
         </member>
         <member name="T:TutorLocal.Models.HelpRequest">
@@ -114,6 +117,9 @@
         </member>
         <member name="P:TutorLocal.Models.User.Avatar">
             <summary>Avatar emoji affiché dans l'application.</summary>
+        </member>
+        <member name="P:TutorLocal.Models.User.Initials">
+            <summary>Initiales discrètes affichées à la place des avatars illustrés.</summary>
         </member>
         <member name="T:TutorLocal.Services.IAuthService">
             <summary>
@@ -271,6 +277,9 @@
         <member name="T:TutorLocal.ViewModels.LoginViewModel">
             <summary>ViewModel de la page de connexion : saisie, validation et authentification.</summary>
         </member>
+        <member name="P:TutorLocal.ViewModels.LoginViewModel.IsPasswordHidden">
+            <summary>L'Entry masque la saisie tant que l'utilisateur n'a pas demandé à l'afficher.</summary>
+        </member>
         <member name="T:TutorLocal.ViewModels.MainViewModel">
             <summary>ViewModel de la page d'accueil publique (avant connexion).</summary>
         </member>
@@ -321,6 +330,9 @@
         </member>
         <member name="T:TutorLocal.ViewModels.RegisterViewModel">
             <summary>ViewModel de la page d'inscription : création de compte élève ou tuteur.</summary>
+        </member>
+        <member name="P:TutorLocal.ViewModels.RegisterViewModel.IsPasswordHidden">
+            <summary>L'Entry masque la saisie tant que l'utilisateur n'a pas demandé à l'afficher.</summary>
         </member>
         <member name="T:TutorLocal.ViewModels.RelayCommand">
             <summary>Commande synchrone avec état d'exécution.</summary>

@@ -39,18 +39,8 @@
                 </Border>
             </Grid>
 
-            <!-- ICONE ET TEXTE BIENVENUE -->
+            <!-- TEXTE BIENVENUE -->
             <VerticalStackLayout Spacing="12" HorizontalOptions="Center" Margin="0,0,0,24">
-                <Grid WidthRequest="60" HeightRequest="60" HorizontalOptions="Center">
-                    <Border WidthRequest="54" HeightRequest="54" BackgroundColor="{StaticResource PrimaryBlue}" StrokeShape="RoundRectangle 16" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="🎓" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="26"/>
-                    </Border>
-                    <!-- Petit badge coeur -->
-                    <Border WidthRequest="22" HeightRequest="22" BackgroundColor="{StaticResource OrangeAccent}" StrokeShape="RoundRectangle 11" Stroke="White" StrokeThickness="2" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,-4,-4">
-                        <Label Text="🤍" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                </Grid>
-
                 <Label Text="Bon retour parmi nous !" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource TextDark}" HorizontalTextAlignment="Center" Margin="0,8,0,0" />
                 <Label Text="Connectez-vous pour retrouver vos tuteurs,&#10;vos cours planifiés et vos messages." FontSize="14" TextColor="{StaticResource TextGray}" HorizontalTextAlignment="Center" LineHeight="1.4" />
             </VerticalStackLayout>
@@ -58,40 +48,33 @@
             <!-- SELECTEUR TYPE DE COMPTE -->
             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="4" Margin="0,0,0,16">
                 <Grid ColumnDefinitions="*,*">
-                    <!-- Actif -->
-                    <Border Grid.Column="0" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
-                        <Border.Shadow>
-                            <Shadow Brush="#000000" Offset="0,2" Radius="4" Opacity="0.05" />
-                        </Border.Shadow>
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
-                            <Label Text="📅" VerticalOptions="Center" FontSize="14" />
-                            <Label Text="Élève / Parent" TextColor="{StaticResource PrimaryBlue}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
+                    <!-- Élève / Parent -->
+                    <Border Grid.Column="0" BackgroundColor="{Binding StudentTabBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectStudentTabCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="Élève / Parent" TextColor="{Binding StudentTabText}" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
                     </Border>
-                    <!-- Inactif -->
-                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
-                        <Label Text="🤝" VerticalOptions="Center" FontSize="14" />
-                        <Label Text="Tuteur bénévole" TextColor="{StaticResource TextGray}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <!-- Tuteur bénévole -->
+                    <Border Grid.Column="1" BackgroundColor="{Binding TutorTabBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="0,12">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectTutorTabCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="Tuteur bénévole" TextColor="{Binding TutorTabText}" FontSize="13" FontAttributes="Bold" HorizontalOptions="Center" />
+                    </Border>
                 </Grid>
             </Border>
 
-            <!-- BANNIERE INFO -->
+            <!-- BANNIERE INFO (selon le type de compte choisi) -->
             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" Margin="0,0,0,24">
-                <Grid ColumnDefinitions="Auto, *">
-                    <Label Text="💡" FontSize="18" Margin="0,0,12,0" VerticalOptions="Center" />
-                    <Label Grid.Column="1" Text="Accédez à votre planning de devoirs et tuteurs du quartier." FontSize="13" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
-                </Grid>
+                <Label Text="{Binding LoginHint}" FontSize="13" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
             </Border>
 
             <!-- CHAMP : EMAIL -->
             <VerticalStackLayout Spacing="8" Margin="0,0,0,16">
                 <Label Text="Adresse email" FontAttributes="Bold" FontSize="13" TextColor="{StaticResource TextDark}" />
                 <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" HeightRequest="52" Padding="12,0">
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Label Text="✉️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
-                        <Entry Grid.Column="1" Placeholder="alex@exemple.fr" Keyboard="Email" Text="{Binding Email}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
-                    </Grid>
+                    <Entry Placeholder="alex@exemple.fr" Keyboard="Email" Text="{Binding Email}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
                 </Border>
             </VerticalStackLayout>
 
@@ -104,20 +87,18 @@
                     </Label>
                 </Grid>
                 <Border BackgroundColor="{StaticResource InputBg}" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" HeightRequest="52" Padding="12,0">
-                    <Grid ColumnDefinitions="Auto, *, Auto">
-                        <Label Text="🔒" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
-                        <Entry Grid.Column="1" Placeholder="••••••••" IsPassword="True" Text="{Binding Password}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" Margin="8,0,0,0" VerticalOptions="Center" />
-                        <Label Grid.Column="2" Text="👁️" TextColor="{StaticResource TextGray}" VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Entry VerticalOptions="Center" Placeholder="••••••••" IsPassword="{Binding IsPasswordHidden}" Text="{Binding Password}" BackgroundColor="Transparent" TextColor="{StaticResource TextDark}" />
+                        <Label Grid.Column="1" Text="{Binding TogglePasswordText}" TextColor="{StaticResource PrimaryBlue}" FontSize="13" FontAttributes="Bold" Padding="8,0" VerticalOptions="Center">
+                            <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding TogglePasswordCommand}" /></Label.GestureRecognizers>
+                        </Label>
                     </Grid>
                 </Border>
             </VerticalStackLayout>
 
             <!-- MESSAGE D'ERREUR DE VALIDATION -->
             <Border BackgroundColor="#FEF2F2" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8" IsVisible="{Binding HasError}" Margin="0,0,0,16">
-                <HorizontalStackLayout Spacing="8">
-                    <Label Text="⚠️" FontSize="14" VerticalOptions="Center" />
-                    <Label Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="13" VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                <Label Text="{Binding ErrorMessage}" TextColor="#B91C1C" FontSize="13" />
             </Border>
 
             <!-- OPTIONS CONNEXION (Se souvenir & Biométrie) -->
@@ -129,15 +110,12 @@
                 
                 <Border Grid.Column="1" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8">
                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BiometryCommand}" /></Border.GestureRecognizers>
-                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
-                        <Label Text="👆" FontSize="12" VerticalOptions="Center"/>
-                        <Label Text="Biométrie" TextColor="{StaticResource TextDark}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <Label Text="Biométrie" TextColor="{StaticResource TextDark}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
                 </Border>
             </Grid>
 
             <!-- BOUTON SE CONNECTER -->
-            <Button Text="Se connecter  →" Command="{Binding LoginCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
+            <Button Text="Se connecter" Command="{Binding LoginCommand}" IsEnabled="{Binding IsNotBusy}" BackgroundColor="{StaticResource PrimaryBlue}" TextColor="White" CornerRadius="12" HeightRequest="52" FontAttributes="Bold" FontSize="16" Margin="0,0,0,24" />
 
             <!-- SEPARATEUR OU -->
             <Grid ColumnDefinitions="*, Auto, *" VerticalOptions="Center" Margin="0,0,0,24">
@@ -149,37 +127,30 @@
             <!-- CONNEXION ENT -->
             <Border BackgroundColor="White" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16,12" Margin="0,0,0,12">
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding EntLoginCommand}" /></Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto, *, Auto">
-                    <Border WidthRequest="36" HeightRequest="36" BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 8" VerticalOptions="Center" Margin="0,0,12,0">
-                        <Label Text="🏛️" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                <Grid ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
                         <Label Text="Éducation Nationale / ENT" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" />
                         <Label Text="Accès direct EduConnect" FontSize="11" TextColor="{StaticResource TextGray}" />
                     </VerticalStackLayout>
-                    <Label Grid.Column="2" Text="›" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="›" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" FontAttributes="Bold"/>
                 </Grid>
             </Border>
 
             <!-- CONNEXION GOOGLE -->
             <Border BackgroundColor="White" StrokeThickness="1" Stroke="{StaticResource BorderColor}" StrokeShape="RoundRectangle 12" Padding="16,12" Margin="0,0,0,24">
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GoogleLoginCommand}" /></Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto, *, Auto">
-                    <Label Text="G" TextColor="#EA4335" FontAttributes="Bold" FontSize="20" VerticalOptions="Center" Margin="8,0,20,0" />
-                    <Label Grid.Column="1" Text="Continuer avec Google" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Grid.Column="0" Text="Continuer avec Google" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource TextDark}" VerticalOptions="Center" />
                     <Label Grid.Column="2" Text="›" FontSize="20" TextColor="{StaticResource TextGray}" VerticalOptions="Center" FontAttributes="Bold"/>
                 </Grid>
             </Border>
 
             <!-- BADGE SECURITE -->
             <Border BackgroundColor="{StaticResource LightBlueBg}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16" Margin="0,0,0,32">
-                <Grid ColumnDefinitions="Auto, *">
-                    <Label Text="🛡️" FontSize="20" Margin="0,0,12,0" VerticalOptions="Start" />
-                    <VerticalStackLayout Grid.Column="1" Spacing="2">
-                        <Label Text="Espace 100% sécurisé et bénévole" FontAttributes="Bold" FontSize="12" TextColor="{StaticResource TextDark}" />
-                        <Label Text="Vos échanges et coordonnées sont protégés. Les tuteurs sont vérifiés par l'équipe." FontSize="11" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
-                    </VerticalStackLayout>
-                </Grid>
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Espace 100% sécurisé et bénévole" FontAttributes="Bold" FontSize="12" TextColor="{StaticResource TextDark}" />
+                    <Label Text="Vos échanges et coordonnées sont protégés. Les tuteurs sont vérifiés par l'équipe." FontSize="11" TextColor="{StaticResource TextGray}" LineHeight="1.3" />
+                </VerticalStackLayout>
             </Border>
 
             <!-- FOOTER INSCRIPTION -->

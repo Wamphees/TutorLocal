@@ -34,7 +34,7 @@ public class TutorProfileViewModel : ViewModelBase
 
     public string FullName => Tutor?.FullName ?? "Tuteur";
 
-    public string Avatar => Tutor?.Avatar ?? "👤";
+    public string TutorInitials => Tutor?.Initials ?? "T";
 
     public string RatingLabel => Tutor is { } t ? $"{t.Rating:0.#}" : "-";
 
@@ -50,8 +50,6 @@ public class TutorProfileViewModel : ViewModelBase
 
     public string About => Tutor?.About ?? string.Empty;
 
-    public string IsFavoriteIcon => _isFavorite ? "❤️" : "🤍";
-
     public string IsFavoriteLabel => _isFavorite ? "Tuteur favori" : "Ajouter aux favoris";
 
     // Actions =============================================================
@@ -64,7 +62,6 @@ public class TutorProfileViewModel : ViewModelBase
 
         _tutorService.ToggleFavorite(userId, Tutor.Id);
         _isFavorite = _tutorService.IsFavorite(userId, Tutor.Id);
-        OnPropertyChanged(nameof(IsFavoriteIcon));
         OnPropertyChanged(nameof(IsFavoriteLabel));
     });
 
@@ -97,7 +94,7 @@ public class TutorProfileViewModel : ViewModelBase
                       _tutorService.IsFavorite(_auth.CurrentUser.Id, Tutor.Id);
         OnPropertyChanged(nameof(Tutor));
         OnPropertyChanged(nameof(FullName));
-        OnPropertyChanged(nameof(Avatar));
+        OnPropertyChanged(nameof(TutorInitials));
         OnPropertyChanged(nameof(RatingLabel));
         OnPropertyChanged(nameof(RatingCountLabel));
         OnPropertyChanged(nameof(HoursLabel));
@@ -105,7 +102,6 @@ public class TutorProfileViewModel : ViewModelBase
         OnPropertyChanged(nameof(LocationPillLabel));
         OnPropertyChanged(nameof(About));
         OnPropertyChanged(nameof(HasTutor));
-        OnPropertyChanged(nameof(IsFavoriteIcon));
         OnPropertyChanged(nameof(IsFavoriteLabel));
 
         Subjects.Clear();

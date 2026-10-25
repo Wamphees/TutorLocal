@@ -34,8 +34,6 @@ public class TutoringSession
 
     public string Subject { get; set; } = string.Empty;
 
-    public string SubjectIcon { get; set; } = "📐";
-
     public SessionStatus Status { get; set; } = SessionStatus.Pending;
 
     public SessionModality Modality { get; set; } = SessionModality.InPerson;
@@ -61,8 +59,6 @@ public class TutoringSession
     public bool NeedsFeedback => Status == SessionStatus.Completed && !FeedbackLeft;
 
     /// <summary>Icône selon la modalité : présentiel ou visio.</summary>
-    public string ModalityIcon => Modality == SessionModality.Online ? "💻" : "📍";
-
     public string ModalityLabel => Modality == SessionModality.Online ? "En visioconférence sécurisée" : "En présentiel";
 }
 
@@ -76,8 +72,6 @@ public class HelpRequest
     public string TutorId { get; set; } = string.Empty;
 
     public string Subject { get; set; } = string.Empty;
-
-    public string SubjectIcon { get; set; } = "📐";
 
     public string Level { get; set; } = string.Empty;
 

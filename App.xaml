@@ -14,6 +14,19 @@
             <local:InverseBoolConverter x:Key="InverseBool" />
             <local:BoolToStringConverter x:Key="ReadMark" TrueValue="✓✓" FalseValue="✓" />
             <local:CountToVisibilityConverter x:Key="AnyToVisible" />
+
+            <!-- Convertisseurs d'onglets (état actif / inactif) partagés -->
+            <local:BoolToStringConverter x:Key="TabActiveBg" TrueValue="#5B44E9" FalseValue="#FFFFFF" />
+            <local:BoolToStringConverter x:Key="TabActiveText" TrueValue="#FFFFFF" FalseValue="#111827" />
+            <local:BoolToStringConverter x:Key="TabSecondaryText" TrueValue="#E9E5FF" FalseValue="#6B7280" />
+            <local:BoolToStringConverter x:Key="TabBadgeBg" TrueValue="#FFFFFF" FalseValue="#EEF2FF" />
+
+            <!-- Convertisseurs des chips de sélection (formulaire de demande d'aide) -->
+            <local:BoolToStringConverter x:Key="UrgentChipBg" TrueValue="#FFE4B5" FalseValue="#FFFFFF" />
+            <local:BoolToStringConverter x:Key="UrgentChipStroke" TrueValue="#F59E0B" FalseValue="#E5E7EB" />
+            <local:BoolToStringConverter x:Key="PlannedChipBg" TrueValue="#EEF0FF" FalseValue="#FFFFFF" />
+            <local:BoolToStringConverter x:Key="SegActiveBg" TrueValue="#FFFFFF" FalseValue="#EEF0FF" />
+            <local:BoolToStringConverter x:Key="SegText" TrueValue="#5B44E9" FalseValue="#6B7280" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
