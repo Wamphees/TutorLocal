@@ -22,6 +22,7 @@ public interface INavigationService
 public class NavigationService : INavigationService
 {
     private readonly IServiceProvider _services;
+    private readonly Dictionary<Type, NavigationPage> _navigationPages = new();
 
     public NavigationService(IServiceProvider services)
     {
@@ -33,30 +34,48 @@ public class NavigationService : INavigationService
         var view = _services.GetRequiredService<TView>();
         var page = Application.Current?.MainPage;
         if (page?.Navigation != null)
-            await page.Navigation.PushAsync(view);
+            await page.Navigation.PushAsync(view, animated: false);
     }
 
     public async Task PopAsync()
     {
         var page = Application.Current?.MainPage;
         if (page?.Navigation?.NavigationStack?.Count > 1)
-            await page.Navigation.PopAsync();
+            await page.Navigation.PopAsync(animated: false);
     }
 
     public void SwitchTab<TView>() where TView : Page
     {
-        var view = _services.GetRequiredService<TView>();
         var current = Application.Current;
         if (current?.Dispatcher == null)
         {
             return;
         }
-        // La barre de navigation basse change la racine de l'application :
-        // l'utilisateur ne doit pas pouvoir "revenir" vers l'ancien onglet via le bouton système.
+
         current.Dispatcher.Dispatch(() =>
         {
-            if (current != null)
-                current.MainPage = new NavigationPage(view);
+            if (current.MainPage is not NavigationPage currentNavigation)
+                return;
+
+            var currentRoot = currentNavigation.RootPage;
+            _navigationPages.TryAdd(currentRoot.GetType(), currentNavigation);
+
+            if (!_navigationPages.TryGetValue(typeof(TView), out var targetNavigation))
+            {
+                targetNavigation = new NavigationPage(_services.GetRequiredService<TView>());
+                _navigationPages.Add(typeof(TView), targetNavigation);
+            }
+
+            if (ReferenceEquals(currentNavigation, targetNavigation))
+            {
+                if (currentNavigation.Navigation.NavigationStack.Count > 1)
+                    _ = currentNavigation.Navigation.PopToRootAsync(animated: false);
+                return;
+            }
+
+            // Chaque onglet garde sa pile, mais le bouton système ne repasse pas
+            // par les onglets précédemment visités.
+            current.MainPage = targetNavigation;
         });
     }
 }

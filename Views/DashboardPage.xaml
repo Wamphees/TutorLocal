@@ -463,63 +463,42 @@
                         </VerticalStackLayout>
                 </ScrollView>
 
-                <!-- BARRE DE NAVIGATION INFÉRIEURE (Tab Bar Fake pour la maquette) -->
+                <!-- Navigation inférieure, style segmented shadcn -->
                 <Border Grid.Row="2"
+                        Margin="16,6,16,12"
+                        Padding="6"
                         BackgroundColor="White"
+                        Stroke="#E4E4E7"
                         StrokeThickness="1"
-                        Stroke="#E5E7EB"
-                        Margin="-1,0,-1,-1"
-                        Padding="10,12,10,24">
-                        <Grid ColumnDefinitions="*, *, *, *">
-                                <!-- Accueil (Actif) -->
-                                <VerticalStackLayout Grid.Column="0"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="4">
-                                        <Label Text="Accueil"
-                                               TextColor="{StaticResource PrimaryBlue}"
-                                               FontSize="11"
-                                               FontAttributes="Bold"
-                                               HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-
-                                <!-- Carte -->
-                                <!-- Carte -->
-                                <VerticalStackLayout Grid.Column="1"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="4"
-                                                     Opacity="0.5">
-                                        <VerticalStackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding OpenMapCommand}"/>
-                                        </VerticalStackLayout.GestureRecognizers>
-                                        <Label Text="Carte"
-                                               TextColor="{StaticResource TextDark}"
-                                               FontSize="11"
-                                               FontAttributes="Bold"
-                                               HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-
-                                <!-- Séances -->
-                                <VerticalStackLayout Grid.Column="2"
-                                                HorizontalOptions="Center"
-                                                Spacing="4"
-                                                Opacity="0.5">
-                                        <VerticalStackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding OpenSessionsCommand}"/>
-                                        </VerticalStackLayout.GestureRecognizers>
-                                        <Label Text="Séances"
-                                                        TextColor="{StaticResource TextDark}"
-                                                        FontSize="11"
-                                                        FontAttributes="Bold"
-                                                        HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-
-                                <!-- Profil -->
-                                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="4" Opacity="0.5">
-    <VerticalStackLayout.GestureRecognizers>
-        <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
-    </VerticalStackLayout.GestureRecognizers>
-    <Label Text="Profil" TextColor="{StaticResource TextDark}" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" />
-</VerticalStackLayout>
+                        StrokeShape="RoundRectangle 16">
+                        <Grid ColumnDefinitions="*,*,*,*">
+                                <Border Grid.Column="0" BackgroundColor="#F4F4F5" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="0,5">
+                                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                                <Label Text="⌂" FontSize="18" TextColor="{StaticResource PrimaryBlue}" HorizontalOptions="Center"/>
+                                                <Label Text="Accueil" FontSize="10" FontAttributes="Bold" TextColor="{StaticResource PrimaryBlue}" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Column="1" BackgroundColor="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="0,5">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenMapCommand}"/></Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                                <Label Text="⌖" FontSize="18" TextColor="#71717A" HorizontalOptions="Center"/>
+                                                <Label Text="Carte" FontSize="10" TextColor="#71717A" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Column="2" BackgroundColor="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="0,5">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenSessionsCommand}"/></Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                                <Label Text="▤" FontSize="18" TextColor="#71717A" HorizontalOptions="Center"/>
+                                                <Label Text="Séances" FontSize="10" TextColor="#71717A" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Column="3" BackgroundColor="Transparent" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="0,5">
+                                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenProfileCommand}"/></Border.GestureRecognizers>
+                                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                                <Label Text="◉" FontSize="18" TextColor="#71717A" HorizontalOptions="Center"/>
+                                                <Label Text="Profil" FontSize="10" TextColor="#71717A" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                </Border>
                         </Grid>
                 </Border>
 
